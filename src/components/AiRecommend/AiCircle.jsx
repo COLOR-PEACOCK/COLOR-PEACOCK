@@ -25,12 +25,20 @@ const AiCircle = ({
 	const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } =
 		useWindowDimensions();
 
+	// AiCircle 크기 나타내는 Animated.Value 객체 생성
 	const animatedSize = useRef(new Animated.Value(1)).current;
+
+	// AiCircle 내 글자 크기 나타내는 Animated.Value 객체 생성
 	const animatedFontSize = useRef(new Animated.Value(0)).current;
 
+	// AiCircle이 핸드폰 좌측 or 우측 중 가까운 부분과 떨어져 있는 거리
 	const distance = 20;
+
+	// 원 지름(안드로이드 에뮬레이터 미디엄폰 기준 205)
 	const diameter = heightScale(205);
-	const beforeDivideLarge = containerHeight - 1.2 * diameter; // 큰 원끼리 간격 나누기 전의 길이(나중에 4로 나누게 됨)
+
+	// 첫번째 원중심과 다섯번째 원중심과의 거리(나중에 4로 나누게 됨)
+	const beforeDivideLarge = containerHeight - 1.2 * diameter;
 	const beforeDivideMiddle = containerHeight - 0.8 * diameter;
 	const beforeDivideSmall = containerHeight - diameter;
 
