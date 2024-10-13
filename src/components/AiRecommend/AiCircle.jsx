@@ -34,13 +34,30 @@ const AiCircle = ({
 	// AiCircle이 핸드폰 좌측 or 우측 중 가까운 부분과 떨어져 있는 거리
 	const distance = 20;
 
-	// 원 지름(안드로이드 에뮬레이터 미디엄폰 기준 205)
+	// 원 지름(중간 크기 원은 안드로이드 에뮬레이터 미디엄폰 기준 205)
 	const diameter = heightScale(205);
+	const smallDiameter = 0.5 * diameter;
+	const largeDiameter = 1.6 * diameter;
 
-	// 첫번째 원중심과 다섯번째 원중심과의 거리(나중에 4로 나누게 됨)
-	const beforeDivideLarge = containerHeight - 1.2 * diameter;
-	const beforeDivideMiddle = containerHeight - 0.8 * diameter;
-	const beforeDivideSmall = containerHeight - diameter;
+	// 첫번째와 마지막 원이 아래위로 화면에서 떨어져 있는 정도
+	const smallVerticalOffset = 0.5 * smallDiameter;
+	const mediumVerticalOffset = -0.1 * diameter;
+	const largeVerticalOffset = -0.125 * largeDiameter;
+
+	// 원 사이 수직 거리
+	const distanceBetweenCircles = size => {
+		switch (size) {
+			case 'medium':
+				const tempMedium = diameter + 2 * mediumVerticalOffset;
+				return (containerHeight - tempMedium) / 4;
+			case 'large':
+				const tempLarge = largeDiameter + 2 * largeVerticalOffset;
+				return (containerHeight - tempLarge) / 4;
+			default:
+				const tempSmall = smallDiameter + 2 * smallVerticalOffset;
+				return (containerHeight - tempSmall) / 4;
+		}
+	};
 
 	useEffect(() => {
 		Animated.parallel([
@@ -118,9 +135,10 @@ const AiCircle = ({
 		top: animatedSize.interpolate({
 			inputRange: [0.5, 1, 1.6],
 			outputRange: [
-				0.25 * diameter + (number * beforeDivideSmall) / 4,
-				-0.1 * diameter + (number * beforeDivideMiddle) / 4,
-				-0.2 * diameter + (number * beforeDivideLarge) / 4,
+				smallVerticalOffset + number * distanceBetweenCircles('small'),
+				mediumVerticalOffset +
+					number * distanceBetweenCircles('medium'),
+				largeVerticalOffset + number * distanceBetweenCircles('large'),
 			],
 		}),
 		width: animatedSize.interpolate({
