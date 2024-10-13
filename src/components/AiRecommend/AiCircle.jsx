@@ -1,14 +1,8 @@
 import React, { useRef, useEffect } from 'react';
-import {
-	Text,
-	TouchableOpacity,
-	Animated,
-	View,
-	useWindowDimensions,
-} from 'react-native';
+import { TouchableOpacity, Animated, useWindowDimensions } from 'react-native';
 import tinycolor from 'tinycolor2';
 import { COLOR } from '@styles/color';
-import { heightScale, widthScale } from '@utils/scaling';
+import { heightScale } from '@utils/scaling';
 
 const AiCircle = ({
 	type,
@@ -22,8 +16,7 @@ const AiCircle = ({
 	setIsSelected,
 	containerHeight,
 }) => {
-	const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } =
-		useWindowDimensions();
+	const { width: SCREEN_WIDTH } = useWindowDimensions();
 
 	// AiCircle 크기 나타내는 Animated.Value 객체 생성
 	const animatedSize = useRef(new Animated.Value(1)).current;
@@ -72,7 +65,7 @@ const AiCircle = ({
 						: 1,
 				useNativeDriver: false,
 			}),
-			// 폰트 크기 애니메이션은 영역 밖으로 튀는 걸 방짛하기 위해 timing으로 선형적 변화
+			// 폰트 크기 애니메이션은 영역 밖으로 튀는 걸 방지하기 위해 timing으로 선형적 변화
 			Animated.timing(animatedFontSize, {
 				toValue:
 					isSelected[number] === 'large'
@@ -93,6 +86,7 @@ const AiCircle = ({
 		return tinycolor(color).isLight() ? COLOR.GRAY_9 : COLOR.GRAY_2;
 	};
 
+	// 원 터치 시 크기 상태 관리 함수
 	const handlePress = () => {
 		setIsSelected(prevSelected => {
 			if (prevSelected[number] === 'large') {
@@ -112,6 +106,7 @@ const AiCircle = ({
 		});
 	};
 
+	// 원 영역 스타일
 	// interpolate를 통해 애니메이션 입력 값의 범위를 다른 출력 값의 범위로 변환
 	const circleStyle = {
 		position: 'absolute',
