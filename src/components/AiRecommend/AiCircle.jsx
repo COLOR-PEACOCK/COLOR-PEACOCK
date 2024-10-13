@@ -39,7 +39,7 @@ const AiCircle = ({
 	const smallDiameter = 0.5 * diameter;
 	const largeDiameter = 1.6 * diameter;
 
-	// 첫번째와 마지막 원이 아래위로 화면에서 떨어져 있는 정도
+	// 첫번째와 마지막 원이 아래위로 화면에서 떨어져 있는 정도(-는 화면 바깥쪽으로 멀어지고, +는 화면 안쪽으로 멀어짐)
 	const smallVerticalOffset = 0.5 * smallDiameter;
 	const mediumVerticalOffset = -0.1 * diameter;
 	const largeVerticalOffset = -0.125 * largeDiameter;
@@ -60,7 +60,9 @@ const AiCircle = ({
 	};
 
 	useEffect(() => {
+		// parallel로 애니메이션 동시 진행
 		Animated.parallel([
+			// spring으로 원 크기 변화 시 튕기는 듯한 모션
 			Animated.spring(animatedSize, {
 				toValue:
 					isSelected[number] === 'large'
@@ -70,6 +72,7 @@ const AiCircle = ({
 						: 1,
 				useNativeDriver: false,
 			}),
+			// 폰트 크기 애니메이션은 영역 밖으로 튀는 걸 방짛하기 위해 timing으로 선형적 변화
 			Animated.timing(animatedFontSize, {
 				toValue:
 					isSelected[number] === 'large'
@@ -109,6 +112,7 @@ const AiCircle = ({
 		});
 	};
 
+	// interpolate를 통해 애니메이션 입력 값의 범위를 다른 출력 값의 범위로 변환
 	const circleStyle = {
 		position: 'absolute',
 		...(type == 'left'
@@ -143,11 +147,11 @@ const AiCircle = ({
 		}),
 		width: animatedSize.interpolate({
 			inputRange: [0.5, 1, 1.6],
-			outputRange: [diameter / 2, diameter, diameter * 1.6],
+			outputRange: [smallDiameter, diameter, largeDiameter],
 		}),
 		height: animatedSize.interpolate({
 			inputRange: [0.5, 1, 1.6],
-			outputRange: [diameter / 2, diameter, diameter * 1.6],
+			outputRange: [smallDiameter, diameter, largeDiameter],
 		}),
 		borderRadius: 400,
 		backgroundColor: colorCode[number],
