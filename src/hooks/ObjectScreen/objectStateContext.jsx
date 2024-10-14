@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
-const useObjectState = () => {
+const ObjectStateContext = createContext();
+
+export const ObjectStateProvider = ({ children }) => {
 	const [droppedItems, setDroppedItems] = useState([]);
 	const [gender, setGender] = useState(false);
 	const [selectedItemId, setSelectedItemId] = useState(null);
@@ -8,7 +10,7 @@ const useObjectState = () => {
 	const [defaultItems, setDefaultItems] = useState([]);
 	const [activeTab, setActiveTab] = useState('');
 
-	return {
+	const value = {
 		droppedItems,
 		setDroppedItems,
 		gender,
@@ -22,6 +24,15 @@ const useObjectState = () => {
 		activeTab,
 		setActiveTab,
 	};
+
+	return (
+		<ObjectStateContext.Provider value={value}>
+			{children}
+		</ObjectStateContext.Provider>
+	);
 };
 
-export default useObjectState;
+export const useObjectState = () => {
+	const context = useContext(ObjectStateContext);
+	return context;
+};

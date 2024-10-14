@@ -5,8 +5,8 @@ import { BasicHeader } from '@components/common';
 import { heightScale } from '@utils/scaling';
 import {
 	ObjectCanvas,
-	ObjectBottomCotainer,
 	ColorBottomSheet,
+	ObjectBottomCotainer,
 } from '@components/ObjectPage';
 
 import { dummyColor, infoText } from '@utils/object/constants';
@@ -36,8 +36,8 @@ const ObjectScreen = ({ route }) => {
 				<ColorBottomSheet colors={colors} />
 			</ImageBackground>
 
+			{/* 바텀 컨테이너 */}
 			<View style={{ height: heightScale(164) }}>
-				{/* 바텀 컨테이너 */}
 				<ObjectBottomCotainer />
 			</View>
 		</SafeAreaView>
