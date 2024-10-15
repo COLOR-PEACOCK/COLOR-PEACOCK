@@ -3,14 +3,13 @@ import { View, StyleSheet } from 'react-native';
 
 import { heightScale } from '@utils/scaling';
 import CanvasDroppedItem from '@components/ObjectPage/CanvasDroppedItem';
+import { useObjectState } from '@hooks/ObjectScreen/objectStateContext';
 
 import MaleBodySvg from '@images/objectitems/bodyimages/male_body.svg';
 import FeMaleBodySvg from '@images/objectitems/bodyimages/female__body.svg';
 
 const ObjectCanvas = () => {
-	const { gender } = useObjectState();
-	const { droppedItems, selectedItemId, handleItemSelect, handleItemDelete } =
-		useCanvasItemHandler();
+	const { gender, droppedItems, selectedItemId } = useObjectState();
 
 	return (
 		<View style={styles.canvas}>
@@ -25,12 +24,6 @@ const ObjectCanvas = () => {
 						key={item.id}
 						item={item}
 						isSelected={selectedItemId === item.id}
-						onSelect={() =>
-							handleItemSelect(item.id, item.category)
-						}
-						onDelete={() =>
-							handleItemDelete(item.id, item.category)
-						}
 					/>
 				))}
 			</View>
@@ -52,6 +45,7 @@ const styles = StyleSheet.create({
 		height: heightScale(480),
 		justifyContent: 'center',
 		alignItems: 'center',
+		zIndex: 1001,
 	},
 });
 

@@ -1,4 +1,13 @@
-import useObjectState from './useObjectState';
+import { useObjectState } from './objectStateContext';
+import { heightScale } from '@utils/scaling';
+
+import {
+	ClothesTopGray,
+	ClothesBottomGray,
+	ShoesGray,
+	Socks,
+	DisableSocks,
+} from '@icons/objecticon/objectIcon.js';
 
 const useCanvasItemHandler = () => {
 	const {
@@ -45,7 +54,7 @@ const useCanvasItemHandler = () => {
 		}
 	};
 
-	const handleItemDelete = (id, category) => {
+	const handleItemDelete = id => {
 		const itemToDelete = droppedItems.find(item => item.id === id);
 
 		if (
@@ -72,11 +81,46 @@ const useCanvasItemHandler = () => {
 		setIsColorPickerOpen(false);
 		setActiveTab(null);
 	};
+
+	const getItemPosition = item => ({
+		left: heightScale(item.canvasX),
+		top: heightScale(item.canvasY),
+		width: heightScale(item.canvasWidth),
+		height: heightScale(item.canvasHeight),
+		zIndex: item.zIndex,
+	});
+
+	const getFocusButtonPosition = category => {
+		const positions = {
+			clothesTop: { top: heightScale(-352), right: heightScale(-148) },
+			clothesBottom: { top: heightScale(-230), right: heightScale(-148) },
+			shoes: { top: heightScale(-90), right: heightScale(-148) },
+			socks: { top: heightScale(-100), right: heightScale(90) },
+		};
+		return (
+			positions[category] || {
+				top: heightScale(-90),
+				right: heightScale(-100),
+			}
+		);
+	};
+
+	const getCategoryIcon = (category, isVisible) => {
+		const icons = {
+			clothesTop: ClothesTopGray,
+			clothesBottom: ClothesBottomGray,
+			shoes: ShoesGray,
+			socks: isVisible ? DisableSocks : Socks,
+		};
+		return icons[category];
+	};
+
 	return {
-		droppedItems,
-		selectedItemId,
 		handleItemSelect,
 		handleItemDelete,
+		getItemPosition,
+		getCategoryIcon,
+		getFocusButtonPosition,
 	};
 };
 
