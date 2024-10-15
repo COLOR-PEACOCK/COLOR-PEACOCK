@@ -7,7 +7,6 @@ import {
 	useWindowDimensions,
 	Image,
 	ScrollView,
-	Alert,
 } from 'react-native';
 import { useSharedValue } from 'react-native-reanimated';
 import Carousel, { Pagination } from 'react-native-reanimated-carousel';
@@ -34,17 +33,12 @@ const Home = ({ navigation }) => {
 		usePressButtonState();
 
 	const { isModalVisible, handleOpenModal, handleCloseModal } = useModal();
-	const { handleSelectCamera, handleSelectAlbum, handleSelectAI } =
-		useHomeState();
-
-	const handleSearch = hexValue => {
-		if (hexValue) {
-			handleCloseModal();
-			navigation.navigate('ColorRecommendScreen', {
-				mainColor: { hexVal: hexValue },
-			});
-		}
-	};
+	const {
+		handleSelectCamera,
+		handleSelectAlbum,
+		handleSelectAI,
+		handleSearch,
+	} = useHomeState();
 
 	const onPressPagination = useCallback(
 		index => {

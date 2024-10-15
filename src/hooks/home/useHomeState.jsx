@@ -33,10 +33,19 @@ const useHomeState = () => {
 		return true;
 	};
 
+	const handleSearch = hexValue => {
+		if (hexValue) {
+			navigation.navigate('ColorRecommendScreen', {
+				mainColor: { hexVal: hexValue },
+			});
+		}
+	};
+
 	return {
 		handleSelectCamera,
 		handleSelectAlbum,
 		handleSelectAI,
+		handleSearch,
 	};
 };
 
