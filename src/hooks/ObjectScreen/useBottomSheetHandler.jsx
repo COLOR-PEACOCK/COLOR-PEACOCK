@@ -1,8 +1,9 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { useObjectState } from '@hooks/ObjectScreen/objectStateContext';
 
-const useBottomSheetHandler = bottomSheetRef => {
+const useBottomSheetHandler = () => {
+	const bottomSheetRef = useRef(null);
 	const {
 		selectedItemId,
 		setDroppedItems,
@@ -33,6 +34,6 @@ const useBottomSheetHandler = bottomSheetRef => {
 		setIsColorPickerOpen(!isColorPickerOpen);
 	};
 
-	return { handleColorSelect, handlerTouchEvent };
+	return { handleColorSelect, handlerTouchEvent, bottomSheetRef };
 };
 export default useBottomSheetHandler;

@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import {
 	ImageBackground,
 	StyleSheet,
@@ -9,13 +9,12 @@ import BottomSheet from '@gorhom/bottom-sheet';
 
 import { heightScale } from '@utils/scaling';
 import useBottomSheetHandler from '@hooks/ObjectScreen/useBottomSheetHandler';
-import CustomHandler from './CustomHandler';
+import CustomHandler from '@components/ObjectPage/CustomHandler';
 
 const colorContainer = require('@images/objectitems/background/cricle__wrapper.png');
 
 const ColorBottomSheet = ({ colors }) => {
-	const bottomSheetRef = useRef(null);
-	const { handleColorSelect } = useBottomSheetHandler(bottomSheetRef);
+	const { bottomSheetRef, handleColorSelect } = useBottomSheetHandler();
 
 	return (
 		<View style={styles.colorContainer}>
