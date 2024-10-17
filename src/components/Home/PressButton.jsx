@@ -1,12 +1,17 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { COLOR } from '@styles/color';
-import SVGIcon from '@components/common/SVGIcon';
+import { SVGIcon } from '@components/common';
 import { usePressButtonState } from '@hooks/home';
 
 const size = 48;
 const PressButton = ({ iconName, onPress, engText, text, enabled = true }) => {
-	const { contentColor, buttonColor, elevation ,handleTouchStart, handleTouchEnd } =
-		usePressButtonState(enabled);
+	const {
+		contentColor,
+		buttonColor,
+		elevation,
+		handleTouchStart,
+		handleTouchEnd,
+	} = usePressButtonState(enabled);
 
 	return (
 		<Pressable
