@@ -23,9 +23,17 @@ const SearchModal = ({ visible, handleCloseModal, onPressSearch }) => {
 		searchNameList,
 		isKeywordKor,
 		handlePressLabel,
-		handlePressSearch,
+		handleHexValue,
 		handlePressSearchList,
-	} = useSearchModalState(onPressSearch);
+	} = useSearchModalState();
+
+	const handlePressSearch = () => {
+		const hexValue = handleHexValue();
+		if (hexValue) {
+			handleCloseModal();
+			onPressSearch(hexValue);
+		}
+	};
 
 	return (
 		<View>

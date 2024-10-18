@@ -6,6 +6,7 @@ import {
 	SafeAreaView,
 	TouchableOpacity,
 	Image,
+	Linking,
 } from 'react-native';
 import { BasicHeader, CustomText as Text } from '@components/common';
 import { useCameraPermission } from 'react-native-vision-camera';
@@ -41,23 +42,34 @@ const CameraScreen = ({ navigation }) => {
 	const [zoomLevel, setZoomLevel] = useState(1);
 	const parentRef = useRef();
 
-	// 카메라 권한
-	useEffect(() => {
-		(async () => {
+	const requestCameraPermission = async () => {
+		try {
 			if (hasPermission === false) {
 				const newPermission = await requestPermission();
 				if (!newPermission) {
 					Alert.alert(
 						'카메라 권한 필요',
-						'이 앱은 카메라 권한이 필요합니다. 설정에서 권한을 허용해주세요.',
+						'이 기능은 카메라 권한이 필요합니다. 설정에서 권한을 허용해주세요.',
 						[
 							{ text: '취소', style: 'cancel' },
-							{ text: '설정으로 이동', onPress: openSettings },
+							{
+								text: '설정으로 이동',
+								onPress: Linking.openSettings,
+							},
 						],
 					);
 				}
 			}
-		})();
+		} catch (error) {
+			Alert.alert('알림', '카메라 렌더링중 오류가 발생했습니다.', [
+				{ text: '확인', onPress: navigation.goback() },
+			]);
+		}
+	};
+
+	// 카메라 권한
+	useEffect(() => {
+		requestCameraPermission();
 	}, [hasPermission, requestPermission]);
 
 	// 카메라 활성화 관리
@@ -108,12 +120,14 @@ const CameraScreen = ({ navigation }) => {
 				ref={parentRef}
 				style={styles.cameracontainer}>
 				{/* 카메라 렌더*/}
-				<CameraRender
-					extColor={setExtColor}
-					cameraType={cameraType}
-					zoomLevel={zoomLevel}
-					isActive={isActive}
-				/>
+				{hasPermission && (
+					<CameraRender
+						extColor={setExtColor}
+						cameraType={cameraType}
+						zoomLevel={zoomLevel}
+						isActive={isActive}
+					/>
+				)}
 
 				{/* 추출 색상 정보 모달 */}
 				<ExtColorModal

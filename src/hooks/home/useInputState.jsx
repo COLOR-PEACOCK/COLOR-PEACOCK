@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { INPUT_TYPES } from '@utils/home';
+import { inputTypeMap } from '@utils/home';
 
 const useInputState = selectedLabel => {
 	const inputRef = useRef([]);
@@ -17,7 +17,7 @@ const useInputState = selectedLabel => {
 
 	const handleAutoFocus = (index, text) => {
 		if (text.length >= inputOption.maxLength) {
-			handleFocusNext(index, text);
+			handleFocusNext(index);
 		}
 	};
 
@@ -32,42 +32,6 @@ const useInputState = selectedLabel => {
 		handleAutoFocus,
 		handlePressInputForm,
 	};
-};
-
-const inputTypeMap = {
-	[INPUT_TYPES.COLOR_NAME]: {
-		labels: ['입력'],
-		placeholders: ['(한글, 영어)'],
-		maxLength: undefined,
-		keyboardType: 'default',
-	},
-	[INPUT_TYPES.HEX]: {
-		labels: ['#'],
-		placeholders: ['ffffff'],
-		maxLength: 6,
-		keyboardType: 'default',
-	},
-	[INPUT_TYPES.RGB]: {
-		labels: ['R', 'G', 'B'],
-		placeholders: ['0~255', '0~255', '0~255'],
-		unit: ['', '', ''],
-		maxLength: 3,
-		keyboardType: 'number-pad',
-	},
-	[INPUT_TYPES.HSL]: {
-		labels: ['H', 'S', 'L'],
-		placeholders: ['0~360', '0~100', '0~100'],
-		unit: ['°', '%', '%'],
-		maxLength: 3,
-		keyboardType: 'number-pad',
-	},
-	[INPUT_TYPES.CMYK]: {
-		labels: ['C', 'M', 'Y', 'K'],
-		placeholders: ['0~100', '0~100', '0~100', '0~100'],
-		unit: ['%', '%', '%', '%'],
-		maxLength: 3,
-		keyboardType: 'number-pad',
-	},
 };
 
 export default useInputState;

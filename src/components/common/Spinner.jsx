@@ -1,24 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { View, Image, Animated, Easing, Text } from 'react-native';
 import spinner from '../../assets/loadingSpinner.png';
 import logoIcon from '../../assets/icons/logo.png';
 
 const Spinner = () => {
 	// 스피너
-	const spinValue = new Animated.Value(0);
+	const spinValue = useRef(new Animated.Value(0)).current;
 
 	useEffect(() => {
-		const startRotation = () => {
-			spinValue.setValue(0); // 초기화
+		const animation = Animated.loop(
 			Animated.timing(spinValue, {
 				toValue: 1,
-				duration: 1000, // 회전 속도 조정
+				duration: 1000,
 				easing: Easing.linear,
 				useNativeDriver: true,
-			}).start(() => startRotation()); // 무한 반복
-		};
+			}),
+		);
 
-		startRotation();
+		animation.start();
+
+		return () => animation.stop(); // 컴포넌트가 unmount될 때 애니메이션 정지
 	}, []);
 
 	const spin = spinValue.interpolate({
