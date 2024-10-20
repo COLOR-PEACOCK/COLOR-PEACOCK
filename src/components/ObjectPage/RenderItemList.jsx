@@ -1,16 +1,21 @@
 import { COLOR } from '@styles/color';
 import React from 'react';
 import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { CustomText as Text } from '@components/common/CustomText';
-import { widthScale, heightScale } from '@utils/scaling';
 
-const RenderItemList = ({
-	setDroppedItems,
-	itemData,
-	activeTab,
-	setIsColorPickerOpen,
-	setSelectedItemId,
-}) => {
+import { CustomText as Text } from '@components/common/CustomText';
+import { heightScale } from '@utils/scaling';
+
+import { useObjectState } from '@hooks/ObjectScreen/objectStateContext';
+
+const RenderItemList = () => {
+	const {
+		setDroppedItems,
+		itemData,
+		activeTab,
+		setIsColorPickerOpen,
+		setSelectedItemId,
+	} = useObjectState();
+
 	//아이템 플랫 리스트 렌더
 	const renderItem = ({ item }) => {
 		return (
@@ -73,7 +78,6 @@ const styles = StyleSheet.create({
 		height: '100%',
 		alignItems: 'center',
 		justifyContent: 'center',
-		// marginHorizontal: 5,
 		borderRightWidth: 1,
 		borderRightColor: COLOR.GRAY_5,
 		gap: heightScale(4),

@@ -3,6 +3,7 @@ import React, { createContext, useContext, useState } from 'react';
 const ObjectStateContext = createContext();
 
 export const ObjectStateProvider = ({ children }) => {
+	const [itemData, setItemData] = useState(null);
 	const [droppedItems, setDroppedItems] = useState([]);
 	const [gender, setGender] = useState(false);
 	const [selectedItemId, setSelectedItemId] = useState(null);
@@ -23,6 +24,8 @@ export const ObjectStateProvider = ({ children }) => {
 		setDefaultItems,
 		activeTab,
 		setActiveTab,
+		itemData,
+		setItemData,
 	};
 
 	return (

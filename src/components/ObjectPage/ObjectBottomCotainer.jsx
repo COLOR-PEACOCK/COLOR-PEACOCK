@@ -1,55 +1,17 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { FlatList, Image, StyleSheet, TouchableOpacity } from 'react-native';
-import { View } from 'react-native';
-import { COLOR } from '@styles/color';
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
+
 import { CustomText as Text } from '@components/common/CustomText';
-import { heightScale, widthScale } from '@utils/scaling';
+import { COLOR } from '@styles/color';
 
-import { BackButton } from '@icons/objecticon/objectIcon.js';
-import ChangeGenderButton from './ChangeGenderButton.jsx';
-import CategoryButton from './CategoryButton.jsx';
-import RenderItemList from './RenderItemList.jsx';
+import { useObjectState } from '@hooks/ObjectScreen/objectStateContext.jsx';
+import TabBackButton from '@components/ObjectPage/TabBackButton.jsx';
+import RenderItemList from '@components/ObjectPage/RenderItemList';
+import ChangeGenderButton from '@components/ObjectPage/ChangeGenderButton.jsx';
+import CategoryButton from '@components/ObjectPage/CategoryButton.jsx';
 
-import maleItemData from '../../assets/data/objectdata/maleItemData';
-import femaleItemData from '../../assets/data/objectdata/femaleItemData';
-
-const ObjectBottomCotainer = ({
-	setDroppedItems,
-	gender,
-	setGender,
-	setIsColorPickerOpen,
-	setSelectedItemId,
-	setDefaultItems,
-	activeTab,
-	setActiveTab,
-}) => {
-	const [itemData, setItemData] = useState(null);
-
-	// 마운트 시 초기 아이템
-	useEffect(() => {
-		const initialItemData = gender ? maleItemData : femaleItemData;
-		setItemData(initialItemData);
-		const defaultItems = getDefaultItems(initialItemData);
-		setDroppedItems(defaultItems);
-		setDefaultItems(defaultItems);
-	}, []);
-
-	// 기본 아이템 선택 함수
-	const getDefaultItems = useCallback(data => {
-		return [data.clothesTop[0], data.clothesBottom[0], data.socks[0]];
-	}, []);
-
-	// 성별과 아이템 아이템 변경 함수
-	const handleGenderChange = useCallback(() => {
-		const newGender = !gender;
-		const newItemData = newGender ? maleItemData : femaleItemData;
-		const defaultItems = getDefaultItems(newItemData);
-
-		setGender(newGender);
-		setDroppedItems(defaultItems);
-		setDefaultItems(defaultItems);
-		setItemData(newItemData);
-	}, [gender]);
+const ObjectBottomCotainer = () => {
+	const { activeTab } = useObjectState();
 
 	return (
 		<View style={styles.bottomContainer}>
@@ -59,29 +21,13 @@ const ObjectBottomCotainer = ({
 			</View>
 			{activeTab ? (
 				<View style={styles.tabViewContainer}>
-					<TouchableOpacity
-						onPress={() => setActiveTab(null)}
-						style={styles.backButtonWrapper}>
-						<Image
-							source={BackButton}
-							style={{ width: 24, height: 25 }}
-						/>
-					</TouchableOpacity>
-					<RenderItemList
-						setDroppedItems={setDroppedItems}
-						itemData={itemData}
-						activeTab={activeTab}
-						setIsColorPickerOpen={setIsColorPickerOpen}
-						setSelectedItemId={setSelectedItemId}
-					/>
+					<TabBackButton />
+					<RenderItemList />
 				</View>
 			) : (
 				<View style={styles.tabViewContainer}>
-					<ChangeGenderButton
-						gender={gender}
-						genderChange={handleGenderChange}
-					/>
-					<CategoryButton setActiveTab={setActiveTab} />
+					<ChangeGenderButton />
+					<CategoryButton />
 				</View>
 			)}
 		</View>
@@ -113,15 +59,6 @@ const styles = StyleSheet.create({
 	tabViewContainer: {
 		flex: 1,
 		flexDirection: 'row',
-	},
-	backButtonWrapper: {
-		width: widthScale(64),
-		justifyContent: 'center',
-		alignItems: 'center',
-		borderRightWidth: 1,
-		borderRightColor: COLOR.GRAY_5,
-		borderBottomWidth: 1,
-		borderBottomColor: COLOR.GRAY_5,
 	},
 });
 export default ObjectBottomCotainer;

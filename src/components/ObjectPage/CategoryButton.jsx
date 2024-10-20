@@ -1,46 +1,22 @@
-import { COLOR } from '@styles/color';
 import React from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { CustomText as Text } from '@components/common/CustomText';
 import { heightScale } from '@utils/scaling';
+import { COLOR } from '@styles/color';
 
-import {
-	ClothesTop,
-	ClothesBottom,
-	Shoes,
-	Cap,
-} from '@icons/objecticon/objectIcon.js';
+import tabs from '@utils/object/tabData';
+import { useObjectState } from '@hooks/ObjectScreen/objectStateContext';
 
-// 탭 데이터
-const tabs = [
-	{
-		key: 'clothesTop',
-		title: '상의',
-		subtitle: 'clothes top',
-		icon: ClothesTop,
-	},
-	{
-		key: 'clothesBottom',
-		title: '하의',
-		subtitle: 'clothes bottom',
-		icon: ClothesBottom,
-	},
-	{ key: 'shoes', title: '신발', subtitle: 'shoes', icon: Shoes },
-	{ key: 'caps', title: '모자', subtitle: 'caps', icon: Cap },
-];
-
-const CategoryButton = ({ setActiveTab }) => {
+const CategoryButton = () => {
+	const { setActiveTab } = useObjectState();
 	// 탭 버튼 이벤트
-	const buttonEvent = key => {
-		setActiveTab(key);
-	};
 	return (
 		<View style={styles.categoryContainer}>
 			{tabs.map(tabdata => (
 				<TouchableOpacity
 					key={tabdata.key}
 					style={styles.categoryWrapper}
-					onPress={() => buttonEvent(tabdata.key)}>
+					onPress={() => setActiveTab(tabdata.key)}>
 					<Image
 						source={tabdata.icon}
 						style={{ width: 44, height: 44 }}

@@ -1,14 +1,21 @@
 import React from 'react';
 import { Image, StyleSheet, TouchableOpacity } from 'react-native';
-import { COLOR } from '@styles/color';
+
 import { CustomText as Text } from '@components/common/CustomText';
+import { COLOR } from '@styles/color';
 import { heightScale, widthScale } from '@utils/scaling';
+
+import { useObjectState } from '@hooks/ObjectScreen/objectStateContext';
+import useGenderChange from '@hooks/ObjectScreen/useGenderChange';
+
 import { GenderMale, GenderFemale } from '@icons/objecticon/objectIcon.js';
 
-const ChangeGenderButton = ({ gender, genderChange }) => {
+const ChangeGenderButton = () => {
+	const { gender } = useObjectState();
+	const handleGenderChange = useGenderChange();
 	return (
 		<TouchableOpacity
-			onPress={genderChange}
+			onPress={handleGenderChange}
 			style={styles.genderChangeButton}>
 			{gender ? (
 				<Image

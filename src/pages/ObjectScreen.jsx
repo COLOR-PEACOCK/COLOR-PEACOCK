@@ -10,11 +10,13 @@ import {
 } from '@components/ObjectPage';
 
 import { dummyColor, infoText } from '@utils/object/constants';
+import useDefaultItem from '@hooks/ObjectScreen/useDefaultItem';
+
 const backgroundimg = require('@images/objectitems/background/background.png');
 
 const ObjectScreen = ({ route }) => {
 	const colors = route.params || dummyColor;
-
+	useDefaultItem();
 	return (
 		<SafeAreaView style={{ flex: 1 }}>
 			{/* 헤더 */}
