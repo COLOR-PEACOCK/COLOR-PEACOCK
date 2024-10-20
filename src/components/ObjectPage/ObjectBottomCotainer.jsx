@@ -19,15 +19,15 @@ const ObjectBottomCotainer = () => {
 				<Text style={styles.barkorname}>분류항목</Text>
 				<Text style={styles.barengname}>CATEGORY</Text>
 			</View>
-			{activeTab ? (
-				<View style={styles.tabViewContainer}>
-					<TabBackButton />
-					<RenderItemList />
-				</View>
-			) : (
+			{!activeTab ? (
 				<View style={styles.tabViewContainer}>
 					<ChangeGenderButton />
 					<CategoryButton />
+				</View>
+			) : (
+				<View style={styles.tabViewContainer}>
+					<TabBackButton />
+					<RenderItemList />
 				</View>
 			)}
 		</View>
