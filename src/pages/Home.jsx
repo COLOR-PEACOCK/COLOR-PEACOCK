@@ -7,7 +7,6 @@ import {
 	useWindowDimensions,
 	Image,
 	ScrollView,
-	Alert,
 } from 'react-native';
 import { useSharedValue } from 'react-native-reanimated';
 import Carousel, { Pagination } from 'react-native-reanimated-carousel';
@@ -16,12 +15,8 @@ import convert from 'color-convert';
 import { COLOR } from '@styles/color';
 import { CustomText as Text } from '@components/common';
 import { PressButton, OutlinedText, SearchModal } from '@components/Home';
-import { useModal } from '@hooks';
-import {
-	useAsyncStorage,
-	useBackHandler,
-	usePressButtonState,
-} from '@hooks/home';
+import { useModal } from '@hooks/index';
+import { useBackHandler, useHomeState, usePressButtonState } from '@hooks/home';
 import { SearchSVG } from '@icons';
 import { widthScale } from '@utils/scaling';
 
@@ -36,7 +31,14 @@ const Home = ({ navigation }) => {
 	const progress = useSharedValue(0);
 	const { contentColor, buttonColor, handleTouchStart, handleTouchEnd } =
 		usePressButtonState();
-	const { storeData, getData, clearData } = useAsyncStorage();
+
+	const { isModalVisible, handleOpenModal, handleCloseModal } = useModal();
+	const {
+		handleSelectCamera,
+		handleSelectAlbum,
+		handleSelectAI,
+		handleSearch,
+	} = useHomeState();
 
 	const onPressPagination = useCallback(
 		index => {
@@ -51,43 +53,6 @@ const Home = ({ navigation }) => {
 		[progress],
 	);
 
-	const { isModalVisible, handleOpenModal, handleCloseModal } = useModal();
-
-	const handleSearch = hexValue => {
-		if (hexValue) {
-			handleCloseModal();
-			navigation.navigate('ColorRecommendScreen', {
-				mainColor: { hexVal: hexValue },
-			});
-		}
-	};
-
-	const handleSelectCamera = () => {
-		// navigation.navigate('CameraScreen')
-		Alert.alert('알림', '카메라 기능은 추후 업데이트 예정입니다.');
-	};
-	const handleSelectAlbum = async () => {
-		const pageName = 'ImageScreen';
-		const isVisited = await isVisitedPage(pageName);
-		navigation.navigate(pageName, { visited: isVisited });
-	};
-	const handleSelectAI = async () => {
-		const pageName = 'AiScreen';
-		const isVisited = await isVisitedPage(pageName);
-		if (isVisited) navigation.navigate(pageName);
-		else navigation.navigate('AiOnboardingScreen');
-	};
-
-	const isVisitedPage = async pageName => {
-		const visitedKey = `${pageName}_visited`;
-		const data = await getData(visitedKey);
-
-		if (!data) {
-			await storeData(visitedKey, 'true');
-			return false;
-		}
-		return true;
-	};
 	// splash로 뒤로가기 방지 및 앱종료 모달
 	useBackHandler();
 
