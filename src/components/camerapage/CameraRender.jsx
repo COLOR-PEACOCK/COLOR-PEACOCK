@@ -7,15 +7,15 @@ import {
 } from 'react-native-vision-camera';
 import { Worklets } from 'react-native-worklets-core';
 import { useResizePlugin } from 'vision-camera-resize-plugin';
-import useColorName from '@hooks/useColorName';
+import { useColorName } from '@hookse';
 
 const CameraRender = ({ extColor, cameraType, zoomLevel, isActive }) => {
 	const [rgbColor, setRgbColor] = useState({ r: 0, g: 0, b: 0 });
-	const { getKorColorName, getEngColorNameLocal , getColorName} = useColorName();
+	const { getColorName } = useColorName();
 	const device = useCameraDevice(cameraType);
 	const { resize } = useResizePlugin();
-	const resizeWidth = 640
-	const resizeHeight = 480
+	const resizeWidth = 640;
+	const resizeHeight = 480;
 	// 추출 색 rgb
 	const updateColorJS = Worklets.createRunOnJS((r, g, b) => {
 		setRgbColor({ r, g, b });
@@ -34,7 +34,7 @@ const CameraRender = ({ extColor, cameraType, zoomLevel, isActive }) => {
 		const { r, g, b } = rgbColor;
 		const bgColor = `rgb(${r}, ${g}, ${b})`;
 		const hexColor = rgbToHex(r, g, b);
-		const {korean_name, name} = getColorName(hexColor);
+		const { korean_name, name } = getColorName(hexColor);
 		extColor({
 			bgColor,
 			hexColor,
