@@ -1,5 +1,5 @@
 // 유사도
-export const getLevenshteinDistance = (a, b) =>{
+export const getLevenshteinDistance = (a: string | any[], b: string | any[]) =>{
 	var temp;
 	if (a.length === 0) { return b.length; }
 	if (b.length === 0) { return a.length; }
