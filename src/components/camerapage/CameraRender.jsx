@@ -7,7 +7,7 @@ import {
 } from 'react-native-vision-camera';
 import { Worklets } from 'react-native-worklets-core';
 import { useResizePlugin } from 'vision-camera-resize-plugin';
-import { useColorName } from '@hookse';
+import { useColorName } from '@hooks';
 
 const CameraRender = ({ extColor, cameraType, zoomLevel, isActive }) => {
 	const [rgbColor, setRgbColor] = useState({ r: 0, g: 0, b: 0 });
