@@ -1,10 +1,26 @@
+import { PropsWithChildren } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { COLOR } from '@styles/color';
 import { SVGIcon } from '@components/common';
 import { usePressButtonState } from '@hooks/home';
+import { IconName } from '@components/common/SVGIcon';
 
-const size = 48;
-const PressButton = ({ iconName, onPress, engText, text, enabled = true }) => {
+interface PressButtonProps {
+	iconName: IconName;
+	onPress: any;
+	engText: string;
+	text: string;
+	enabled?: boolean;
+}
+const SIZE = 48;
+
+const PressButton = ({
+	iconName,
+	onPress,
+	engText,
+	text,
+	enabled = true,
+}: PressButtonProps) => {
 	const {
 		contentColor,
 		buttonColor,
@@ -18,15 +34,14 @@ const PressButton = ({ iconName, onPress, engText, text, enabled = true }) => {
 			onPress={onPress}
 			onPressIn={handleTouchStart}
 			onPressOut={handleTouchEnd}
-			underlayColor={COLOR.PRIMARY}
 			style={[
 				styles.button,
 				{ backgroundColor: buttonColor, elevation: elevation },
 			]}>
 			<SVGIcon
 				name={iconName}
-				width={size}
-				height={size}
+				width={SIZE}
+				height={SIZE}
 				color={contentColor}
 				style={styles.icon}
 			/>
