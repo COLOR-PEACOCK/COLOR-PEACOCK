@@ -7,6 +7,7 @@ import _ from 'lodash';
 import { useColorName, useImagePicker } from '@hooks';
 
 export const useImageScreen = (navigation, visited) => {
+	// TODO: 팝업 반복 실행 이슈
 	const [color, setColor] = useState('#000000');
 	const [colorName, setColorName] = useState({ korName: '', engName: '' });
 	const [showPopup, setShowPopup] = useState(false);
