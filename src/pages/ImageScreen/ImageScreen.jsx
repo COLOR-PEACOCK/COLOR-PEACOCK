@@ -1,31 +1,19 @@
-import React, { useState, useCallback, useEffect } from 'react';
-import {
-	View,
-	StyleSheet,
-	TouchableOpacity,
-	Pressable,
-	Image,
-	SafeAreaView,
-	Alert,
-} from 'react-native';
+import React from 'react';
+import { SafeAreaView, View, StyleSheet } from 'react-native';
 import { WebView } from 'react-native-webview';
-import _ from 'lodash';
-import RNFS from 'react-native-fs';
-import { COLOR } from '@styles/color';
-// components
-import {
-	BasicHeader,
-	CustomText as Text,
-	CustomPopup,
-} from '@components/common';
-// hooks
-import { useColorName, useImageWebview, useImagePicker } from '@hooks';
-// icons
-import imageIcon from '@icons/image.png';
-import paletteIcon from '@icons/palette.png';
-import aiIcon from '@icons/ai.png';
-import { widthScale, heightScale } from '@utils/scaling';
 
+// hooks & utils
+import { infoText } from '@utils/ImageScreen/infoText';
+import { useImageWebview } from '@hooks';
+import { useImageScreen } from '@hooks/ImageScreen/useImageScreen';
+
+// components
+import { BasicHeader, CustomPopup } from '@components/common';
+import ColorInfo from '@components/ImageScreen/ColorInfo';
+import ImagePlaceholder from '@components/ImageScreen/ImagePlaceholder';
+import ControlButtons from '@components/ImageScreen/ControlButtons';
+
+<<<<<<< Updated upstream
 const ImageScreen = ({ navigation }) => {
 	const [color, setColor] = useState('#000000');
 	const [colorName, setColorName] = useState({ korName: '', engName: '' });
@@ -181,139 +169,65 @@ const ImageScreen = ({ navigation }) => {
 							'조준점을 잡아다 끌어서 이동시켜 보세요!\n• 선택하신 색상으로 추천을 진행합니다!'
 						}
 						onClose={handleClosePopup}
+=======
+const ImageScreen = ({ navigation, route }) => {
+	const {
+		color,
+		colorName,
+		showPopup,
+		imageDataUrl,
+		handleColorRecommend,
+		handleAiRecommend,
+		onMessage,
+		handleClosePopup,
+		selectImage,
+	} = useImageScreen(navigation, route.params.visited);
+	const { getHtmlContent } = useImageWebview();
+
+	return (
+		<SafeAreaView style={{ flex: 1 }}>
+			{/* 베이직 헤더 */}
+			<BasicHeader
+				titleIcon="image"
+				title="이미지"
+				subTitle="images"
+				rightIcon="info"
+				infoText={infoText}
+			/>
+			{/* 크로스 헤어 초점 색상 정보 */}
+			<ColorInfo color={color} colorName={colorName} />
+			{/* 이미지 */}
+			<View style={styles.imageContainer}>
+				{imageDataUrl ? (
+					<WebView
+						source={{ html: getHtmlContent(imageDataUrl) }}
+						onMessage={onMessage}
+						style={styles.webview}
+>>>>>>> Stashed changes
 					/>
+				) : (
+					<ImagePlaceholder onSelectImage={selectImage} />
 				)}
 			</View>
+			{/* 버튼 */}
+			<ControlButtons
+				onAiRecommend={handleAiRecommend}
+				onColorRecommend={handleColorRecommend}
+			/>
+			{/* 초기 설명 팝업 */}
+			{showPopup && (
+				<CustomPopup
+					message="조준점을 잡아다 끌어서 이동시켜 보세요!"
+					onClose={handleClosePopup}
+				/>
+			)}
 		</SafeAreaView>
 	);
 };
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: '#000',
-	},
-	headerContainer: {
-		flexDirection: 'row',
-		justifyContent: 'space-between',
-		alignItems: 'center',
-	},
-	changeButton: {
-		padding: 10,
-		borderRadius: 8,
-	},
-	changeButtonText: {
-		color: COLOR.PRIMARY,
-		fontWeight: 'bold',
-	},
-	colorInfoBox: {
-		paddingVertical: 18,
-		flexDirection: 'row',
-		alignItems: 'center',
-		justifyContent: 'center',
-		gap: 16,
-		backgroundColor: COLOR.GRAY_9,
-		zIndex: -1,
-	},
-	colorIndicator: {
-		width: 64,
-		height: 64,
-		borderRadius: 4,
-		borderWidth: 1,
-		borderColor: 'rgba(250, 250, 250, .3)',
-	},
-	colorDetails: {
-		gap: 6,
-		flex: 0.55,
-	},
-	korName: {
-		color: COLOR.WHITE,
-		fontSize: 14,
-		fontWeight: '700',
-	},
-	engName: { color: COLOR.WHITE, fontSize: 12 },
-
-	colorHex: {
-		color: COLOR.GRAY_6,
-		fontSize: 12,
-		fontFamily: 'Pretendard-Light',
-	},
-	imageContainer: {
-		flex: 3,
-		width: '100%',
-		paddingVertical: 4,
-	},
-	placeholder: {
-		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center',
-		backgroundColor: COLOR.GRAY_2,
-		gap: 24,
-	},
-	placeholderTextKor: {
-		color: COLOR.GRAY_6,
-		fontSize: 18,
-		fontFamily: 'Pretendard-Bold',
-	},
-	placeholderTextEng: {
-		color: COLOR.GRAY_6,
-		fontSize: 14,
-		fontFamily: 'Pretendard-Bold',
-		textTransform: 'capitalize',
-	},
-	webview: {
-		width: '100%',
-		height: '100%',
-	},
-	buttonContainer: {
-		height: heightScale(124),
-		flexDirection: 'row',
-		justifyContent: 'center',
-		alignItems: 'center',
-		backgroundColor: COLOR.GRAY_10,
-	},
-	button: {
-		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center',
-		width: '100%',
-		height: '100%',
-		flexDirection: 'row',
-		gap: 6,
-	},
-	buttonIcon: {
-		width: widthScale(26),
-		height: heightScale(26),
-	},
-	aiButton: {
-		backgroundColor: COLOR.GRAY_10,
-		width: '40%',
-		height: 78,
-		marginVertical: 24,
-		paddingVertical: 24,
-		borderRadius: 8,
-		borderColor: COLOR.PRIMARY,
-		borderWidth: 1,
-		flexDirection: 'row',
-		justifyContent: 'center',
-		alignItems: 'center',
-	},
-	ButtonText: {
-		color: COLOR.WHITE,
-		fontSize: widthScale(18),
-		fontFamily: 'Pretendard-Bold',
-	},
-	recommendationButton: {
-		backgroundColor: COLOR.PRIMARY,
-		width: '40%',
-		height: 78,
-		marginVertical: 24,
-		paddingVertical: 24,
-		borderRadius: 8,
-		flexDirection: 'row',
-		justifyContent: 'center',
-		alignItems: 'center',
-	},
+	imageContainer: { flex: 3, width: '100%', paddingVertical: 4 },
+	webview: { width: '100%', height: '100%' },
 });
 
 export default ImageScreen;
