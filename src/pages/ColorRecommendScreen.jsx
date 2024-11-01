@@ -1,12 +1,7 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import {
-	SafeAreaView,
-	View,
-	StyleSheet,
-	ScrollView,
-} from 'react-native';
-import tinycolor from 'tinycolor2';
-import convert from 'color-convert';
+import React, { useState } from 'react';
+import { SafeAreaView, View, StyleSheet, ScrollView } from 'react-native';
+import convert from 'color-convert'; // hex -> hsl 로 변환
+// TODO :  useColorVariants 훅에 hex -> hsl 변환 하는 부분도 넣고 싶음
 
 // components
 import { BasicHeader } from '@components/common';
@@ -16,123 +11,31 @@ import {
 	MainColorInfo,
 } from '@components/ColorRecommend';
 
-// hook & utils
-import { getColorInfo } from '@utils/colorRecommendUtils';
-import { useColorName } from '@hooks';
-import {
-	getComplementaryColor,
-	getAnalogousColors,
-	getTriadicColors,
-	getSplitComplementaryColors,
-	getMonochromaticColors,
-	getTetradicColors,
-	getTintColors,
-	getShadowColors,
-} from '@utils/colorRecommendUtils';
+// hooks & utils
+import useColorInfo from '@hooks/ColorRecommendScreen/useColorInfo';
+import useColorVariants from '@hooks/ColorRecommendScreen/useColorVariants';
+import { infoText } from '@utils/ColorRecommendScreen/infoText';
 
 // styles
 import { COLOR } from '@styles/color';
 
 const ColorRecommendScreen = ({ route, navigation }) => {
 	const { mainColor } = route.params;
+	const { tempColor, setTempColor, colorInfo, textColor, labelColor } =
+		useColorInfo(mainColor.hexVal);
+
 	const [isPickerVisible, setIsPickerVisible] = useState(false);
-	const [tempColor, setTempColor] = useState(mainColor.hexVal);
-	const { getEngColorName, getKorColorName, getEngColorNameLocal } =
-		useColorName();
 
-	const [colorInfo, setColorInfo] = useState(() => {
-		const colorData = getColorInfo(tempColor.replace('#', ''));
-		return {
-			engName: getEngColorNameLocal(tempColor),
-			korName: getKorColorName(tempColor),
-			hexVal: colorData.hexVal,
-			rgbVal: colorData.rgbVal,
-			hslVal: colorData.hslVal,
-			cmykVal: colorData.cmykVal,
-		};
-	});
-
-	useEffect(() => {
-		if (tempColor) {
-			const updateColorInfo = () => {
-				const colorData = getColorInfo(tempColor.replace('#', ''));
-				const engName = getEngColorNameLocal(tempColor);
-				const korName = getKorColorName(tempColor);
-
-				setColorInfo({
-					engName: engName,
-					korName: korName,
-					hexVal: colorData.hexVal,
-					rgbVal: colorData.rgbVal,
-					hslVal: colorData.hslVal,
-					cmykVal: colorData.cmykVal,
-				});
-			};
-
-			updateColorInfo();
-		}
-	}, [tempColor]);
-
-	const textColor = tinycolor(tempColor).isLight()
-		? COLOR.GRAY_9
-		: COLOR.GRAY_3;
-	const labelColor = tinycolor(tempColor).isLight()
-		? COLOR.GRAY_10
-		: COLOR.WHITE;
+	const hslColor = convert.hex.hsl(tempColor.replace('#', ''));
+	const colorVariants = useColorVariants(hslColor);
 
 	const handleColorSelect = selectedColors => {
-		// TODO: 선택 팔레트 넘겨주기
 		navigation.navigate('ObjectScreen', selectedColors);
 	};
 
-	const hslColor = convert.hex.hsl(tempColor.replace('#', ''));
-
-	const complementaryColors = useMemo(
-		() => [...getComplementaryColor(hslColor)],
-		[hslColor],
-	);
-
-	const analogousColors = useMemo(
-		() => [...getAnalogousColors(hslColor)],
-		[hslColor],
-	);
-
-	const triadicColors = useMemo(
-		() => [
-			...getTriadicColors(hslColor).map(hsl =>
-				tinycolor(hsl).toHexString(),
-			),
-		],
-		[hslColor],
-	);
-
-	const splitComplementaryColors = useMemo(
-		() => [...getSplitComplementaryColors(hslColor)],
-		[hslColor],
-	);
-
-	const monochromaticColors = useMemo(
-		() => [...getMonochromaticColors(hslColor)],
-		[hslColor],
-	);
-
-	const tetradicColors = useMemo(
-		() => [...getTetradicColors(hslColor)],
-		[hslColor],
-	);
-
-	const tintColors = useMemo(() => [...getTintColors(hslColor)], [hslColor]);
-
-	const shadowColors = useMemo(
-		() => [...getShadowColors(hslColor)],
-		[hslColor],
-	);
-
-	const infoText =
-		'• 선택한 색상을 기반하여 색상 추천 목록을 제공합니다.\n• 원하는 색상을 터치해 색상의 자세한 정보를 확인하세요!';
-
 	return (
 		<SafeAreaView style={{ flex: 1 }}>
+			{/* 베이직 헤더 */}
 			<BasicHeader
 				titleIcon={'palette'}
 				title={'색상 추천'}
@@ -140,73 +43,77 @@ const ColorRecommendScreen = ({ route, navigation }) => {
 				rightIcon={'info'}
 				infoText={infoText}
 			/>
-
 			<View style={styles.container}>
-				<ScrollView style={styles.colorPaletteWrap}
-				showsVerticalScrollIndicator={false}
-				>
-				<View style={[styles.colorBox, { backgroundColor: tempColor }]}>
-					<MainColorInfo
-						colorInfo={colorInfo}
-						textColor={textColor}
-						labelColor={labelColor}
-						setIsPickerVisible={setIsPickerVisible}
-					/>
-				</View>
-
-				<View style={styles.split}/>
-				<View style={{marginBottom: 18}}>
-					<ColorPalette
-						titleKor="단색"
-						titleEng="Monochromatic color"
-						colors={monochromaticColors}
-						onColorSelect={handleColorSelect}
-					/>
-					<ColorPalette
-						titleKor="보색"
-						titleEng="Complementary color"
-						colors={complementaryColors}
-						onColorSelect={handleColorSelect}
-					/>
-					<ColorPalette
-						titleKor="밝게"
-						titleEng="Tint"
-						colors={tintColors}
-						onColorSelect={handleColorSelect}
-					/>
-					<ColorPalette
-						titleKor="어둡게"
-						titleEng="Shade"
-						colors={shadowColors}
-						onColorSelect={handleColorSelect}
-					/>
-					<ColorPalette
-						titleKor="유사색"
-						titleEng="Analogous colors"
-						colors={analogousColors}
-						onColorSelect={handleColorSelect}
-					/>
-					<ColorPalette
-						titleKor="분할 보색"
-						titleEng="Split complementary colors"
-						colors={splitComplementaryColors}
-						onColorSelect={handleColorSelect}
-					/>
-					<ColorPalette
-						titleKor="3가지 색상 조화"
-						titleEng="Three colors harmony"
-						colors={triadicColors}
-						onColorSelect={handleColorSelect}
-					/>
-					<ColorPalette
-						titleKor="4가지 색상 조화"
-						titleEng="Four colors harmony"
-						colors={tetradicColors}
-						onColorSelect={handleColorSelect}
-					/>
+				<ScrollView
+					style={styles.colorPaletteWrap}
+					showsVerticalScrollIndicator={false}>
+					<View
+						style={[
+							styles.colorBox,
+							{ backgroundColor: tempColor },
+						]}>
+						{/* 메인 컬러 정보 */}
+						<MainColorInfo
+							colorInfo={colorInfo}
+							textColor={textColor}
+							labelColor={labelColor}
+							setIsPickerVisible={setIsPickerVisible}
+						/>
+					</View>
+					<View style={styles.split} />
+					{/* 컬러 팔레트들 */}
+					<View style={{ marginBottom: 18 }}>
+						<ColorPalette
+							titleKor="단색"
+							titleEng="Monochromatic color"
+							colors={colorVariants.monochromaticColors}
+							onColorSelect={handleColorSelect}
+						/>
+						<ColorPalette
+							titleKor="보색"
+							titleEng="Complementary color"
+							colors={colorVariants.complementaryColors}
+							onColorSelect={handleColorSelect}
+						/>
+						<ColorPalette
+							titleKor="밝게"
+							titleEng="Tint"
+							colors={colorVariants.tintColors}
+							onColorSelect={handleColorSelect}
+						/>
+						<ColorPalette
+							titleKor="어둡게"
+							titleEng="Shade"
+							colors={colorVariants.shadowColors}
+							onColorSelect={handleColorSelect}
+						/>
+						<ColorPalette
+							titleKor="유사색"
+							titleEng="Analogous colors"
+							colors={colorVariants.analogousColors}
+							onColorSelect={handleColorSelect}
+						/>
+						<ColorPalette
+							titleKor="분할 보색"
+							titleEng="Split complementary colors"
+							colors={colorVariants.splitComplementaryColors}
+							onColorSelect={handleColorSelect}
+						/>
+						<ColorPalette
+							titleKor="3가지 색상 조화"
+							titleEng="Three colors harmony"
+							colors={colorVariants.triadicColors}
+							onColorSelect={handleColorSelect}
+						/>
+						<ColorPalette
+							titleKor="4가지 색상 조화"
+							titleEng="Four colors harmony"
+							colors={colorVariants.tetradicColors}
+							onColorSelect={handleColorSelect}
+						/>
 					</View>
 				</ScrollView>
-
+				{/* 컬러 피커 모달 */}
 				<ColorPickerModal
 					isVisible={isPickerVisible}
 					tempColor={tempColor}
