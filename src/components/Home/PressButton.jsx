@@ -1,13 +1,17 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { COLOR } from '@styles/color';
-import SVGIcon from '@components/common/SVGIcon';
+import { SVGIcon } from '@components/common';
 import { usePressButtonState } from '@hooks/home';
-import { widthScale } from '@utils/scaling';
 
 const size = 48;
-const PressButton = ({ iconName, onPress, engText, text }) => {
-	const { contentColor, buttonColor, handleTouchStart, handleTouchEnd } =
-		usePressButtonState();
+const PressButton = ({ iconName, onPress, engText, text, enabled = true }) => {
+	const {
+		contentColor,
+		buttonColor,
+		elevation,
+		handleTouchStart,
+		handleTouchEnd,
+	} = usePressButtonState(enabled);
 
 	return (
 		<Pressable
@@ -15,7 +19,10 @@ const PressButton = ({ iconName, onPress, engText, text }) => {
 			onPressIn={handleTouchStart}
 			onPressOut={handleTouchEnd}
 			underlayColor={COLOR.PRIMARY}
-			style={[styles.button, { backgroundColor: buttonColor }]}>
+			style={[
+				styles.button,
+				{ backgroundColor: buttonColor, elevation: elevation },
+			]}>
 			<SVGIcon
 				name={iconName}
 				width={size}
@@ -41,7 +48,7 @@ const PressButton = ({ iconName, onPress, engText, text }) => {
 
 const styles = StyleSheet.create({
 	button: {
-		width: widthScale(376),
+		width: '100%',
 		height: 84,
 		marginHorizontal: 18,
 		borderRadius: 8,
@@ -49,8 +56,6 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		justifyContent: 'center',
 		backgroundColor: COLOR.WHITE,
-		// Android 그림자 설정
-		elevation: 4,
 		// iOS 그림자 설정
 		shadowOffset: {
 			width: 0,
@@ -62,7 +67,7 @@ const styles = StyleSheet.create({
 	},
 	icon: {
 		alignItems: 'center',
-		justifyContent: 'center'
+		justifyContent: 'center',
 	},
 	buttonEngText: {
 		fontFamily: 'Pretendard-Medium',

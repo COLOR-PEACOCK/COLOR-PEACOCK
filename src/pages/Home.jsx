@@ -15,12 +15,14 @@ import convert from 'color-convert';
 import { COLOR } from '@styles/color';
 import { CustomText as Text } from '@components/common';
 import { PressButton, OutlinedText, SearchModal } from '@components/Home';
-import { useModal } from '@hooks';
-import { useBackHandler, usePressButtonState } from '@hooks/home';
+import { useModal } from '@hooks/index';
+import { useBackHandler, useHomeState, usePressButtonState } from '@hooks/home';
 import { SearchSVG } from '@icons';
 import { widthScale } from '@utils/scaling';
 
 const logoIcon = require('@icons/logo.png');
+
+const DEFAULT_BUTTON_WIDTH = 376;
 
 const Home = ({ navigation }) => {
 	const { width } = useWindowDimensions();
@@ -29,6 +31,14 @@ const Home = ({ navigation }) => {
 	const progress = useSharedValue(0);
 	const { contentColor, buttonColor, handleTouchStart, handleTouchEnd } =
 		usePressButtonState();
+
+	const { isModalVisible, handleOpenModal, handleCloseModal } = useModal();
+	const {
+		handleSelectCamera,
+		handleSelectAlbum,
+		handleSelectAI,
+		handleSearch,
+	} = useHomeState();
 
 	const onPressPagination = useCallback(
 		index => {
@@ -42,20 +52,6 @@ const Home = ({ navigation }) => {
 		},
 		[progress],
 	);
-
-	const { isModalVisible, handleOpenModal, handleCloseModal } = useModal();
-
-	const handleSearch = hexValue => {
-		if (hexValue) {
-			handleCloseModal();
-			navigation.navigate('ColorRecommendScreen', {
-				mainColor: { hexVal: hexValue },
-			});
-		}
-	};
-	const handleSelectCamera = () => navigation.navigate('CameraScreen');
-	const handleSelectAlbum = () => navigation.navigate('ImageScreen');
-	const handleSelectAI = () => navigation.navigate('AiOnboardingScreen');
 
 	// splash로 뒤로가기 방지 및 앱종료 모달
 	useBackHandler();
@@ -72,7 +68,7 @@ const Home = ({ navigation }) => {
 					styles.card,
 					{
 						width: pageWidth,
-						maxWidth: 376,
+						maxWidth: DEFAULT_BUTTON_WIDTH,
 						backgroundColor: item.color,
 					},
 				]}>
@@ -124,13 +120,16 @@ const Home = ({ navigation }) => {
 						<SearchSVG color={contentColor} />
 					</Pressable>
 				</View>
-				<ScrollView contentContainerStyle={{ alignItems: 'center' }}>
+				<ScrollView
+					contentContainerStyle={{ alignItems: 'center' }}
+					showsVerticalScrollIndicator={false}>
 					<View style={styles.buttonContainer}>
 						<PressButton
 							iconName={'camera'}
 							onPress={handleSelectCamera}
 							engText={'SELECT FROM CAMERA'}
 							text={'카메라로 색상 추천 받기'}
+							enabled={false}
 						/>
 						<PressButton
 							iconName={'image'}
@@ -163,7 +162,10 @@ const Home = ({ navigation }) => {
 							mode={'horizontal-stack'}
 							modeConfig={{
 								snapDirection: 'left',
-								stackInterval: pageWidth > 376 ? 376 : pageWidth + 4,
+								stackInterval:
+									pageWidth > DEFAULT_BUTTON_WIDTH
+										? DEFAULT_BUTTON_WIDTH
+										: pageWidth + 4,
 							}}
 							data={dummy_trendColor}
 							onProgressChange={progress}
@@ -218,11 +220,12 @@ const styles = StyleSheet.create({
 		borderRadius: 8,
 	},
 	split: {
-		width: widthScale(376),
+		width: widthScale(DEFAULT_BUTTON_WIDTH),
 		height: 4,
 		backgroundColor: COLOR.GRAY_1,
 	},
 	buttonContainer: {
+		width: widthScale(DEFAULT_BUTTON_WIDTH),
 		paddingVertical: 38,
 		gap: 18,
 		justifyContent: 'center',

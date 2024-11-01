@@ -7,7 +7,7 @@ import {
 	stringFormat,
 } from '@utils/home';
 
-const useSearchModalState = onPressSearch => {
+const useSearchModalState = () => {
 	const initValue = {
 		part1: '',
 		part2: '',
@@ -48,11 +48,11 @@ const useSearchModalState = onPressSearch => {
 	}, [selectedLabel]);
 
 	// 검색 버튼 터치 시
-	const handlePressSearch = () => {
+	const handleHexValue = () => {
 		const convertValueToHex =
 			colorConverter[selectedLabel] || (values => values);
 		const hexValue = convertValueToHex(inputValues, searchNameList);
-		if (hexValue) onPressSearch(hexValue);
+		if (hexValue) return hexValue;
 		else console.log('fail');
 	};
 
@@ -69,7 +69,7 @@ const useSearchModalState = onPressSearch => {
 		searchNameList,
 		isKeywordKor,
 		handlePressLabel,
-		handlePressSearch,
+		handleHexValue,
 		handlePressSearchList,
 	};
 };
