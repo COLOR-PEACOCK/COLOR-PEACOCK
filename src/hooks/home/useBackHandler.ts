@@ -14,7 +14,7 @@ import { useEffect } from 'react';
  */
 
 const useBackHandler = () => {
-	const navigation = useNavigation();
+	const navigation = useNavigation<any>();
 
 	useEffect(() => {
 		const backAction = () => {
