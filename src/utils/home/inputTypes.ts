@@ -10,7 +10,7 @@ export const inputTypeMap = {
 	[INPUT_TYPES.COLOR_NAME]: {
 		labels: ['입력'],
 		placeholders: ['(한글, 영어)'],
-		maxLength: undefined,
+		maxLength: 20,
 		keyboardType: 'default',
 	},
 	[INPUT_TYPES.HEX]: {

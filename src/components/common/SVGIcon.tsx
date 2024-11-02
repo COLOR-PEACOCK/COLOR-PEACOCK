@@ -43,7 +43,7 @@ color={COLOR.PRIMARY}
 />
 ```
  */
-const SVGIcon: React.FC<SVGIconProps> = ({ name, ...rest }) => {
+const SVGIcon = ({ name, ...rest }: SVGIconProps) => {
 	const SVG = iconMap[name];
 	return SVG ? <SVG key={name} {...rest} /> : null;
 };
