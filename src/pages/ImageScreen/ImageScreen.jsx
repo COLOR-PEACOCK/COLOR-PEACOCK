@@ -3,7 +3,7 @@ import { SafeAreaView, View, StyleSheet } from 'react-native';
 import { WebView } from 'react-native-webview';
 
 // hooks & utils
-import { infoText } from '@utils/ImageScreen/infoText';
+import { ImageScreenInfoText } from '@utils/infoText';
 import { useImageWebview } from '@hooks';
 import { useImageScreen } from '@hooks/ImageScreen/useImageScreen';
 
@@ -35,7 +35,7 @@ const ImageScreen = ({ navigation, route }) => {
 				title="이미지"
 				subTitle="images"
 				rightIcon="info"
-				infoText={infoText}
+				infoText={ImageScreenInfoText}
 			/>
 			{/* 크로스 헤어 초점 색상 정보 */}
 			<ColorInfo color={color} colorName={colorName} />

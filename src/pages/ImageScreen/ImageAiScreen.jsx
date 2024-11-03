@@ -1,102 +1,49 @@
-import React, { useState, useEffect } from 'react';
-import {
-	SafeAreaView,
-	View,
-	StyleSheet,
-	ScrollView,
-	Alert,
-} from 'react-native';
-import tinycolor from 'tinycolor2';
+import React from 'react';
+import { SafeAreaView, View, StyleSheet, ScrollView } from 'react-native';
 import { COLOR } from '@styles/color';
+
+// hooks & utils
+import useColorInfo from '@hooks/ColorRecommendScreen/useColorInfo';
+import useFetchColorData from '@hooks/ImageScreen/useFetchColorData';
+import { ImageAiScreeninfoText } from '@utils/infoText';
+
+// components
 import { BasicHeader, LoadingScreen } from '@components/common';
 import { ColorPalette, MainColorInfo } from '@components/ColorRecommend';
-import { useColorName, useGemini } from '@hooks';
-import { getColorInfo } from '@utils/colorRecommendUtils';
 
 const ImageAiScreen = ({ route, navigation }) => {
 	const { mainColor } = route.params;
-	const hexValue = mainColor.hexVal;
-	const [data, setData] = useState(null);
-	const [colorInfo, setColorInfo] = useState({
-		engName: '',
-		korName: '',
-		hexVal: '',
-		rgbVal: '',
-		hslVal: '',
-		cmykVal: '',
-	});
-	const { getKorColorName, getEngColorNameLocal } = useColorName();
-	const { run } = useGemini();
-	const [isLoading, setIsLoading] = useState(true);
-
-	useEffect(() => {
-		fetchData();
-	}, []);
-
-	useEffect(() => {
-		setColorInfo(() => {
-			const colorData = getColorInfo(hexValue.replace('#', ''));
-			return {
-				engName: getEngColorNameLocal(hexValue),
-				korName: getKorColorName(hexValue),
-				hexVal: colorData.hexVal,
-				rgbVal: colorData.rgbVal,
-				hslVal: colorData.hslVal,
-				cmykVal: colorData.cmykVal,
-			};
-		});
-	}, [data]);
-
-	const fetchData = async () => {
-		setIsLoading(true);
-		const response = await run(hexValue);
-		setIsLoading(false);
-		if (response) setData(response);
-		else
-			Alert.alert('알림', 'AI 분석중 오류가 발생했습니다.', [
-				{ text: '확인', onPress: () => navigation.goBack() },
-			]);
-	};
-
-	const textColor = tinycolor(hexValue).isLight()
-		? COLOR.GRAY_9
-		: COLOR.GRAY_6;
-	const labelColor = tinycolor(hexValue).isLight()
-		? COLOR.GRAY_10
-		: COLOR.WHITE;
+	const { colorInfo, textColor, labelColor } = useColorInfo(mainColor.hexVal);
+	const { data, isLoading } = useFetchColorData(mainColor.hexVal, navigation);
 
 	const handleColorSelect = selectedColors => {
 		navigation.navigate('ObjectScreen', selectedColors);
 	};
 
-	const infoText =
-		'• 선택하신 색상을 기반으로 AI가 테마 선정해 색상을 추천해 드립니다. \n• 색상을 터치해 간단한 추천 이유와 함께 색상 정보를 확인하세요!';
 	return (
 		<SafeAreaView style={{ flex: 1 }}>
+			{/* 베이직 헤더 */}
 			<BasicHeader
-				titleIcon={'AI'}
-				title={'AI 테마 추천'}
-				subTitle={'ai theme recs'}
-				rightIcon={'info'}
-				infoText={infoText}
+				titleIcon="AI"
+				title="AI 테마 추천"
+				subTitle="ai theme recs"
+				rightIcon="info"
+				infoText={ImageAiScreeninfoText}
 			/>
+			{/* 로딩 화면 */}
 			{isLoading ? (
-				<View
-					style={{
-						flex: 1,
-						justifyContent: 'center',
-						alignItems: 'center',
-					}}>
+				<View style={styles.loadingContainer}>
 					<LoadingScreen />
 				</View>
 			) : (
 				<ScrollView
 					style={{ paddingHorizontal: 18 }}
 					showsVerticalScrollIndicator={false}>
+					{/* 메인 컬러 정보 */}
 					<View
 						style={[
 							styles.colorBox,
-							{ backgroundColor: hexValue },
+							{ backgroundColor: mainColor.hexVal },
 						]}>
 						<MainColorInfo
 							colorInfo={colorInfo}
@@ -105,7 +52,8 @@ const ImageAiScreen = ({ route, navigation }) => {
 							setIsPickerVisible={null}
 						/>
 					</View>
-					<View style={{ marginBottom: 18 }}>
+					{/* 컬러 팔레트들 */}
+					<View style={styles.paletteContainer}>
 						{data &&
 							data.recommended_themes_and_colors?.map(item => (
 								<ColorPalette
@@ -127,6 +75,11 @@ const ImageAiScreen = ({ route, navigation }) => {
 };
 
 const styles = StyleSheet.create({
+	loadingContainer: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+	},
 	colorBox: {
 		flexDirection: 'row',
 		width: '100%',
@@ -138,11 +91,8 @@ const styles = StyleSheet.create({
 		borderWidth: 2,
 		borderColor: COLOR.GRAY_3,
 	},
-	loadingSpinner: {
-		top: 100,
-		alignItems: 'center',
-		justifyContent: 'center',
-		color: COLOR.PRIMARY,
+	paletteContainer: {
+		marginBottom: 18,
 	},
 });
 

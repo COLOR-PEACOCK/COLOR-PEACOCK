@@ -6,6 +6,7 @@ import _ from 'lodash';
 // hooks & utils
 import { useColorName, useImagePicker } from '@hooks';
 
+// TODO: 기능들좀 분리하고 싶음
 export const useImageScreen = (navigation, visited) => {
 	// TODO: 팝업 반복 실행 이슈
 	const [color, setColor] = useState('#000000');
