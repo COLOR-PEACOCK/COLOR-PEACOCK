@@ -1,5 +1,9 @@
+// TODO : 시간이 된다면 기능 -> 훅,  뷰 -> 컴포넌트 리팩토링
+
 import React from 'react';
 import { View, Modal, Text, StyleSheet, Pressable, Image } from 'react-native';
+
+// styles
 import tinycolor from 'tinycolor2';
 import { COLOR } from '@styles/color';
 
@@ -171,7 +175,7 @@ const styles = StyleSheet.create({
 	},
 	engColorName: {
 		marginHorizontal: 18,
-        marginTop: -2,
+		marginTop: -2,
 		marginBottom: 14,
 		fontSize: 18,
 		fontFamily: 'Pretendard-Regular',

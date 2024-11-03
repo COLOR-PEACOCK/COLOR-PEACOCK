@@ -6,44 +6,21 @@ import {
 	TouchableOpacity,
 	View,
 } from 'react-native';
+
+import { heightScale } from '@utils/scaling';
 import { COLOR } from '@styles/color';
-import {
-	ClothesTopGray,
-	ClothesBottomGray,
-	ShoesGray,
-	Socks,
-	DisableSocks,
-	TrashIcon,
-} from '@icons/objecticon/objectIcon.js';
+import useCanvasItemHandler from '@hooks/ObjectScreen/useCanvasItemHandler';
 
-const CanvasDroppedItem = ({ item, isSelected, onSelect, onDelete }) => {
-	const getItemPosition = item => ({
-		left: item.canvasX,
-		top: item.canvasY,
-		width: item.canvasWidth,
-		height: item.canvasHeight,
-		zIndex: item.zIndex,
-	});
+import { TrashIcon } from '@icons/objecticon/objectIcon.js';
 
-	const getFocusButtonPosition = category => {
-		const positions = {
-			clothesTop: { top: -352, right: -142 },
-			clothesBottom: { top: -230, right: -142 },
-			shoes: { top: -90, right: -150 },
-			socks: { top: -100, right: 90 },
-		};
-		return positions[category] || { top: -90, right: -100 };
-	};
-
-	const getCategoryIcon = (category, isVisible) => {
-		const icons = {
-			clothesTop: ClothesTopGray,
-			clothesBottom: ClothesBottomGray,
-			shoes: ShoesGray,
-			socks: isVisible ? DisableSocks : Socks,
-		};
-		return icons[category];
-	};
+const CanvasDroppedItem = ({ item, isSelected }) => {
+	const {
+		handleItemSelect,
+		handleItemDelete,
+		getItemPosition,
+		getCategoryIcon,
+		getFocusButtonPosition,
+	} = useCanvasItemHandler();
 
 	const focusButtonPosition = getFocusButtonPosition(item.category);
 
@@ -51,11 +28,11 @@ const CanvasDroppedItem = ({ item, isSelected, onSelect, onDelete }) => {
 		<View>
 			{(item.category !== 'socks' || item.isVisible !== false) && (
 				<Pressable
-					onPress={onSelect}
+					onPress={() => handleItemSelect(item.id, item.category)}
 					style={[styles.droppedItem, getItemPosition(item)]}>
 					{React.cloneElement(item.svg, {
-						width: item.canvasWidth,
-						height: item.canvasHeight,
+						width: '100%',
+						height: ' 100%',
 						fill: item.color || '#FBFBFB',
 					})}
 				</Pressable>
@@ -66,10 +43,10 @@ const CanvasDroppedItem = ({ item, isSelected, onSelect, onDelete }) => {
 					isSelected && styles.focusButtonSelected,
 					focusButtonPosition,
 				]}
-				onPress={onSelect}>
+				onPress={() => handleItemSelect(item.id, item.category)}>
 				<Image
 					source={getCategoryIcon(item.category, item.isVisible)}
-					style={{ width: 28, height: 28 }}
+					style={{ width: heightScale(28), height: heightScale(28) }}
 				/>
 			</TouchableOpacity>
 			{isSelected && item.category !== 'socks' && (
@@ -77,14 +54,17 @@ const CanvasDroppedItem = ({ item, isSelected, onSelect, onDelete }) => {
 					style={[
 						styles.trashButton,
 						{
-							top: focusButtonPosition.top - 3,
-							right: focusButtonPosition.right - 49,
+							top: focusButtonPosition.top - heightScale(3),
+							right: focusButtonPosition.right - heightScale(49),
 						},
 					]}
-					onPress={() => onDelete(item.id)}>
+					onPress={() => handleItemDelete(item.id)}>
 					<Image
 						source={TrashIcon}
-						style={{ width: 15, height: 23 }}
+						style={{
+							width: heightScale(15),
+							height: heightScale(23),
+						}}
 					/>
 				</TouchableOpacity>
 			)}
@@ -99,11 +79,11 @@ const styles = StyleSheet.create({
 	focusButton: {
 		position: 'absolute',
 		backgroundColor: COLOR.GRAY_1,
-		borderRadius: 50,
-		borderWidth: 2,
+		borderRadius: heightScale(50),
+		borderWidth: heightScale(2),
 		borderColor: COLOR.GRAY_4,
-		width: 48,
-		height: 48,
+		width: heightScale(48),
+		height: heightScale(48),
 		justifyContent: 'center',
 		alignItems: 'center',
 		zIndex: 1001,
@@ -116,11 +96,11 @@ const styles = StyleSheet.create({
 		backgroundColor: COLOR.GRAY_3,
 		flexDirection: 'row',
 		borderRadius: 50,
-		width: 100,
-		height: 54,
+		width: heightScale(100),
+		height: heightScale(54),
 		justifyContent: 'flex-end',
 		alignItems: 'center',
-		paddingRight: 20,
+		paddingRight: heightScale(20),
 		zIndex: 1000,
 	},
 });

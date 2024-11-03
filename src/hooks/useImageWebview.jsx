@@ -1,8 +1,7 @@
-import { COLOR } from "@styles/color";
+import { COLOR } from '@styles/color';
 
 const useImageWebview = () => {
-
-    const getHtmlContent = imgSrc => `
+	const getHtmlContent = imgSrc => `
 <html>
     <head>
     <style>
@@ -232,11 +231,12 @@ const useImageWebview = () => {
                 betweenbg.style.borderColor = color;
                 window.ReactNativeWebView.postMessage(color);
             }
+            updateColor()
         }
     </script>
 </body>
 </html>
 `;
-return { getHtmlContent }
-}
+	return { getHtmlContent };
+};
 export default useImageWebview;
