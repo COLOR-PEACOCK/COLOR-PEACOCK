@@ -4,9 +4,7 @@ import { Alert } from 'react-native';
 
 const useGemini = () => {
 	const apiKey = process.env.API_KEY;
-	const genAI = new GoogleGenerativeAI(
-		'AIzaSyA_sunb-sNvZDeMvAYDm2rX1BjaVARclNI',
-	);
+	const genAI = new GoogleGenerativeAI(apiKey);
 	const model = genAI.getGenerativeModel({
 		model: 'gemini-1.5-flash',
 	});
