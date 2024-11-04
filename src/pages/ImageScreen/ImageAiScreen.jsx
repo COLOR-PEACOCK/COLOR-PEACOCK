@@ -3,8 +3,8 @@ import { SafeAreaView, View, StyleSheet, ScrollView } from 'react-native';
 import { COLOR } from '@styles/color';
 
 // hooks & utils
-import useColorInfo from '@hooks/ColorRecommendScreen/useColorInfo';
-import useFetchColorData from '@hooks/ImageScreen/useFetchColorData';
+import { useColorInfo } from '@hooks/ColorRecommendScreen';
+import { useFetchColorData } from '@hooks/ImageScreen';
 import { ImageAiScreeninfoText } from '@utils/infoText';
 
 // components

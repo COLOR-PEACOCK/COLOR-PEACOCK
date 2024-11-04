@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Alert } from 'react-native';
 import { useGemini } from '@hooks';
 
-const useFetchColorData = (hexValue, navigation) => {
+export const useFetchColorData = (hexValue, navigation) => {
 	const [data, setData] = useState(null);
 	const [isLoading, setIsLoading] = useState(true);
 	const { run } = useGemini();
@@ -27,5 +27,3 @@ const useFetchColorData = (hexValue, navigation) => {
 
 	return { data, isLoading };
 };
-
-export default useFetchColorData;

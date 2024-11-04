@@ -5,27 +5,28 @@ import { WebView } from 'react-native-webview';
 // hooks & utils
 import { ImageScreenInfoText } from '@utils/infoText';
 import { useImageWebview } from '@hooks';
-import { useImageScreen } from '@hooks/ImageScreen/useImageScreen';
+import { useImageScreen, useControlScreen, usePopup } from '@hooks/ImageScreen';
 
 // components
 import { BasicHeader, CustomPopup } from '@components/common';
-import ColorInfo from '@components/ImageScreen/ColorInfo';
-import ImagePlaceholder from '@components/ImageScreen/ImagePlaceholder';
-import ControlButtons from '@components/ImageScreen/ControlButtons';
+import {
+	ColorInfo,
+	ImagePlaceholder,
+	ControlButtons,
+} from '@components/ImageScreen';
 
 const ImageScreen = ({ navigation, route }) => {
-	const {
+	const { color, colorName, imageDataUrl, onMessage, selectImage } =
+		useImageScreen(route.params);
+	const { handleColorRecommend, handleAiRecommend } = useControlScreen(
+		navigation,
 		color,
-		colorName,
-		showPopup,
-		imageDataUrl,
-		handleColorRecommend,
-		handleAiRecommend,
-		onMessage,
-		handleClosePopup,
-		selectImage,
-	} = useImageScreen(navigation, route.params);
+	);
 	const { getHtmlContent } = useImageWebview();
+	const { showPopup, handleClosePopup } = usePopup(
+		!route.params?.visited,
+		imageDataUrl,
+	);
 
 	return (
 		<SafeAreaView style={{ flex: 1 }}>
