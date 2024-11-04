@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import convert from 'color-convert'; // hex -> hsl 로 변환
 
 // hooks & utils
 import {
@@ -16,7 +17,8 @@ import {
 import tinycolor from 'tinycolor2';
 
 // 색상 조합 생성 및 변환
-const useColorVariants = hslColor => {
+const useColorVariants = hexColor => {
+	const hslColor = convert.hex.hsl(hexColor);
 	return useMemo(
 		() => ({
 			monochromaticColors: getMonochromaticColors(hslColor),

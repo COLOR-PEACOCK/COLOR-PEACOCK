@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { SafeAreaView, View, StyleSheet, ScrollView } from 'react-native';
-import convert from 'color-convert'; // hex -> hsl 로 변환
-// TODO :  useColorVariants 훅에 hex -> hsl 변환 하는 부분도 넣고 싶음
 
 // components
 import { BasicHeader } from '@components/common';
@@ -14,7 +12,7 @@ import {
 // hooks & utils
 import useColorInfo from '@hooks/ColorRecommendScreen/useColorInfo';
 import useColorVariants from '@hooks/ColorRecommendScreen/useColorVariants';
-import { infoText } from '@utils/ColorRecommendScreen/infoText';
+import { ColorRecommendScreenInfoText } from '@utils/infoText';
 
 // styles
 import { COLOR } from '@styles/color';
@@ -26,8 +24,7 @@ const ColorRecommendScreen = ({ route, navigation }) => {
 
 	const [isPickerVisible, setIsPickerVisible] = useState(false);
 
-	const hslColor = convert.hex.hsl(tempColor.replace('#', ''));
-	const colorVariants = useColorVariants(hslColor);
+	const colorVariants = useColorVariants(tempColor.replace('#', ''));
 
 	const handleColorSelect = selectedColors => {
 		navigation.navigate('ObjectScreen', selectedColors);
@@ -41,7 +38,7 @@ const ColorRecommendScreen = ({ route, navigation }) => {
 				title={'색상 추천'}
 				subTitle={'color palette'}
 				rightIcon={'info'}
-				infoText={infoText}
+				infoText={ColorRecommendScreenInfoText}
 			/>
 			<View style={styles.container}>
 				<ScrollView
