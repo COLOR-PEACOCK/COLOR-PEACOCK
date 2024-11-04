@@ -1,3 +1,5 @@
+import { KeyboardTypeOptions } from 'react-native';
+
 export const INPUT_TYPES = {
 	COLOR_NAME: '색상 이름',
 	HEX: 'HEX',
@@ -6,7 +8,18 @@ export const INPUT_TYPES = {
 	CMYK: 'CMYK',
 };
 
-export const inputTypeMap = {
+interface InputConfig {
+	labels: string[];
+	placeholders?: string[];
+	unit?: string[];
+	maxLength: number;
+	keyboardType: KeyboardTypeOptions;
+}
+
+export const inputTypeMap: InputConfig = {
+	labels: [],
+	maxLength: 0,
+	keyboardType: 'default',
 	[INPUT_TYPES.COLOR_NAME]: {
 		labels: ['입력'],
 		placeholders: ['(한글, 영어)'],
