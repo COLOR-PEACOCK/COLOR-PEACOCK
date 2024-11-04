@@ -11,11 +11,21 @@ import { COLOR } from '@styles/color';
 import { CustomText as Text } from '@components/common';
 import { SearchInputForm, ListValue, Dropdown } from '@components/Home';
 import { useSearchModalState } from '@hooks/home';
-import { ArrowGoBackSVG, FormkitSubmitSVG } from '@icons';
+import { ArrowGoBackSVG, FormkitSubmitSVG } from '@icons/index';
 import { BASE_HEIGHT, heightScale } from '@utils/scaling';
 const DEVICE_HEIGHT = Dimensions.get('window').height;
 
-const SearchModal = ({ visible, handleCloseModal, onPressSearch }) => {
+interface SearchModalProps {
+	visible: boolean;
+	handleCloseModal: () => void;
+	onPressSearch: (hexValue: string) => void;
+}
+
+const SearchModal = ({
+	visible,
+	handleCloseModal,
+	onPressSearch,
+}: SearchModalProps) => {
 	const {
 		selectedLabel,
 		inputValues,
