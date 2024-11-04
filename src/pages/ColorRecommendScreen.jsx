@@ -10,8 +10,7 @@ import {
 } from '@components/ColorRecommend';
 
 // hooks & utils
-import useColorInfo from '@hooks/ColorRecommendScreen/useColorInfo';
-import useColorVariants from '@hooks/ColorRecommendScreen/useColorVariants';
+import { useColorInfo, useColorVariants } from '@hooks/ColorRecommendScreen';
 import { ColorRecommendScreenInfoText } from '@utils/infoText';
 
 // styles

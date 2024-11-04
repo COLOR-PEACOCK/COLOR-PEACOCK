@@ -4,11 +4,11 @@ import React, { useState } from 'react';
 import { View, TouchableOpacity, StyleSheet, Pressable } from 'react-native';
 
 // components
-import ColorInfoModal from '@components/ColorRecommend/ColorInfoModal';
+import { ColorInfoModal } from '@components/ColorRecommend';
 import { CustomText as Text } from '@components/common/CustomText';
 
 // hooks & utils
-import useColorInfo from '@hooks/ColorRecommendScreen/useColorInfo';
+import { useColorInfo } from '@hooks/ColorRecommendScreen';
 
 // styles
 import { COLOR } from '@styles/color';
