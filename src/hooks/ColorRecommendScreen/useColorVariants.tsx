@@ -16,9 +16,21 @@ import {
 // styles
 import tinycolor from 'tinycolor2';
 
+interface ColorVariants {
+	monochromaticColors: string[];
+	complementaryColors: string[];
+	tintColors: string[];
+	shadowColors: string[];
+	analogousColors: string[];
+	splitComplementaryColors: string[];
+	triadicColors: string[];
+	tetradicColors: string[];
+}
+
 // 색상 조합 생성 및 변환
-const useColorVariants = hexColor => {
+const useColorVariants = (hexColor: string): ColorVariants => {
 	const hslColor = convert.hex.hsl(hexColor);
+
 	return useMemo(
 		() => ({
 			monochromaticColors: getMonochromaticColors(hslColor),

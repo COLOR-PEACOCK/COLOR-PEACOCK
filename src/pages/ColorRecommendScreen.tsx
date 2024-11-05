@@ -16,16 +16,32 @@ import { ColorRecommendScreenInfoText } from '@utils/infoText';
 // styles
 import { COLOR } from '@styles/color';
 
-const ColorRecommendScreen = ({ route, navigation }) => {
+interface ColorRecommendScreenProps {
+	route: {
+		params: {
+			mainColor: {
+				hexVal: string;
+			};
+		};
+	};
+	navigation: {
+		navigate: (screen: string, params: any) => void;
+	};
+}
+
+const ColorRecommendScreen: React.FC<ColorRecommendScreenProps> = ({
+	route,
+	navigation,
+}) => {
 	const { mainColor } = route.params;
 	const { tempColor, setTempColor, colorInfo, textColor, labelColor } =
 		useColorInfo(mainColor.hexVal);
 
-	const [isPickerVisible, setIsPickerVisible] = useState(false);
+	const [isPickerVisible, setIsPickerVisible] = useState<boolean>(false);
 
 	const colorVariants = useColorVariants(tempColor.replace('#', ''));
 
-	const handleColorSelect = selectedColors => {
+	const handleColorSelect = (selectedColors: string[]) => {
 		navigation.navigate('ObjectScreen', selectedColors);
 	};
 

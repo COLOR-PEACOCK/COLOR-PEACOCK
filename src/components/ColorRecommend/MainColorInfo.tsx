@@ -1,4 +1,4 @@
-// TODO : 시간이 된다면 기능 -> 훅,  뷰 -> 컴포넌트 리팩토링
+// TODO : 시간이 된다면 기능 -> 훅, 뷰 -> 컴포넌트 리팩토링
 
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
@@ -10,11 +10,27 @@ import adjustment_dark from '@icons/adjustment_dark.png';
 // styles
 import tinycolor from 'tinycolor2';
 
-const extractNumbers = str => {
+interface ColorInfo {
+	korName: string;
+	engName: string;
+	rgbVal: string;
+	hexVal: string;
+	hslVal: string;
+	cmykVal: string;
+}
+
+interface MainColorInfoProps {
+	colorInfo: ColorInfo;
+	labelColor: string;
+	textColor: string;
+	setIsPickerVisible?: (visible: boolean) => void;
+}
+
+const extractNumbers = (str: string): string | undefined => {
 	return str.match(/\d+%?/g)?.join(', ');
 };
 
-const MainColorInfo = ({
+const MainColorInfo: React.FC<MainColorInfoProps> = ({
 	colorInfo,
 	labelColor,
 	textColor,
@@ -25,7 +41,7 @@ const MainColorInfo = ({
 	const hslNumbers = extractNumbers(colorInfo.hslVal);
 	const cmykNumbers = extractNumbers(colorInfo.cmykVal);
 
-	const getIconSource = labelColor => {
+	const getIconSource = (labelColor: string) => {
 		const color = tinycolor(labelColor);
 		return color.isDark() ? adjustment_dark : adjustment;
 	};

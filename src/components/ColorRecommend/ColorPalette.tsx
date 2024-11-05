@@ -1,4 +1,4 @@
-// TODO : 시간이 된다면 기능 -> 훅,  뷰 -> 컴포넌트 리팩토링
+// TODO : 시간이 된다면 기능 -> 훅, 뷰 -> 컴포넌트 리팩토링
 
 import React, { useState } from 'react';
 import { View, TouchableOpacity, StyleSheet, Pressable } from 'react-native';
@@ -17,7 +17,15 @@ import tinycolor from 'tinycolor2';
 // icons
 import HangerIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const ColorPalette = ({
+interface ColorPaletteProps {
+	titleKor: string;
+	titleEng: string;
+	colors: string[];
+	onColorSelect: (selectedColors: string[]) => void;
+	description?: { hexCode: string; harmony_description: string }[];
+}
+
+const ColorPalette: React.FC<ColorPaletteProps> = ({
 	titleKor,
 	titleEng,
 	colors,
@@ -25,12 +33,14 @@ const ColorPalette = ({
 	description,
 }) => {
 	const [isButtonPressed, setIsButtonPressed] = useState(false);
-	const [selectedColor, setSelectedColor] = useState(colors[0]);
+	const [selectedColor, setSelectedColor] = useState<string | null>(
+		colors[0],
+	);
 	const [isModalVisible, setIsModalVisible] = useState(false);
 
-	const { colorInfo, setTempColor } = useColorInfo(selectedColor);
+	const { colorInfo, setTempColor } = useColorInfo(selectedColor || '');
 
-	const handleColorPress = color => {
+	const handleColorPress = (color: string) => {
 		const hexColor = tinycolor(color).toHexString();
 		setSelectedColor(hexColor);
 		setTempColor(hexColor);
@@ -113,7 +123,7 @@ const ColorPalette = ({
 				isVisible={isModalVisible}
 				onClose={closeModal}
 				colorInfo={colorInfo}
-				selectedColor={selectedColor}
+				selectedColor={selectedColor || ''}
 				description={
 					description &&
 					selectedColor &&
