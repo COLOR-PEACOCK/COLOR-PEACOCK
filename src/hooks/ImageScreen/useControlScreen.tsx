@@ -1,6 +1,13 @@
 import { useCallback } from 'react';
 
-export const useControlScreen = (navigation, color) => {
+interface Navigation {
+	navigate: (
+		screen: string,
+		params: { mainColor: { hexVal: string } },
+	) => void;
+}
+
+export const useControlScreen = (navigation: Navigation, color: string) => {
 	// 색상 추천 화면으로
 	const handleColorRecommend = useCallback(() => {
 		navigation.navigate('ColorRecommendScreen', {

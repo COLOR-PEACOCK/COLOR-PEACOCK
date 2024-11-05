@@ -2,9 +2,13 @@ import { useState, useEffect } from 'react';
 import { Alert } from 'react-native';
 import { useGemini } from '@hooks';
 
-export const useFetchColorData = (hexValue, navigation) => {
-	const [data, setData] = useState(null);
-	const [isLoading, setIsLoading] = useState(true);
+interface Navigation {
+	goBack: () => void;
+}
+
+export const useFetchColorData = (hexValue: string, navigation: Navigation) => {
+	const [data, setData] = useState<any>(null);
+	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const { run } = useGemini();
 
 	const fetchData = async () => {

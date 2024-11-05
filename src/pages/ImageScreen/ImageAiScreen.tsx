@@ -11,12 +11,29 @@ import { ImageAiScreeninfoText } from '@utils/infoText';
 import { BasicHeader, LoadingScreen } from '@components/common';
 import { ColorPalette, MainColorInfo } from '@components/ColorRecommend';
 
-const ImageAiScreen = ({ route, navigation }) => {
+interface RouteParams {
+	mainColor: {
+		hexVal: string,
+	};
+}
+
+interface Navigation {
+	navigate: (screen: string, params: any) => void;
+}
+
+interface ImageAiScreenProps {
+	route: {
+		params: RouteParams,
+	};
+	navigation: Navigation;
+}
+
+const ImageAiScreen: React.FC<ImageAiScreenProps> = ({ route, navigation }) => {
 	const { mainColor } = route.params;
 	const { colorInfo, textColor, labelColor } = useColorInfo(mainColor.hexVal);
 	const { data, isLoading } = useFetchColorData(mainColor.hexVal, navigation);
 
-	const handleColorSelect = selectedColors => {
+	const handleColorSelect = (selectedColors: string[]) => {
 		navigation.navigate('ObjectScreen', selectedColors);
 	};
 
