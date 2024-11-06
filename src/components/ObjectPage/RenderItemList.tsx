@@ -6,8 +6,9 @@ import { CustomText as Text } from '@components/common/CustomText';
 import { heightScale } from '@utils/scaling';
 
 import { useObjectState } from '@hooks/ObjectScreen/objectStateContext';
+import { ItemDatatypes, RenderItemProps } from 'types/itemData.interface';
 
-const RenderItemList = () => {
+const RenderItemList: React.FC = () => {
 	const {
 		setDroppedItems,
 		itemData,
@@ -17,7 +18,7 @@ const RenderItemList = () => {
 	} = useObjectState();
 
 	//아이템 플랫 리스트 렌더
-	const renderItem = ({ item }) => {
+	const renderItem = ({ item }: RenderItemProps) => {
 		return (
 			<View>
 				<TouchableOpacity
@@ -31,7 +32,7 @@ const RenderItemList = () => {
 	};
 
 	//아이템 선택 이벤트
-	const handleItemSelect = item => {
+	const handleItemSelect = (item: ItemDatatypes) => {
 		setSelectedItemId(prevId => (prevId === item.id ? null : item.id));
 		setIsColorPickerOpen(true);
 
@@ -58,7 +59,7 @@ const RenderItemList = () => {
 
 	return (
 		<FlatList
-			data={itemData[activeTab] || []}
+			data={itemData?.[activeTab] || []}
 			renderItem={renderItem}
 			horizontal={true}
 			keyExtractor={item => item.id}
