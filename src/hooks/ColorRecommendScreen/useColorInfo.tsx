@@ -8,11 +8,20 @@ import { useColorName } from '@hooks';
 import { COLOR } from '@styles/color';
 import tinycolor from 'tinycolor2';
 
-const useColorInfo = initialColor => {
-	const [tempColor, setTempColor] = useState(initialColor);
+interface ColorInfo {
+	engName: string;
+	korName: string;
+	hexVal?: string;
+	rgbVal?: string;
+	hslVal?: string;
+	cmykVal?: string;
+}
+
+const useColorInfo = (initialColor: string) => {
+	const [tempColor, setTempColor] = useState<string>(initialColor);
 	const { getEngColorNameLocal, getKorColorName } = useColorName();
 
-	const [colorInfo, setColorInfo] = useState(() => {
+	const [colorInfo, setColorInfo] = useState<ColorInfo>(() => {
 		const colorData = getColorInfo(tempColor.replace('#', '')) || {};
 		return {
 			engName: getEngColorNameLocal(tempColor),

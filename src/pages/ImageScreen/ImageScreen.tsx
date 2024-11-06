@@ -4,8 +4,12 @@ import { WebView } from 'react-native-webview';
 
 // hooks & utils
 import { ImageScreenInfoText } from '@utils/infoText';
-import { useImageWebview } from '@hooks';
-import { useImageScreen, useControlScreen, usePopup } from '@hooks/ImageScreen';
+import {
+	useImageScreen,
+	useControlScreen,
+	usePopup,
+	useImageWebview,
+} from '@hooks/ImageScreen';
 
 // components
 import { BasicHeader, CustomPopup } from '@components/common';
@@ -15,7 +19,19 @@ import {
 	ControlButtons,
 } from '@components/ImageScreen';
 
-const ImageScreen = ({ navigation, route }) => {
+interface ImageScreenProps {
+	navigation: any;
+	route: {
+		params: {
+			color?: string;
+			colorName?: string;
+			imageDataUrl?: string;
+			visited?: boolean;
+		};
+	};
+}
+
+const ImageScreen: React.FC<ImageScreenProps> = ({ navigation, route }) => {
 	const { color, colorName, imageDataUrl, onMessage, selectImage } =
 		useImageScreen(route.params);
 	const { handleColorRecommend, handleAiRecommend } = useControlScreen(

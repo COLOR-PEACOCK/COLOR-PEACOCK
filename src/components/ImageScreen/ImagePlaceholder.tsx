@@ -10,8 +10,14 @@ import imageIcon from '@icons/image.png';
 // styles
 import { COLOR } from '@styles/color';
 
+interface ImagePlaceholderProps {
+	onSelectImage: () => void;
+}
+
 // AI screen 화면 실행하자마자 바로 이미지 선택
-const ImagePlaceholder = ({ onSelectImage }) => (
+const ImagePlaceholder: React.FC<ImagePlaceholderProps> = ({
+	onSelectImage,
+}) => (
 	<TouchableOpacity style={styles.placeholder} onPress={onSelectImage}>
 		<Image source={imageIcon} style={styles.icon} />
 		<View style={styles.textContainer}>

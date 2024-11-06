@@ -14,7 +14,15 @@ import paletteIcon from '@icons/palette.png';
 // styles
 import { COLOR } from '@styles/color';
 
-const ControlButtons = ({ onAiRecommend, onColorRecommend }) => (
+interface ControlButtonsProps {
+	onAiRecommend: () => void;
+	onColorRecommend: () => void;
+}
+
+const ControlButtons: React.FC<ControlButtonsProps> = ({
+	onAiRecommend,
+	onColorRecommend,
+}) => (
 	<View style={styles.buttonContainer}>
 		{/* AI 테마 추천 버튼 */}
 		<Pressable

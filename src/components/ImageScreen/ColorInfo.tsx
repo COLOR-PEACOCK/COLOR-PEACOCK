@@ -7,7 +7,15 @@ import { CustomText as Text } from '@components/common';
 // styles
 import { COLOR } from '@styles/color';
 
-const ColorInfo = ({ color, colorName }) => (
+interface ColorInfoProps {
+	color: string;
+	colorName: {
+		korName: string;
+		engName: string;
+	};
+}
+
+const ColorInfo: React.FC<ColorInfoProps> = ({ color, colorName }) => (
 	<View style={styles.colorInfoBox}>
 		<View style={[styles.colorIndicator, { backgroundColor: color }]} />
 		<View style={styles.colorDetails}>
