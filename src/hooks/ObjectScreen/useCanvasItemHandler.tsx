@@ -1,5 +1,7 @@
+import { ImageSourcePropType } from 'react-native';
 import { useObjectState } from './objectStateContext';
 import { heightScale } from '@utils/scaling';
+import { ItemDataTypes } from 'types/itemData.interface';
 
 import {
 	ClothesTopGray,
@@ -21,7 +23,7 @@ const useCanvasItemHandler = () => {
 		setIsColorPickerOpen,
 	} = useObjectState();
 
-	const toggleSocksVisibility = id => {
+	const toggleSocksVisibility = (id: string) => {
 		setDroppedItems(prevItems =>
 			prevItems.map(item =>
 				item.id === id ? { ...item, isVisible: !item.isVisible } : item,
@@ -29,7 +31,7 @@ const useCanvasItemHandler = () => {
 		);
 	};
 
-	const handleItemSelect = (id, category) => {
+	const handleItemSelect = (id: string, category: string) => {
 		if (category === 'socks') {
 			toggleSocksVisibility(id);
 			setSelectedItemId(prevId => (prevId === id ? null : id));
@@ -44,7 +46,9 @@ const useCanvasItemHandler = () => {
 				setActiveTab(category);
 			}
 		} else {
-			setActiveTab(prevTab => (prevTab === category ? null : category));
+			setActiveTab((prevTab: string | null) =>
+				prevTab === category ? null : category,
+			);
 		}
 		// 컬러피커 바텀시트 관리
 		if (newSelectedId !== null) {
@@ -54,7 +58,7 @@ const useCanvasItemHandler = () => {
 		}
 	};
 
-	const handleItemDelete = id => {
+	const handleItemDelete = (id: string) => {
 		const itemToDelete = droppedItems.find(item => item.id === id);
 
 		if (
@@ -82,7 +86,7 @@ const useCanvasItemHandler = () => {
 		setActiveTab(null);
 	};
 
-	const getItemPosition = item => ({
+	const getItemPosition = (item: ItemDataTypes) => ({
 		left: heightScale(item.canvasX),
 		top: heightScale(item.canvasY),
 		width: heightScale(item.canvasWidth),
@@ -90,8 +94,8 @@ const useCanvasItemHandler = () => {
 		zIndex: item.zIndex,
 	});
 
-	const getFocusButtonPosition = category => {
-		const positions = {
+	const getFocusButtonPosition = (category: string) => {
+		const positions: { [key: string]: { top: number; right: number } } = {
 			clothesTop: { top: heightScale(-352), right: heightScale(-148) },
 			clothesBottom: { top: heightScale(-230), right: heightScale(-148) },
 			shoes: { top: heightScale(-90), right: heightScale(-148) },
@@ -105,8 +109,11 @@ const useCanvasItemHandler = () => {
 		);
 	};
 
-	const getCategoryIcon = (category, isVisible) => {
-		const icons = {
+	const getCategoryIcon = (
+		category: string,
+		isVisible: boolean | undefined,
+	): ImageSourcePropType => {
+		const icons: { [key: string]: ImageSourcePropType } = {
 			clothesTop: ClothesTopGray,
 			clothesBottom: ClothesBottomGray,
 			shoes: ShoesGray,

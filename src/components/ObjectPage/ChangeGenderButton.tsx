@@ -5,8 +5,7 @@ import { CustomText as Text } from '@components/common/CustomText';
 import { COLOR } from '@styles/color';
 import { heightScale, widthScale } from '@utils/scaling';
 
-import { useObjectState } from '@hooks/ObjectScreen/objectStateContext';
-import useGenderChange from '@hooks/ObjectScreen/useGenderChange';
+import { useObjectState, useGenderChange } from '@hooks/ObjectScreen';
 
 import { GenderMale, GenderFemale } from '@icons/objecticon/objectIcon.js';
 

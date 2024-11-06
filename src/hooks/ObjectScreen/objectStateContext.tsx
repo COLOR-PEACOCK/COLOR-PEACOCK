@@ -1,33 +1,10 @@
-import React, {
-	createContext,
-	useContext,
-	useState,
-	Dispatch,
-	SetStateAction,
-} from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
-import { ItemDatatypes } from 'types/itemData.interface';
-
-interface ObjectStateContextType {
-	itemData: ItemDatatypes | null;
-	setItemData: Dispatch<SetStateAction<ItemDatatypes | null>>;
-	droppedItems: any[];
-	setDroppedItems: Dispatch<SetStateAction<any[]>>;
-	gender: boolean;
-	setGender: Dispatch<SetStateAction<boolean>>;
-	selectedItemId: string | null;
-	setSelectedItemId: Dispatch<SetStateAction<string | null>>;
-	isColorPickerOpen: boolean;
-	setIsColorPickerOpen: Dispatch<SetStateAction<boolean>>;
-	defaultItems: any[];
-	setDefaultItems: Dispatch<SetStateAction<any[]>>;
-	activeTab: string;
-	setActiveTab: Dispatch<SetStateAction<string>>;
-}
-
-interface ObjectStateProviderProps {
-	children: string;
-}
+import {
+	ItemDataTypes,
+	ObjectStateContextType,
+	ObjectStateProviderProps,
+} from 'types/itemData.interface';
 
 const ObjectStateContext = createContext<ObjectStateContextType | undefined>(
 	undefined,
@@ -36,13 +13,13 @@ const ObjectStateContext = createContext<ObjectStateContextType | undefined>(
 export const ObjectStateProvider: React.FC<ObjectStateProviderProps> = ({
 	children,
 }) => {
-	const [itemData, setItemData] = useState<ItemDatatypes | null>(null);
+	const [itemData, setItemData] = useState<ItemDataTypes | null>(null);
 	const [droppedItems, setDroppedItems] = useState<any[]>([]);
 	const [gender, setGender] = useState<boolean>(false);
 	const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
 	const [isColorPickerOpen, setIsColorPickerOpen] = useState<boolean>(false);
 	const [defaultItems, setDefaultItems] = useState<any[]>([]);
-	const [activeTab, setActiveTab] = useState<string>('');
+	const [activeTab, setActiveTab] = useState<string | null>('');
 
 	const value: ObjectStateContextType = {
 		itemData,

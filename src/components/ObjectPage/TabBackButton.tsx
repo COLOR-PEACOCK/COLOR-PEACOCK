@@ -2,7 +2,7 @@ import { Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { COLOR } from '@styles/color';
 import { widthScale } from '@utils/scaling';
 
-import { useObjectState } from '@hooks/ObjectScreen/objectStateContext';
+import { useObjectState } from '@hooks/ObjectScreen';
 import { BackButton } from '@icons/objecticon/objectIcon.js';
 
 const TabBackButton = () => {

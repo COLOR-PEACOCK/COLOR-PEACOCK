@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ImageBackground, SafeAreaView, StyleSheet, View } from 'react-native';
 
 import { BasicHeader } from '@components/common';
@@ -10,13 +10,20 @@ import {
 } from '@components/ObjectPage';
 
 import { dummyColor, infoText } from '@utils/object/constants';
-import useDefaultItem from '@hooks/ObjectScreen/useDefaultItem';
+import { useDefaultItem, useObjectState } from '@hooks/ObjectScreen';
 
 const backgroundimg = require('@images/objectitems/background/background.png');
 
-const ObjectScreen = ({ route }) => {
+interface ObjectScreenProps {
+	route: {
+		params?: string[];
+	};
+}
+
+const ObjectScreen: React.FC<ObjectScreenProps> = ({ route }) => {
 	const colors = route.params || dummyColor;
 	useDefaultItem();
+
 	return (
 		<SafeAreaView style={{ flex: 1 }}>
 			{/* 헤더 */}
