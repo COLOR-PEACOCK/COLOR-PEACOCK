@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import {
 	StyleSheet,
 	View,
@@ -8,8 +8,13 @@ import {
 	Image,
 	ScrollView,
 } from 'react-native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useSharedValue } from 'react-native-reanimated';
-import Carousel, { Pagination } from 'react-native-reanimated-carousel';
+import Carousel, {
+	ICarouselInstance,
+	Pagination,
+} from 'react-native-reanimated-carousel';
+import { CarouselRenderItemInfo } from 'react-native-reanimated-carousel/lib/typescript/types';
 import convert from 'color-convert';
 
 import { COLOR } from '@styles/color';
@@ -17,18 +22,29 @@ import { CustomText as Text } from '@components/common';
 import { PressButton, OutlinedText, SearchModal } from '@components/Home';
 import { useModal } from '@hooks/index';
 import { useBackHandler, useHomeState, usePressButtonState } from '@hooks/home';
-import { SearchSVG } from '@icons';
+import { SearchSVG } from '@icons/index';
 import { widthScale } from '@utils/scaling';
 
-const logoIcon = require('@icons/logo.png');
+import { RootStackParamList } from '../router';
+import logoIcon from '@icons/logo.png';
 
 const DEFAULT_BUTTON_WIDTH = 376;
 
-const Home = ({ navigation }) => {
+interface color {
+	hexcode: string;
+	colorName: string;
+}
+
+type HomeScreenRouteProp = NativeStackNavigationProp<
+	RootStackParamList,
+	'Home'
+>;
+
+const Home = ({ navigation }: any) => {
 	const { width } = useWindowDimensions();
 	const pageWidth = width * 0.7;
-	const caroucelRef = useRef(null);
-	const progress = useSharedValue(0);
+	const caroucelRef = useRef<ICarouselInstance>(null);
+	const progress = useSharedValue<number>(0);
 	const { contentColor, buttonColor, handleTouchStart, handleTouchEnd } =
 		usePressButtonState();
 
@@ -41,7 +57,7 @@ const Home = ({ navigation }) => {
 	} = useHomeState();
 
 	const onPressPagination = useCallback(
-		index => {
+		(index: number) => {
 			'worklet';
 			if (caroucelRef.current?.scrollTo) {
 				caroucelRef.current.scrollTo({
@@ -56,12 +72,12 @@ const Home = ({ navigation }) => {
 	// splash로 뒤로가기 방지 및 앱종료 모달
 	useBackHandler();
 
-	const renderItem = ({ item }) => {
+	const renderItem = ({ item }: CarouselRenderItemInfo<color>) => {
 		return (
 			<Pressable
 				onPress={() => {
 					navigation.navigate('ColorRecommendScreen', {
-						mainColor: { hexVal: item.color },
+						mainColor: { hexVal: item.hexcode },
 					});
 				}}
 				style={[
@@ -69,16 +85,16 @@ const Home = ({ navigation }) => {
 					{
 						width: pageWidth,
 						maxWidth: DEFAULT_BUTTON_WIDTH,
-						backgroundColor: item.color,
+						backgroundColor: item.hexcode,
 					},
 				]}>
 				<OutlinedText
 					strokeColor={
-						convert.hex.hsl(item.color.replace('#', ''))[2] > 80
+						convert.hex.hsl(item.hexcode.replace('#', ''))[2] > 80
 							? COLOR.GRAY_10
 							: COLOR.GRAY_2
 					}
-					textColor={item.color}
+					textColor={item.hexcode}
 					fontSize={38}
 					text={item.colorName}
 				/>
@@ -169,7 +185,9 @@ const Home = ({ navigation }) => {
 							}}
 							data={dummy_trendColor}
 							onProgressChange={progress}
-							renderItem={renderItem}
+							renderItem={(info: CarouselRenderItemInfo<color>) =>
+								renderItem(info)
+							}
 						/>
 					</View>
 					<View style={styles.indicator}>
@@ -279,29 +297,29 @@ const styles = StyleSheet.create({
 	},
 });
 
-const dummy_trendColor = [
+const dummy_trendColor: color[] = [
 	{
-		color: '#EAACC6',
+		hexcode: '#EAACC6',
 		colorName: 'Pink Macaroon',
 	},
 	{
-		color: '#FFDAB9',
+		hexcode: '#FFDAB9',
 		colorName: 'Peach Puff',
 	},
 	{
-		color: '#FFAA4A',
+		hexcode: '#FFAA4A',
 		colorName: 'Five Star',
 	},
 	{
-		color: '#A2CFFE',
+		hexcode: '#A2CFFE',
 		colorName: 'Baby Blue',
 	},
 	{
-		color: '#EDDCC8',
+		hexcode: '#EDDCC8',
 		colorName: 'Almond',
 	},
 	{
-		color: '#816575',
+		hexcode: '#816575',
 		colorName: 'Opera',
 	},
 ];
