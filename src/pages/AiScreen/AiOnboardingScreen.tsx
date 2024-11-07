@@ -1,43 +1,34 @@
-import React, { useRef, useState } from 'react';
-import {
-	SafeAreaView,
-	View,
-	TouchableOpacity,
-	StyleSheet,
-	Image,
-	Text,
-} from 'react-native';
+import React from 'react';
+import { SafeAreaView, View, StyleSheet, Image, Text } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import Swiper from 'react-native-swiper';
-import { COLOR } from '@styles/color';
+
+// components
 import { BasicHeader } from '@components/common';
-import { OnboardingIcon } from '@components/AiRecommend';
+import OnboardingButton from '@components/AiOnboardingScreen/OnboardingButton';
+
+// hooks & utils
 import { widthScale, heightScale } from '@utils/scaling';
+import useOnboardingNavigation from '@hooks/AiOnboardingScreen/useOnboardingNavigation';
 
-const AiOnboardingScreen = ({ navigation }) => {
-	const swiperRef = useRef(null);
-	const [currentIndex, setCurrentIndex] = useState(0);
+// styles
+import { COLOR } from '@styles/color';
 
-	const handleSkip = () => {
-		navigation.navigate('AiScreen');
-	};
-
-	const handleNext = () => {
-		if (currentIndex < 2) {
-			swiperRef.current.scrollBy(1);
-		} else {
-			navigation.navigate('AiScreen');
-		}
-	};
+const AiOnboardingScreen = () => {
+	const navigation = useNavigation();
+	const { swiperRef, currentIndex, setCurrentIndex, handleSkip, handleNext } =
+		useOnboardingNavigation(navigation);
 
 	return (
 		<SafeAreaView style={styles.container}>
 			<BasicHeader
-				titleIcon={'AI'}
-				title={'Ai 추천'}
-				subTitle={'ai recs'}
-				rightIcon={'Skip'}
+				titleIcon="AI"
+				title="Ai 추천"
+				subTitle="ai recs"
+				rightIcon="Skip"
 				onPressRight={handleSkip}
 			/>
+			{/* TODO: 슬라이드 뷰 분리 <= 이슈 : Warning: Error: Text strings must be rendered within a <Text> component. */}
 			<Swiper
 				ref={swiperRef}
 				loop={false}
@@ -46,7 +37,6 @@ const AiOnboardingScreen = ({ navigation }) => {
 				activeDot={<View style={styles.activeDot} />}>
 				<View style={styles.slide}>
 					<Text style={styles.title}>내가 고른 아이템 색상과</Text>
-
 					<View style={styles.highlightContainer}>
 						<Image
 							source={require('@images/highlight1.png')}
@@ -57,7 +47,6 @@ const AiOnboardingScreen = ({ navigation }) => {
 							어울리는 색상을 추천해 드려요!
 						</Text>
 					</View>
-
 					<Text style={styles.subtitle}>순식간에 색상 조합 끝</Text>
 					<Image
 						source={require('@images/onboarding1.png')}
@@ -94,7 +83,6 @@ const AiOnboardingScreen = ({ navigation }) => {
 					<Text style={styles.title}>
 						사진 속 아이템과 추천 아이템을
 					</Text>
-
 					<View style={styles.highlightContainer}>
 						<Image
 							source={require('@images/highlight1.png')}
@@ -105,7 +93,6 @@ const AiOnboardingScreen = ({ navigation }) => {
 							아래와 같이 빠짐없이 작성합니다!
 						</Text>
 					</View>
-
 					<Text style={styles.subtitle}>
 						바지에 어울리는 신발 색상이 궁금하다면?
 					</Text>
@@ -116,33 +103,29 @@ const AiOnboardingScreen = ({ navigation }) => {
 					/>
 				</View>
 			</Swiper>
-			<TouchableOpacity style={styles.nextButton} onPress={handleNext}>
-				<OnboardingIcon color={COLOR.GRAY_1} />
-				<Text style={styles.nextButtonText}>
-					{currentIndex === 2
+
+			{/* 이동하기 버튼 컴포넌트 */}
+			<OnboardingButton
+				onPress={handleNext}
+				text={
+					currentIndex === 2
 						? '지금 바로 이동하기'
-						: '다음으로 이동하기'}
-				</Text>
-			</TouchableOpacity>
+						: '다음으로 이동하기'
+				}
+			/>
 		</SafeAreaView>
 	);
 };
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: '#fff',
-	},
+	container: { flex: 1, backgroundColor: '#fff' },
 	slide: {
 		flex: 1,
 		justifyContent: 'center',
 		alignItems: 'center',
 		paddingHorizontal: widthScale(18),
 	},
-	backgroundImage: {
-		width: 412,
-		height: heightScale(426),
-	},
+	backgroundImage: { width: 412, height: heightScale(426) },
 	title: {
 		fontSize: heightScale(24),
 		color: COLOR.GRAY_9,
@@ -188,20 +171,6 @@ const styles = StyleSheet.create({
 		height: heightScale(8),
 		borderRadius: 25,
 		margin: 3,
-	},
-	nextButton: {
-		backgroundColor: COLOR.PRIMARY,
-		height: heightScale(98),
-		paddingVertical: heightScale(15),
-		flexDirection: 'row',
-		alignItems: 'center',
-		justifyContent: 'center',
-		gap: 6,
-	},
-	nextButtonText: {
-		color: COLOR.GRAY_1,
-		fontSize: widthScale(18),
-		fontFamily: 'Pretendard-Bold',
 	},
 });
 

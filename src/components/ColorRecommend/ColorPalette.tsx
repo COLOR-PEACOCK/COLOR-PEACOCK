@@ -1,14 +1,31 @@
-import React, { useState, useEffect } from 'react';
-import { View, TouchableOpacity, StyleSheet, Pressable } from 'react-native';
-import { getColorInfo } from '@utils/colorRecommendUtils';
-import useColorName from '@hooks/useColorName';
-import tinycolor from 'tinycolor2';
-import HangerIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import ColorInfoModal from '@components/ColorRecommend/ColorInfoModal';
-import { CustomText as Text } from '@components/common/CustomText';
-import { COLOR } from '@styles/color';
+// TODO : 시간이 된다면 기능 -> 훅, 뷰 -> 컴포넌트 리팩토링
 
-const ColorPalette = ({
+import React, { useState } from 'react';
+import { View, TouchableOpacity, StyleSheet, Pressable } from 'react-native';
+
+// components
+import { ColorInfoModal } from '@components/ColorRecommend';
+import { CustomText as Text } from '@components/common/CustomText';
+
+// hooks & utils
+import { useColorInfo } from '@hooks/ColorRecommendScreen';
+
+// styles
+import { COLOR } from '@styles/color';
+import tinycolor from 'tinycolor2';
+
+// icons
+import HangerIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+
+interface ColorPaletteProps {
+	titleKor: string;
+	titleEng: string;
+	colors: string[];
+	onColorSelect: (selectedColors: string[]) => void;
+	description?: { hexCode: string; harmony_description: string }[];
+}
+
+const ColorPalette: React.FC<ColorPaletteProps> = ({
 	titleKor,
 	titleEng,
 	colors,
@@ -16,44 +33,17 @@ const ColorPalette = ({
 	description,
 }) => {
 	const [isButtonPressed, setIsButtonPressed] = useState(false);
-	const [selectedColor, setSelectedColor] = useState(null);
+	const [selectedColor, setSelectedColor] = useState<string | null>(
+		colors[0],
+	);
 	const [isModalVisible, setIsModalVisible] = useState(false);
-	const [colorInfo, setColorInfo] = useState({
-		engName: '',
-		korName: '',
-		hexVal: '',
-		rgbVal: '',
-		hslVal: '',
-		cmykVal: '',
-	});
 
-	const { getEngColorName, getKorColorName, getEngColorNameLocal } =
-		useColorName();
+	const { colorInfo, setTempColor } = useColorInfo(selectedColor || '');
 
-	useEffect(() => {
-		if (selectedColor) {
-			const updateColorInfo = () => {
-				const colorKey = selectedColor.replace('#', '');
-				const colorData = getColorInfo(colorKey) || {};
-				const engName = getEngColorNameLocal(selectedColor);
-				const korName = getKorColorName(selectedColor);
-
-				setColorInfo({
-					engName,
-					korName,
-					hexVal: colorData.hexVal,
-					rgbVal: colorData.rgbVal,
-					hslVal: colorData.hslVal,
-					cmykVal: colorData.cmykVal,
-				});
-			};
-
-			updateColorInfo();
-		}
-	}, [selectedColor]);
-
-	const handleColorPress = color => {
-		setSelectedColor(color);
+	const handleColorPress = (color: string) => {
+		const hexColor = tinycolor(color).toHexString();
+		setSelectedColor(hexColor);
+		setTempColor(hexColor);
 		setIsModalVisible(true);
 	};
 
@@ -64,11 +54,12 @@ const ColorPalette = ({
 
 	return (
 		<View style={styles.container}>
+			{/* 이름 */}
 			<View style={styles.header}>
 				<Text style={styles.titleKor}>{titleKor}</Text>
 				<Text style={styles.titleEng}>{titleEng}</Text>
 			</View>
-
+			{/* 팔레트의 컬러들 */}
 			<View style={styles.paletteContainer}>
 				<View style={styles.colorRow}>
 					{colors.map((color, index) => {
@@ -96,16 +87,13 @@ const ColorPalette = ({
 									},
 									borderRadiusStyle,
 								]}
-								onPress={() =>
-									handleColorPress(
-										tinycolor(color).toHexString(),
-									)
-								}
+								onPress={() => handleColorPress(color)}
 								activeOpacity={0.9}
 							/>
 						);
 					})}
 				</View>
+				{/* 클릭 -> 오브젝트 화면으로 색상 팔레트 넘김 */}
 				<Pressable
 					style={[
 						styles.iconContainer,
@@ -117,11 +105,11 @@ const ColorPalette = ({
 					]}
 					activeOpacity={1}
 					onPressIn={() => setIsButtonPressed(true)}
-					onPress={() => {
+					onPress={() =>
 						onColorSelect(
 							colors.map(c => tinycolor(c).toHexString()),
-						);
-					}}
+						)
+					}
 					onPressOut={() => setIsButtonPressed(false)}>
 					<HangerIcon
 						name="hanger"
@@ -130,12 +118,12 @@ const ColorPalette = ({
 					/>
 				</Pressable>
 			</View>
-
+			{/* 각 컬러의 정보 확인 모달 */}
 			<ColorInfoModal
 				isVisible={isModalVisible}
 				onClose={closeModal}
 				colorInfo={colorInfo}
-				selectedColor={selectedColor}
+				selectedColor={selectedColor || ''}
 				description={
 					description &&
 					selectedColor &&

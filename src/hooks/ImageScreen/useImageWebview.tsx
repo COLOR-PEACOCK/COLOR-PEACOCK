@@ -1,7 +1,7 @@
 import { COLOR } from '@styles/color';
 
-const useImageWebview = () => {
-	const getHtmlContent = imgSrc => `
+export const useImageWebview = () => {
+	const getHtmlContent = (imgSrc: string): string => `
 <html>
     <head>
     <style>
@@ -239,4 +239,3 @@ const useImageWebview = () => {
 `;
 	return { getHtmlContent };
 };
-export default useImageWebview;
