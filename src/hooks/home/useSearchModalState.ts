@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useColorName } from '@hooks';
+import { useColorName } from '@hooks/index';
 import {
 	INPUT_TYPES,
 	colorConverter,
@@ -15,13 +15,22 @@ const useSearchModalState = () => {
 		part4: '',
 	};
 
-	const [selectedLabel, setSelectedLabel] = useState('색상 이름');
-	const [inputValues, setInputValues] = useState(initValue);
-	const [searchNameList, setSearchNameList] = useState(['l']);
-	const [isKeywordKor, setIsKeywordKor] = useState(false);
+	const [selectedLabel, setSelectedLabel] = useState<string>(
+		INPUT_TYPES.COLOR_NAME,
+	);
+	const [inputValues, setInputValues] = useState<typeof initValue>(initValue);
+	const [searchNameList, setSearchNameList] = useState<
+		{
+			distance: number | undefined;
+			name: string;
+			hex: string;
+			korean_name: string;
+		}[]
+	>([]);
+	const [isKeywordKor, setIsKeywordKor] = useState<boolean>(false);
 	const { getSearchColorList } = useColorName();
 
-	const handlePressLabel = label => setSelectedLabel(label);
+	const handlePressLabel = (label: string) => setSelectedLabel(label);
 
 	// 검색어 입력 시 색상 리스트 업데이트
 	useEffect(() => {
@@ -57,8 +66,8 @@ const useSearchModalState = () => {
 	};
 
 	// 자동완성 검색 리스트 터치 시
-	const handlePressSearchList = label => {
-		setInputValues({ ...{ part1: label } });
+	const handlePressSearchList = (label: string) => {
+		setInputValues(prevValues => ({ ...prevValues, part1: label }));
 		// 자동완성 터치하면 숨기기?
 	};
 

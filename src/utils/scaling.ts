@@ -12,12 +12,12 @@ const { width, height } = Dimensions.get('window');
  * @param baseSize 디자인 기준 사이즈
  * @returns 화면 비율에 따라 크기 반환
  */
-export const widthScale = baseSize => {
+export const widthScale = (baseSize: number) => {
 	const screenRatio = width / BASE_WIDTH;
 	return baseSize * screenRatio;
 };
 
-export const heightScale = baseSize => {
+export const heightScale = (baseSize: number) => {
 	const screenRatio = height / BASE_HEIGHT;
 	return baseSize * screenRatio;
 };

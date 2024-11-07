@@ -1,6 +1,19 @@
+import React, { PropsWithChildren } from 'react';
 import { StyleSheet, Text } from 'react-native';
 
-const OutlinedText = ({ strokeColor, textColor, fontSize, text }) => {
+interface OutlinedTextProps {
+	strokeColor: string;
+	textColor: string;
+	fontSize: number;
+	text: string;
+}
+
+const OutlinedText = ({
+	strokeColor,
+	textColor,
+	fontSize,
+	text,
+}: OutlinedTextProps) => {
 	const weight = 1;
 	const styles = StyleSheet.create({
 		paragraph: {

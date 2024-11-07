@@ -1,15 +1,15 @@
 import { COLOR } from '@styles/color';
 import { useState } from 'react';
 
-const usePressButtonState = (enabled = true) => {
-	const [contentColor, setContentColor] = useState(
+const usePressButtonState = (enabled: boolean = true) => {
+	const [contentColor, setContentColor] = useState<string>(
 		enabled ? COLOR.GRAY_10 : COLOR.GRAY_7,
 	);
-	const [buttonColor, setButtonColor] = useState(
+	const [buttonColor, setButtonColor] = useState<string>(
 		enabled ? COLOR.WHITE : COLOR.GRAY_3,
 	);
 
-	const [elevation, setElevation] = useState(enabled ? 4 : 0);
+	const [elevation, setElevation] = useState<number>(enabled ? 4 : 0);
 
 	const handleTouchStart = () => {
 		if (enabled) {

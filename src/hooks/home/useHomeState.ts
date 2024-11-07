@@ -1,9 +1,11 @@
 import { Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useAsyncStorage } from '@hooks/home';
+import { RootStackParamList } from '../../router';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 const useHomeState = () => {
-	const navigation = useNavigation();
+	const navigation = useNavigation<any>();
 	const { storeData, getData, clearData } = useAsyncStorage();
 
 	const handleSelectCamera = () => {
@@ -22,7 +24,7 @@ const useHomeState = () => {
 		else navigation.navigate('AiOnboardingScreen');
 	};
 
-	const isVisitedPage = async pageName => {
+	const isVisitedPage = async (pageName: string) => {
 		const visitedKey = `${pageName}_visited`;
 		const data = await getData(visitedKey);
 
@@ -33,7 +35,7 @@ const useHomeState = () => {
 		return true;
 	};
 
-	const handleSearch = hexValue => {
+	const handleSearch = (hexValue: string) => {
 		if (hexValue) {
 			navigation.navigate('ColorRecommendScreen', {
 				mainColor: { hexVal: hexValue },

@@ -1,4 +1,13 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, {
+	useRef,
+	useState,
+	useEffect,
+	PropsWithChildren,
+	Component,
+	RefObject,
+	ComponentProps,
+	ComponentRef,
+} from 'react';
 import {
 	View,
 	StyleSheet,
@@ -6,15 +15,25 @@ import {
 	Dimensions,
 	ScrollView,
 	Pressable,
+	ViewStyle,
+	TouchableOpacityProps,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { COLOR } from '@styles/color';
 import { ListValue } from '@components/Home';
-import { useModal } from '@hooks';
+import { useModal } from '@hooks/index';
 
 const DEVICE_HEIGHT = Dimensions.get('window').height;
 const SCROLL_VIEW_MAX_HEIGHT = 240;
 
+interface DropdownProps {
+	list: string[];
+	selectedLabel?: string;
+	onClickDropdown?: (label: string) => void;
+	layoutStyle?: ViewStyle;
+	disabled?: boolean;
+	placeholder?: string;
+}
 const Dropdown = ({
 	list,
 	selectedLabel = '',
@@ -22,12 +41,12 @@ const Dropdown = ({
 	layoutStyle,
 	disabled,
 	placeholder,
-}) => {
+}: DropdownProps) => {
 	const { isModalVisible, handleOpenModal, handleCloseModal } = useModal();
-	const [dropdownTop, setDropdownTop] = useState(0);
-	const [width, setWidth] = useState(0);
-	const [dropdownLeft, setDropDownLeft] = useState();
-	const touchableOpacityRef = useRef(null);
+	const [dropdownTop, setDropdownTop] = useState<number>(0);
+	const [dropdownLeft, setDropDownLeft] = useState<number>();
+	const [width, setWidth] = useState<number>(0);
+	const touchableOpacityRef = useRef<View>(null);
 
 	useEffect(() => {
 		if (!isModalVisible) {
@@ -35,9 +54,16 @@ const Dropdown = ({
 		}
 
 		touchableOpacityRef.current?.measure(
-			(_x, _y, width, height, _pageX, pageY) => {
+			(
+				_x: any,
+				_y: any,
+				width: React.SetStateAction<number>,
+				height: any,
+				pageX: number,
+				pageY: number,
+			) => {
 				setWidth(width);
-				setDropDownLeft(_pageX);
+				setDropDownLeft(pageX);
 				if (
 					DEVICE_HEIGHT -
 						(pageY +
@@ -60,7 +86,7 @@ const Dropdown = ({
 		);
 	}, [isModalVisible]);
 
-	const handlePressLabel = label => {
+	const handlePressLabel = (label: string) => {
 		handleCloseModal();
 		if (onClickDropdown) {
 			onClickDropdown(label);

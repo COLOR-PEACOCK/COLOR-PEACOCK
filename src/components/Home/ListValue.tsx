@@ -1,9 +1,22 @@
-import React from 'react';
-import { Pressable } from 'react-native';
+import React, { PropsWithChildren } from 'react';
+import { Pressable, TextStyle } from 'react-native';
 import { COLOR } from '@styles/color';
 import { CustomText as Text } from '@components/common';
 
-const ListValue = ({ label, textStyle, isActive, disabled, onPressLabel }) => {
+interface ListValueProps {
+	label: string;
+	textStyle?: TextStyle;
+	isActive?: boolean;
+	disabled?: boolean;
+	onPressLabel?: (label: string) => void;
+}
+const ListValue = ({
+	label,
+	textStyle,
+	isActive,
+	disabled,
+	onPressLabel,
+}: ListValueProps) => {
 	const handlePressLabel = () => {
 		if (onPressLabel) onPressLabel(label);
 	};
