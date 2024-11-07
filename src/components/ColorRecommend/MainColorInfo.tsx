@@ -1,16 +1,36 @@
+// TODO : 시간이 된다면 기능 -> 훅, 뷰 -> 컴포넌트 리팩토링
+
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import tinycolor from 'tinycolor2';
 
 // images
 import adjustment from '@icons/adjustment.png';
 import adjustment_dark from '@icons/adjustment_dark.png';
 
-const extractNumbers = str => {
+// styles
+import tinycolor from 'tinycolor2';
+
+interface ColorInfo {
+	korName: string;
+	engName: string;
+	rgbVal: string;
+	hexVal: string;
+	hslVal: string;
+	cmykVal: string;
+}
+
+interface MainColorInfoProps {
+	colorInfo: ColorInfo;
+	labelColor: string;
+	textColor: string;
+	setIsPickerVisible?: (visible: boolean) => void;
+}
+
+const extractNumbers = (str: string): string | undefined => {
 	return str.match(/\d+%?/g)?.join(', ');
 };
 
-const MainColorInfo = ({
+const MainColorInfo: React.FC<MainColorInfoProps> = ({
 	colorInfo,
 	labelColor,
 	textColor,
@@ -21,9 +41,7 @@ const MainColorInfo = ({
 	const hslNumbers = extractNumbers(colorInfo.hslVal);
 	const cmykNumbers = extractNumbers(colorInfo.cmykVal);
 
-	const getIconSource = labelColor => {
-		// 색상값을 통한 이미지 소스 교체
-		// labelColor가 밝으면 밝은 이미지, 어두우면 어두운 이미지
+	const getIconSource = (labelColor: string) => {
 		const color = tinycolor(labelColor);
 		return color.isDark() ? adjustment_dark : adjustment;
 	};
@@ -46,12 +64,14 @@ const MainColorInfo = ({
 						{colorInfo.engName}
 					</Text>
 				</View>
-				{setIsPickerVisible && <TouchableOpacity onPress={() => setIsPickerVisible(true)}>
-					<Image
-						source={getIconSource(labelColor)}
-						style={[styles.icon, { tintColor: labelColor }]}
-					/>
-				</TouchableOpacity>}
+				{setIsPickerVisible && (
+					<TouchableOpacity onPress={() => setIsPickerVisible(true)}>
+						<Image
+							source={getIconSource(labelColor)}
+							style={[styles.icon, { tintColor: labelColor }]}
+						/>
+					</TouchableOpacity>
+				)}
 			</View>
 
 			<View>

@@ -1,21 +1,33 @@
+// TODO : 시간이 된다면 기능 -> 훅, 뷰 -> 컴포넌트 리팩토링
+
 import React, { useState } from 'react';
 import { View, Modal, Text, StyleSheet, Image, Pressable } from 'react-native';
 import ColorPicker, { Panel1, HueSlider } from 'reanimated-color-picker';
-import { COLOR } from '@styles/color';
-import tinycolor from 'tinycolor2';
 
 // icons
 import GoBackIcon from '@icons/go-back.png';
 import DownloadIcon from '@icons/download.png';
 
-const ColorPickerModal = ({
+// styles
+import { COLOR } from '@styles/color';
+import tinycolor from 'tinycolor2';
+
+interface ColorPickerModalProps {
+	isVisible: boolean;
+	tempColor: string;
+	setTempColor: (color: string) => void;
+	onCancel: () => void;
+	setIsPickerVisible: (visible: boolean) => void;
+}
+
+const ColorPickerModal: React.FC<ColorPickerModalProps> = ({
 	isVisible,
 	tempColor,
 	setTempColor,
 	onCancel,
 	setIsPickerVisible,
 }) => {
-	const [currentColor, setCurrentColor] = useState(tempColor);
+	const [currentColor, setCurrentColor] = useState<string>(tempColor);
 	const textColor = tinycolor(currentColor).isLight()
 		? COLOR.GRAY_9
 		: COLOR.WHITE;

@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, StyleSheet, View, TouchableOpacity } from 'react-native';
+import {
+	SafeAreaView,
+	StyleSheet,
+	View,
+	TouchableOpacity,
+	LayoutChangeEvent,
+} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { COLOR } from '@styles/color';
@@ -7,21 +13,21 @@ import { BasicHeader, LoadingScreen, CustomPopup } from '@components/common';
 import { AiCircle, Background } from '@components/AiRecommend';
 import useRunAi from '@hooks/AiScreen/useRunAi';
 
-const AiResponseScreen = ({ route }) => {
+const AiResponseScreen: React.FC<any> = ({ route }) => {
 	const { itemInImage, itemToRecommend, base64Image } = route.params;
 
 	const [isButtonPressed, setIsButtonPressed] = useState(false);
 
 	// 헤더 인포 텍스트
-	const infotext =
+	const infotext: string =
 		'• 분석한 색상들의 원을 터치해 보세요!\n• 각 색상에 대해서 자세히 알려드립니다!';
 
 	// 팝업 메세지
-	const popupMessage =
+	const popupMessage: string =
 		'분석한 색상들의 원을 터치해 보세요!\n• 각 색상에 대해서 자세히 알려드립니다!';
 
 	// AI 결과 나오는 원 컨테이너 세로 길이 값 저장
-	const [containerHeight, setContainerHeight] = useState(0);
+	const [containerHeight, setContainerHeight] = useState<number>(0);
 
 	// 오브젝트 화면으로 네비게이트
 	const navigation = useNavigation();
@@ -30,7 +36,7 @@ const AiResponseScreen = ({ route }) => {
 	};
 
 	// AI 결과 원 컨테이너의 세로길이 구하는 함수
-	const handleLayout = event => {
+	const handleLayout = (event: LayoutChangeEvent) => {
 		const { height } = event.nativeEvent.layout;
 		setContainerHeight(height); // 세로 길이를 상태에 저장
 	};
@@ -49,10 +55,10 @@ const AiResponseScreen = ({ route }) => {
 	} = useRunAi();
 
 	// 배경 무늬 state
-	const [background, setBackground] = useState(true);
+	const [background, setBackground] = useState<boolean>(true);
 
 	// AiCircle 상태 변화
-	const [isSelected, setIsSelected] = useState([
+	const [isSelected, setIsSelected] = useState<string[]>([
 		'medium',
 		'medium',
 		'medium',
@@ -85,7 +91,7 @@ const AiResponseScreen = ({ route }) => {
 	// 배경 무늬 색상 컨트롤
 	useEffect(() => {
 		if (itemColor) {
-			const shouldUseWhiteColor = hexColor => {
+			const shouldUseWhiteColor = (hexColor: string) => {
 				const r = parseInt(hexColor.substr(1, 2), 16);
 				const g = parseInt(hexColor.substr(3, 2), 16);
 				const b = parseInt(hexColor.substr(5, 2), 16);
@@ -98,7 +104,7 @@ const AiResponseScreen = ({ route }) => {
 
 	return (
 		<SafeAreaView style={{ flex: 1 }}>
-			<View style={{ flex: 1, backgroundColor: itemColor }}>
+			<View style={{ flex: 1, backgroundColor: itemColor || '#ffffff' }}>
 				<BasicHeader
 					titleIcon={'AI'}
 					title={'AI 분석'}
@@ -134,8 +140,6 @@ const AiResponseScreen = ({ route }) => {
 									position: 'absolute',
 									bottom: 14,
 									right: 12,
-									width: 185,
-									height: 62,
 									width: 70,
 									height: 70,
 									borderRadius: 64,
