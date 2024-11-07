@@ -3,22 +3,50 @@ import { Alert } from 'react-native';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { useNavigation } from '@react-navigation/native';
 
-const genAI = new GoogleGenerativeAI(process.env.API_KEY);
+const genAI = new GoogleGenerativeAI(process.env.API_KEY as string);
+
+interface ItemColor {
+	color_name_korean: string;
+	color_name_english: string;
+	hex_code: string;
+	description: string;
+}
+
+interface RecommendedColor {
+	color_name_korean: string;
+	color_name_english: string;
+	hex_code: string;
+	description: string;
+	description_Very_Short_Ver: string;
+}
+
+interface ResponseJson {
+	image_explain: string;
+	item_color: ItemColor;
+	recommended_colors: RecommendedColor[];
+	hexcode_list: string[];
+}
 
 const useRunAi = () => {
-	const [korColorNameList, setKorColorNameList] = useState([]);
-	const [engColorNameList, setEngColorNameList] = useState([]);
-	const [colorCodeList, setColorCodeList] = useState([]);
-	const [colorDescriptionList, setColorDescriptionList] = useState([]);
-	const [colorShortList, setColorShortList] = useState([]);
+	const [korColorNameList, setKorColorNameList] = useState<string[]>([]);
+	const [engColorNameList, setEngColorNameList] = useState<string[]>([]);
+	const [colorCodeList, setColorCodeList] = useState<string[]>([]);
+	const [colorDescriptionList, setColorDescriptionList] = useState<string[]>(
+		[],
+	);
+	const [colorShortList, setColorShortList] = useState<string[]>([]);
 
-	const [isLoading, setIsLoading] = useState(true);
-	const [colors, setColors] = useState([]);
-	const [itemColor, setItemColor] = useState(null);
+	const [isLoading, setIsLoading] = useState<boolean>(true);
+	const [colors, setColors] = useState<string[]>([]);
+	const [itemColor, setItemColor] = useState<string | null>(null);
 
 	const navigation = useNavigation();
 
-	const runAIModel = async (itemInImage, itemToRecommend, base64Image) => {
+	const runAIModel = async (
+		itemInImage: string,
+		itemToRecommend: string,
+		base64Image: string,
+	) => {
 		const prompt = `너에게 제공된 이미지에서 ${itemInImage}에 대한 색상과 분위기에 대한 설명과 해당 컬러 헥스 코드를 추출해주고, 그리고 그 아이템과 어울리는 ${itemToRecommend} 색상을 recommended_colors에 5종류를 한국말로 추천해줘. 각 색상의 효과를 포함하여 JSON 형식으로 응답해줘. hexcode_list에는 언급된 hexcode들을 차례로 정리해줘. recommended_colors.description은 한글로 공백 포함 80자 이내로 작성해줘. JSON 응답의 형식은 아래와 같아야 해:
 
 {
@@ -62,7 +90,7 @@ const useRunAi = () => {
 			console.log('Raw Response Text:', text);
 
 			try {
-				const responseJson = JSON.parse(text);
+				const responseJson: ResponseJson = JSON.parse(text);
 
 				if (
 					responseJson &&
@@ -76,31 +104,34 @@ const useRunAi = () => {
 
 					const recommendedKorColorNames =
 						responseJson.recommended_colors.map(
-							color => color.color_name_korean,
+							(color: RecommendedColor) =>
+								color.color_name_korean,
 						);
 					setKorColorNameList(recommendedKorColorNames);
 
 					const recommendedEngColorNames =
 						responseJson.recommended_colors.map(
-							color => color.color_name_english,
+							(color: RecommendedColor) =>
+								color.color_name_english,
 						);
 					setEngColorNameList(recommendedEngColorNames);
 
 					const recommendedHexCodes =
 						responseJson.recommended_colors.map(
-							color => color.hex_code,
+							(color: RecommendedColor) => color.hex_code,
 						);
 					setColorCodeList(recommendedHexCodes);
 
 					const recommendedDescriptions =
 						responseJson.recommended_colors.map(
-							color => color.description,
+							(color: RecommendedColor) => color.description,
 						);
 					setColorDescriptionList(recommendedDescriptions);
 
 					const recommendedShortDescriptions =
 						responseJson.recommended_colors.map(
-							color => color.description_Very_Short_Ver,
+							(color: RecommendedColor) =>
+								color.description_Very_Short_Ver,
 						);
 					setColorShortList(recommendedShortDescriptions);
 
