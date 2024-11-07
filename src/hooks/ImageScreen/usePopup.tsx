@@ -1,27 +1,20 @@
 import { useState, useEffect } from 'react';
 
-export const usePopup = (
-	initialVisibility: boolean = false,
-	dependency: any,
-) => {
-	const [showPopup, setShowPopup] = useState<boolean>(initialVisibility);
+interface UsePopupProps {
+	initialVisibility: boolean;
+	dependency: any;
+}
 
-	// 특정 종속성 변경 시 팝업 표시
+export const usePopup = ({ initialVisibility, dependency }: UsePopupProps) => {
+	const [showPopup, setShowPopup] = useState(initialVisibility);
+
 	useEffect(() => {
 		if (dependency) {
-			setShowPopup(true);
+			setShowPopup(!initialVisibility);
 		}
-	}, [dependency]);
+	}, [dependency, initialVisibility]);
 
-	// 팝업 표시 여부 설정
-	const togglePopup = (visibility: boolean) => setShowPopup(visibility);
-
-	// 팝업 닫기
 	const handleClosePopup = () => setShowPopup(false);
 
-	return {
-		showPopup,
-		togglePopup,
-		handleClosePopup,
-	};
+	return { showPopup, handleClosePopup };
 };
