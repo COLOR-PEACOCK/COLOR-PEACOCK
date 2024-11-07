@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
 		fontSize: 16,
 		color: COLOR.GRAY_6,
 		paddingLeft: 6,
-		letterSpacing: -.8,
+		letterSpacing: -0.8,
 	},
 	headerButton: {
 		width: 48,
