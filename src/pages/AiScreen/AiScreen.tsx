@@ -11,12 +11,12 @@ import {
 import RNFS from 'react-native-fs';
 import { COLOR } from '@styles/color';
 import { BasicHeader, CustomText as Text } from '@components/common';
-import { useImagePicker } from '@hooks';
+import useImagePicker from '@hooks/useImagePicker';
 import RunAi from '@icons/runAiIcon.svg';
 
-const AiScreen = ({ navigation }) => {
-	const [itemInImage, setItemInImage] = useState('');
-	const [itemToRecommend, setItemToRecommend] = useState('');
+const AiScreen: React.FC<any> = ({ navigation }) => {
+	const [itemInImage, setItemInImage] = useState<string>('');
+	const [itemToRecommend, setItemToRecommend] = useState<string>('');
 	const { imageUri, selectImage } = useImagePicker();
 
 	useEffect(() => {
@@ -49,7 +49,9 @@ const AiScreen = ({ navigation }) => {
 					title={'AI 추천'}
 					subTitle={'ai recs'}
 					rightIcon={'info'}
-					onPressRight={() => navigation.navigate('AiOnboardingScreen')}
+					onPressRight={() =>
+						navigation.navigate('AiOnboardingScreen')
+					}
 				/>
 				<View style={styles.imageContainer}>
 					{imageUri ? (
