@@ -1,5 +1,5 @@
-import { useObjectState } from '@hooks/ObjectScreen/objectStateContext.jsx';
-import getDefaultItems from '@utils/object/getDefaultItems.jsx';
+import { useObjectState } from '@hooks/ObjectScreen/objectStateContext';
+import getDefaultItems from '@utils/object/getDefaultItems';
 
 import maleItemData from '../../assets/data/objectdata/maleItemData.js';
 import femaleItemData from '../../assets/data/objectdata/femaleItemData.js';
@@ -11,7 +11,7 @@ const useGenderChange = () => {
 	// 성별과 아이템 아이템 변경 함수
 	const handleGenderChange = () => {
 		const newGender = !gender;
-		const newItemData = newGender ? maleItemData : femaleItemData;
+		const newItemData: any = newGender ? maleItemData : femaleItemData;
 		const defaultItems = getDefaultItems(newItemData);
 
 		setGender(newGender);

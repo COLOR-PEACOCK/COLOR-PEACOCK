@@ -2,10 +2,9 @@ import React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { COLOR } from '@styles/color';
 import { heightScale } from '@utils/scaling';
-import useBottomSheetHandler from '@hooks/ObjectScreen/useBottomSheetHandler';
+import { useBottomSheetHandler, useObjectState } from '@hooks/ObjectScreen';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { useObjectState } from '@hooks/ObjectScreen/objectStateContext';
 
 const CustomHandler = () => {
 	const { handlerTouchEvent } = useBottomSheetHandler();

@@ -1,13 +1,20 @@
 import { COLOR } from '@styles/color';
 import React from 'react';
-import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native';
+import {
+	FlatList,
+	ListRenderItem,
+	StyleSheet,
+	TouchableOpacity,
+	View,
+} from 'react-native';
 
 import { CustomText as Text } from '@components/common/CustomText';
 import { heightScale } from '@utils/scaling';
 
-import { useObjectState } from '@hooks/ObjectScreen/objectStateContext';
+import { useObjectState } from '@hooks/ObjectScreen';
+import { ItemDataTypes } from 'types/itemData.interface';
 
-const RenderItemList = () => {
+const RenderItemList: React.FC = () => {
 	const {
 		setDroppedItems,
 		itemData,
@@ -17,7 +24,7 @@ const RenderItemList = () => {
 	} = useObjectState();
 
 	//아이템 플랫 리스트 렌더
-	const renderItem = ({ item }) => {
+	const renderItem: ListRenderItem<ItemDataTypes> = ({ item }) => {
 		return (
 			<View>
 				<TouchableOpacity
@@ -31,7 +38,7 @@ const RenderItemList = () => {
 	};
 
 	//아이템 선택 이벤트
-	const handleItemSelect = item => {
+	const handleItemSelect = (item: ItemDataTypes) => {
 		setSelectedItemId(prevId => (prevId === item.id ? null : item.id));
 		setIsColorPickerOpen(true);
 
@@ -58,7 +65,7 @@ const RenderItemList = () => {
 
 	return (
 		<FlatList
-			data={itemData[activeTab] || []}
+			data={activeTab ? itemData?.[activeTab] : []}
 			renderItem={renderItem}
 			horizontal={true}
 			keyExtractor={item => item.id}

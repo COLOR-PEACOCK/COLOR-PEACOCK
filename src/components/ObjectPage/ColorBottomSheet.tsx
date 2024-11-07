@@ -6,20 +6,25 @@ import {
 	View,
 } from 'react-native';
 import BottomSheet from '@gorhom/bottom-sheet';
+import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 
 import { heightScale } from '@utils/scaling';
-import useBottomSheetHandler from '@hooks/ObjectScreen/useBottomSheetHandler';
-import CustomHandler from '@components/ObjectPage/CustomHandler';
+import { useBottomSheetHandler } from '@hooks/ObjectScreen';
+import { CustomHandler } from '@components/ObjectPage';
 
 const colorContainer = require('@images/objectitems/background/cricle__wrapper.png');
 
-const ColorBottomSheet = ({ colors }) => {
+interface ColorBottomSheetProps {
+	colors: string[];
+}
+
+const ColorBottomSheet: React.FC<ColorBottomSheetProps> = ({ colors }) => {
 	const { bottomSheetRef, handleColorSelect } = useBottomSheetHandler();
 
 	return (
 		<View style={styles.colorContainer}>
 			<BottomSheet
-				ref={bottomSheetRef}
+				ref={bottomSheetRef as React.RefObject<BottomSheetMethods>}
 				snapPoints={[heightScale(40), heightScale(108)]}
 				enableHandlePanningGesture={false}
 				handleComponent={CustomHandler}

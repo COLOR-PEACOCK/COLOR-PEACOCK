@@ -2,8 +2,12 @@ import { useEffect, useRef } from 'react';
 
 import { useObjectState } from '@hooks/ObjectScreen/objectStateContext';
 
+interface BottomSheetType {
+	snapToIndex: (index: number) => void;
+}
+
 const useBottomSheetHandler = () => {
-	const bottomSheetRef = useRef(null);
+	const bottomSheetRef = useRef<BottomSheetType | null>(null);
 	const {
 		selectedItemId,
 		setDroppedItems,
@@ -12,7 +16,7 @@ const useBottomSheetHandler = () => {
 	} = useObjectState();
 
 	//컬러 팔레트 터치 이벤트
-	const handleColorSelect = color => {
+	const handleColorSelect = (color: string) => {
 		if (selectedItemId) {
 			setDroppedItems(prevItems =>
 				prevItems.map(item =>
@@ -30,7 +34,7 @@ const useBottomSheetHandler = () => {
 	}, [isColorPickerOpen]);
 
 	// 커스텀 핸들러 터치 이벤트
-	const handlerTouchEvent = () => {
+	const handlerTouchEvent = (): void => {
 		setIsColorPickerOpen(!isColorPickerOpen);
 	};
 

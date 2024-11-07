@@ -1,15 +1,16 @@
 {
-  "extends": "@react-native/typescript-config/tsconfig.json",
-  "compilerOptions": {
-    "paths": {
-      "@icons/*":["./src/assets/icons/*"],
-      "@images/*":["./src/assets/images/*"],
-      "@components/*":["./src/components/*"],
-      "@pages/*":["./src/pages/*"],
-      "@styles/*":["./src/styles/*"],
-      "@libs/*":["./src/libs/*"],
-      "@hooks/*":["./src/hooks/*"],
-      "@utils/*":["./src/utils/*"],
-    }
-  }
+	"extends": "@react-native/typescript-config/tsconfig.json",
+	"compilerOptions": {
+		"paths": {
+			"@icons/*": ["./src/assets/icons/*"],
+			"@images/*": ["./src/assets/images/*"],
+			"@components/*": ["./src/components/*"],
+			"@pages/*": ["./src/pages/*"],
+			"@styles/*": ["./src/styles/*"],
+			"@libs/*": ["./src/libs/*"],
+			"@hooks/*": ["./src/hooks/*"],
+			"@utils/*": ["./src/utils/*"],
+			"types/*": ["./src/types/*"]
+		}
+	}
 }

@@ -2,8 +2,8 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 
 import { heightScale } from '@utils/scaling';
-import CanvasDroppedItem from '@components/ObjectPage/CanvasDroppedItem';
-import { useObjectState } from '@hooks/ObjectScreen/objectStateContext';
+import { CanvasDroppedItem } from '@components/ObjectPage';
+import { useObjectState } from '@hooks/ObjectScreen';
 
 import MaleBodySvg from '@images/objectitems/bodyimages/male_body.svg';
 import FeMaleBodySvg from '@images/objectitems/bodyimages/female__body.svg';

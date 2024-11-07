@@ -10,7 +10,7 @@ const useDefaultItem = () => {
 		useObjectState();
 	// 마운트 시 초기 아이템
 	useEffect(() => {
-		const initialItemData = gender ? maleItemData : femaleItemData;
+		const initialItemData: any = gender ? maleItemData : femaleItemData;
 		setItemData(initialItemData);
 		const defaultItems = getDefaultItems(initialItemData);
 		setDroppedItems(defaultItems);

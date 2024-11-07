@@ -5,7 +5,7 @@ import { heightScale } from '@utils/scaling';
 import { COLOR } from '@styles/color';
 
 import tabs from '@utils/object/tabData';
-import { useObjectState } from '@hooks/ObjectScreen/objectStateContext';
+import { useObjectState } from '@hooks/ObjectScreen';
 
 const CategoryButton = () => {
 	const { setActiveTab } = useObjectState();

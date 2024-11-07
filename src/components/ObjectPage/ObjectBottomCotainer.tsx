@@ -4,11 +4,13 @@ import { StyleSheet, View } from 'react-native';
 import { CustomText as Text } from '@components/common/CustomText';
 import { COLOR } from '@styles/color';
 
-import { useObjectState } from '@hooks/ObjectScreen/objectStateContext.jsx';
-import TabBackButton from '@components/ObjectPage/TabBackButton.jsx';
-import RenderItemList from '@components/ObjectPage/RenderItemList';
-import ChangeGenderButton from '@components/ObjectPage/ChangeGenderButton.jsx';
-import CategoryButton from '@components/ObjectPage/CategoryButton.jsx';
+import { useObjectState } from '@hooks/ObjectScreen/objectStateContext';
+import {
+	TabBackButton,
+	RenderItemList,
+	ChangeGenderButton,
+	CategoryButton,
+} from '@components/ObjectPage';
 
 const ObjectBottomCotainer = () => {
 	const { activeTab } = useObjectState();
