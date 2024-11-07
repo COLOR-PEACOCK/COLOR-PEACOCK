@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { ImageBackground, SafeAreaView, StyleSheet, View } from 'react-native';
 
 import { BasicHeader } from '@components/common';
@@ -10,7 +10,7 @@ import {
 } from '@components/ObjectPage';
 
 import { dummyColor, infoText } from '@utils/object/constants';
-import { useDefaultItem, useObjectState } from '@hooks/ObjectScreen';
+import { useDefaultItem } from '@hooks/ObjectScreen';
 
 const backgroundimg = require('@images/objectitems/background/background.png');
 

@@ -101,12 +101,7 @@ const useCanvasItemHandler = () => {
 			shoes: { top: heightScale(-90), right: heightScale(-148) },
 			socks: { top: heightScale(-100), right: heightScale(90) },
 		};
-		return (
-			positions[category] || {
-				top: heightScale(-90),
-				right: heightScale(-100),
-			}
-		);
+		return positions[category];
 	};
 
 	const getCategoryIcon = (
