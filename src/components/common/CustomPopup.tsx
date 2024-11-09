@@ -1,7 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, StyleSheet, Animated, Easing } from 'react-native';
+import { Text, StyleSheet, Animated, Easing } from 'react-native';
 import { COLOR } from '@styles/color';
 import { widthScale, heightScale } from '@utils/scaling';
+
+interface CustomPopupProps {
+	message: string;
+}
 
 /**
  * 아래 example 참고
@@ -20,7 +24,7 @@ import { widthScale, heightScale } from '@utils/scaling';
  *  \n• : 줄바꿈
  */
 
-const CustomPopup = ({ message }) => {
+const CustomPopup = ({ message }: CustomPopupProps) => {
 	const [visible, setVisible] = useState(false);
 	const slideAnim = useRef(new Animated.Value(0)).current;
 	const opicityAnim = useRef(new Animated.Value(0)).current;
