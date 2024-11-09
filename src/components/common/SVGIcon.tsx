@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, SVGProps } from 'react';
+import React, { SVGProps } from 'react';
 import {
 	CameraSVG,
 	ImageSVG,
@@ -8,15 +8,6 @@ import {
 	ObjectSVG,
 	SearchSVG,
 } from '@icons/index';
-
-export type IconName =
-	| 'camera'
-	| 'image'
-	| 'AI'
-	| 'palette'
-	| 'report'
-	| 'object'
-	| 'search';
 
 const iconMap: { [key in IconName]: React.FC<SVGProps<SVGSVGElement>> } = {
 	camera: CameraSVG as React.FC<SVGProps<SVGSVGElement>>,
@@ -29,7 +20,7 @@ const iconMap: { [key in IconName]: React.FC<SVGProps<SVGSVGElement>> } = {
 };
 
 interface SVGIconProps extends SVGProps<SVGSVGElement> {
-	name: IconName;
+	name?: IconName;
 }
 
 /**
@@ -44,7 +35,7 @@ color={COLOR.PRIMARY}
 ```
  */
 const SVGIcon = ({ name, ...rest }: SVGIconProps) => {
-	const SVG = iconMap[name];
+	const SVG = name ? iconMap[name] : null;
 	return SVG ? <SVG key={name} {...rest} /> : null;
 };
 

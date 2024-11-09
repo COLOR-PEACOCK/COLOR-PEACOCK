@@ -1,12 +1,11 @@
 import { KeyboardTypeOptions } from 'react-native';
 
-export const INPUT_TYPES = {
-	COLOR_NAME: '색상 이름',
-	HEX: 'HEX',
-	RGB: 'RGB',
-	HSL: 'HSL',
-	CMYK: 'CMYK',
-};
+export interface InputValuesType {
+	part1: string;
+	part2: string;
+	part3: string;
+	part4: string;
+}
 
 export interface InputConfig {
 	[key: string]: {
@@ -17,6 +16,14 @@ export interface InputConfig {
 		keyboardType: KeyboardTypeOptions;
 	};
 }
+
+export const INPUT_TYPES = {
+	COLOR_NAME: '색상 이름',
+	HEX: 'HEX',
+	RGB: 'RGB',
+	HSL: 'HSL',
+	CMYK: 'CMYK',
+};
 
 export const inputTypeMap: InputConfig = {
 	[INPUT_TYPES.COLOR_NAME]: {

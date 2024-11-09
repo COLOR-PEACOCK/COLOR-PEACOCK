@@ -1,10 +1,10 @@
 import convert from 'color-convert';
 import {
 	stringFormat,
-	INPUT_TYPES,
 	isValidKorean,
 	isValidHexCode,
 } from '@utils/Home';
+import { INPUT_TYPES } from '@typesStore/Home/inputTypes';
 
 const rgbToHex = (r: number, g: number, b: number) => {
 	return `#${convert.rgb.hex([r, g, b])}`;

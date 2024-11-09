@@ -4,10 +4,8 @@ import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { COLOR } from '@styles/color';
 import { CustomText as Text, SVGIcon } from '@components/common';
-import { IconName } from '@utils/Home/inputTypes';
 // images
 import informationIcon from '@icons/infor.png';
-
 
 interface BasicHeaderProps {
 	leftIcon?: string;
