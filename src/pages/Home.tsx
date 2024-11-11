@@ -20,8 +20,8 @@ import convert from 'color-convert';
 import { COLOR } from '@styles/color';
 import { CustomText as Text } from '@components/common';
 import { PressButton, OutlinedText, SearchModal } from '@components/Home';
-import { useModal } from '@hooks/index';
-import { useBackHandler, useHomeState, usePressButtonState } from '@hooks/home';
+import { useCheckAppVersion, useModal } from '@hooks/index';
+import { useBackHandler, useHomeState, usePressButtonState } from '@hooks/Home';
 import { SearchSVG } from '@icons/index';
 import { widthScale } from '@utils/scaling';
 
@@ -55,6 +55,7 @@ const Home = ({ navigation }: any) => {
 		handleSelectAI,
 		handleSearch,
 	} = useHomeState();
+	const { checkAppVersion } = useCheckAppVersion();
 
 	const onPressPagination = useCallback(
 		(index: number) => {
@@ -101,6 +102,10 @@ const Home = ({ navigation }: any) => {
 			</Pressable>
 		);
 	};
+
+	useEffect(() => {
+		checkAppVersion();
+	}, []);
 
 	return (
 		<SafeAreaView style={{ flex: 1 }}>
