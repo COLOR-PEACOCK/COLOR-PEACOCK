@@ -1,14 +1,44 @@
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import {
+	GoogleGenerativeAI,
+	ChatSession,
+	GenerativeModel,
+	GenerationConfig,
+} from '@google/generative-ai';
 import { useState } from 'react';
 import { Alert } from 'react-native';
 
+interface BaseColor {
+	base_color_name_kr: string;
+	base_color_name_eng: string;
+	hexCode: string;
+}
+
+interface RecommendedColor {
+	color_name_kr: string;
+	color_name_eng: string;
+	hexCode: string;
+	harmony_description: string;
+}
+
+interface RecommendedTheme {
+	theme_name_kr: string;
+	theme_name_eng: string;
+	colors: RecommendedColor[];
+	theme_hexCode_list: string[];
+}
+
+interface ResponseData {
+	base_color: BaseColor[];
+	recommended_themes_and_colors: RecommendedTheme[];
+}
+
 const useGemini = () => {
-	const apiKey = process.env.API_KEY;
+	const apiKey = process.env.API_KEY as string;
 	const genAI = new GoogleGenerativeAI(apiKey);
-	const model = genAI.getGenerativeModel({
+	const model: GenerativeModel = genAI.getGenerativeModel({
 		model: 'gemini-1.5-flash',
 	});
-	const generationConfig = {
+	const generationConfig: GenerationConfig = {
 		temperature: 1,
 		topP: 0.95,
 		topK: 64,
@@ -16,12 +46,11 @@ const useGemini = () => {
 		responseMimeType: 'application/json',
 	};
 	const [isLoading, setIsLoading] = useState(false);
-	async function run(value) {
+
+	async function run(value: string): Promise<ResponseData | null> {
 		setIsLoading(true);
-		const chatSession = model.startChat({
+		const chatSession: ChatSession = model.startChat({
 			generationConfig,
-			// safetySettings: Adjust safety settings
-			// See https://ai.google.dev/gemini-api/docs/safety-settings
 			history: [],
 		});
 		const prompt = `
@@ -50,14 +79,16 @@ const useGemini = () => {
 
 		try {
 			const result = await chatSession.sendMessage(prompt);
-			const data = JSON.parse(result.response.text());
+			const data: ResponseData = JSON.parse(result.response.text());
 			setIsLoading(false);
 			return data;
 		} catch (error) {
 			console.log(error);
+			setIsLoading(false);
 			return null;
 		}
 	}
+
 	return { run, isLoading };
 };
 
