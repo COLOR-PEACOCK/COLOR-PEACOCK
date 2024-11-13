@@ -5,13 +5,13 @@ import { SafeAreaView, View, StyleSheet, ScrollView } from 'react-native';
 import { BasicHeader } from '@components/common';
 import {
 	ColorPickerModal,
-	ColorPalette,
 	MainColorInfo,
+	ColorPalette,
 } from '@components/ColorRecommend';
 
 // hooks & utils
-import { useColorInfo, useColorVariants } from '@hooks/ColorRecommendScreen';
 import { ColorRecommendScreenInfoText } from '@utils/infoText';
+import { useColorInfo, useColorVariants } from '@hooks/ColorRecommendScreen';
 
 // styles
 import { COLOR } from '@styles/color';

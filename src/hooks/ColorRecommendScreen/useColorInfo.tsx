@@ -11,10 +11,10 @@ import tinycolor from 'tinycolor2';
 interface ColorInfo {
 	engName: string;
 	korName: string;
-	hexVal?: string;
-	rgbVal?: string;
-	hslVal?: string;
-	cmykVal?: string;
+	hexVal: string;
+	rgbVal: string;
+	hslVal: string;
+	cmykVal: string;
 }
 
 const useColorInfo = (initialColor: string) => {
