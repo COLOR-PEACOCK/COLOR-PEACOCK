@@ -15,7 +15,7 @@ const ColorInfo: React.FC<ColorInfoProps> = ({
 	isOpen,
 	setCameraType,
 }) => {
-	const bottomSheetRef = useRef(null);
+	const bottomSheetRef = useRef<BottomSheet>(null);
 	const cameraSwitch = () =>
 		setCameraType(prevType => (prevType === 'back' ? 'front' : 'back'));
 

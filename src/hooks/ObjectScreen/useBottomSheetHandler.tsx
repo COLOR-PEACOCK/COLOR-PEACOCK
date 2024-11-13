@@ -1,13 +1,10 @@
 import { useEffect, useRef } from 'react';
 
 import { useObjectState } from '@hooks/ObjectScreen/objectStateContext';
-
-interface BottomSheetType {
-	snapToIndex: (index: number) => void;
-}
+import BottomSheet from '@gorhom/bottom-sheet';
 
 const useBottomSheetHandler = () => {
-	const bottomSheetRef = useRef<BottomSheetType | null>(null);
+	const bottomSheetRef = useRef<BottomSheet | null>(null);
 	const {
 		selectedItemId,
 		setDroppedItems,
@@ -33,7 +30,6 @@ const useBottomSheetHandler = () => {
 			: bottomSheetRef?.current?.snapToIndex(0);
 	}, [isColorPickerOpen]);
 
-	// 커스텀 핸들러 터치 이벤트
 	const handlerTouchEvent = (): void => {
 		setIsColorPickerOpen(!isColorPickerOpen);
 	};
