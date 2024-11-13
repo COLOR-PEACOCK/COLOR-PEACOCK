@@ -7,7 +7,7 @@ interface ColorInfo {
 	cmykVal: string;
 }
 
-// 색상 정보 (hexVal, rgbVal, hslVal, cmykVal)
+// hexVal -> 색상 정보 (hexVal, rgbVal, hslVal, cmykVal)
 export const getColorInfo = (hexVal: string): ColorInfo => {
 	hexVal = hexVal.length > 6 ? hexVal.slice(1, 7) : hexVal;
 

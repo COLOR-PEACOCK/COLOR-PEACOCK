@@ -3,11 +3,11 @@ import nearestColor from 'nearest-color';
 import colorNameList from '../assets/color_name.json';
 import { getLevenshteinDistance, stringFormat } from '@utils/home';
 
-interface ColorName {
-	korean_name: string;
-	name: string;
-	hex: string;
-}
+// interface ColorName {
+// 	korean_name: string;
+// 	name: string;
+// 	hex: string;
+// }
 
 interface ColorResponse {
 	korean_name: string;

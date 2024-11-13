@@ -3,7 +3,12 @@ import { View, Image, TouchableOpacity, Alert, StyleSheet } from 'react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { CustomText as Text } from '@components/common/CustomText';
 
-const ImagePicker = ({ imageUri, setImageUri }) => {
+interface ImagePickerProps {
+	imageUri: string | null;
+	setImageUri: (uri: string) => void;
+}
+
+const ImagePicker: React.FC<ImagePickerProps> = ({ imageUri, setImageUri }) => {
 	const selectImage = async () => {
 		try {
 			const response = await launchImageLibrary({ mediaType: 'photo' });
@@ -12,13 +17,16 @@ const ImagePicker = ({ imageUri, setImageUri }) => {
 					'Image selection canceled',
 					'No image was selected.',
 				);
-			} else if (response.error) {
-				Alert.alert('Error', response.error);
-			} else if (response.assets && response.assets[0].uri) {
+			} else if (response.errorMessage) {
+				Alert.alert('Error', response.errorMessage);
+			} else if (response.assets && response.assets[0]?.uri) {
 				setImageUri(response.assets[0].uri);
 			}
 		} catch (error) {
-			Alert.alert('Error', `An error occurred: ${error.message}`);
+			Alert.alert(
+				'Error',
+				`An error occurred: ${(error as Error).message}`,
+			);
 		}
 	};
 
