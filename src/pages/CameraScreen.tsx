@@ -5,9 +5,12 @@ import {
 	SafeAreaView,
 	TouchableOpacity,
 	Image,
+	LayoutChangeEvent,
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
+import { CameraPosition } from 'react-native-vision-camera';
 import Icon from 'react-native-vector-icons/FontAwesome';
+
 import { COLOR } from '@styles/color';
 import { BasicHeader, CustomText as Text } from '@components/common';
 import {
@@ -17,27 +20,30 @@ import {
 	ExtColorModal,
 } from '@components/camerapage';
 
-import { useCamera } from '@hooks';
+import { useCamera } from '@hooks/index';
+import { ExtColor, ParentLayout, SeletedColor } from '@typesStore/cameraTypes';
 
 const extbutton = require('@icons/circle__lock__btn.png');
 
 const CameraScreen = ({ navigation }) => {
-	const [isActive, setIsActive] = useState(false);
-	const [cameraType, setCameraType] = useState('back');
-	const [parentlayout, setParentlayout] = useState({
+	const [isActive, setIsActive] = useState<boolean>(false);
+	const [cameraType, setCameraType] = useState<CameraPosition>('back');
+	const [parentlayout, setParentlayout] = useState<ParentLayout>({
 		height: 0,
 		width: 0,
 	});
-	const [extColor, setExtColor] = useState({
+	const [extColor, setExtColor] = useState<ExtColor>({
 		bgColor: `rgb(0,0,0)`,
 		hexColor: '000000',
 		engName: '',
 		korName: '',
 	});
-	const [selectedColor, setSelectedColor] = useState();
-	const [isOpen, setIsOpen] = useState(0);
-	const [zoomLevel, setZoomLevel] = useState(1);
-	const parentRef = useRef();
+	const [selectedColor, setSelectedColor] = useState<
+		SeletedColor | undefined
+	>(undefined);
+	const [isOpen, setIsOpen] = useState<boolean>(false);
+	const [zoomLevel, setZoomLevel] = useState<1 | 2>(1);
+	const parentRef = useRef<View>(null);
 	const { hasPermission, requestCameraPermission } = useCamera();
 
 	// 카메라 권한
@@ -56,7 +62,7 @@ const CameraScreen = ({ navigation }) => {
 	);
 
 	// 크기 정보
-	const onLayout = event => {
+	const onLayout = (event: LayoutChangeEvent) => {
 		const { width, height } = event.nativeEvent.layout;
 		setParentlayout({ height: height, width: width });
 	};
@@ -74,7 +80,7 @@ const CameraScreen = ({ navigation }) => {
 			engName: extColor.engName,
 			korName: extColor.korName,
 		});
-		setIsOpen(1);
+		setIsOpen(true);
 	};
 	//다음 버튼 이벤트
 	const handlePressNext = () => {

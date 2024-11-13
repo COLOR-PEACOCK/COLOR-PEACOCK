@@ -1,8 +1,9 @@
 import { COLOR } from '@styles/color';
+import { CrossHairProps } from '@typesStore/cameraTypes';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-const CrossHair = ({ extColor, parentlayout }) => {
+const CrossHair: React.FC<CrossHairProps> = ({ extColor, parentlayout }) => {
 	return (
 		<View
 			style={[
