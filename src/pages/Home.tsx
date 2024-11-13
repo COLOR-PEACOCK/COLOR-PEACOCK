@@ -8,7 +8,7 @@ import {
 	Image,
 	ScrollView,
 } from 'react-native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useSharedValue } from 'react-native-reanimated';
 import Carousel, {
 	ICarouselInstance,
@@ -25,22 +25,15 @@ import { useBackHandler, useHomeState, usePressButtonState } from '@hooks/Home';
 import { SearchSVG } from '@icons/index';
 import { widthScale } from '@utils/scaling';
 
-import { RootStackParamList } from '../router';
 import logoIcon from '@icons/logo.png';
 
 const DEFAULT_BUTTON_WIDTH = 376;
 
-interface color {
-	hexcode: string;
-	colorName: string;
-}
+type color = { hexcode: string; colorName: string };
 
-type HomeScreenRouteProp = NativeStackNavigationProp<
-	RootStackParamList,
-	'Home'
->;
+type HomeScreenRouteProp = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
-const Home = ({ navigation }: any) => {
+const Home: React.FC<HomeScreenRouteProp> = ({ navigation }) => {
 	const { width } = useWindowDimensions();
 	const pageWidth = width * 0.7;
 	const caroucelRef = useRef<ICarouselInstance>(null);
