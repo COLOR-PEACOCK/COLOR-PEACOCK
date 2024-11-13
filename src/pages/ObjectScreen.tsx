@@ -11,14 +11,9 @@ import {
 
 import { dummyColor, infoText } from '@utils/object/constants';
 import { useDefaultItem } from '@hooks/ObjectScreen';
+import { ObjectScreenProps } from '@typesStore/itemData.interface';
 
 const backgroundimg = require('@images/objectitems/background/background.png');
-
-interface ObjectScreenProps {
-	route: {
-		params?: string[];
-	};
-}
 
 const ObjectScreen: React.FC<ObjectScreenProps> = ({ route }) => {
 	const colors = route.params || dummyColor;
