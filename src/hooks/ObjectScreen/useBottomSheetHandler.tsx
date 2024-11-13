@@ -30,6 +30,12 @@ const useBottomSheetHandler = () => {
 			: bottomSheetRef?.current?.snapToIndex(0);
 	}, [isColorPickerOpen]);
 
+	useEffect(() => {
+		return () => {
+			setIsColorPickerOpen(false);
+		};
+	}, []);
+
 	const handlerTouchEvent = (): void => {
 		setIsColorPickerOpen(!isColorPickerOpen);
 	};
