@@ -2,10 +2,11 @@ import React, { PropsWithChildren } from 'react';
 import { Pressable, TextStyle } from 'react-native';
 import { COLOR } from '@styles/color';
 import { CustomText as Text } from '@components/common';
+import { StyleProp } from 'react-native';
 
 interface ListValueProps {
 	label: string;
-	textStyle?: TextStyle;
+	textStyle?: StyleProp<TextStyle>;
 	isActive?: boolean;
 	disabled?: boolean;
 	onPressLabel?: (label: string) => void;
@@ -32,10 +33,7 @@ const ListValue = ({
 	};
 
 	const getBackgroundColor = () => {
-		if (isActive) {
-			return COLOR.PRIMARY;
-		} else {
-		}
+		return isActive ? COLOR.PRIMARY : undefined;
 	};
 
 	return (
