@@ -5,7 +5,6 @@ import {
 	GenerationConfig,
 } from '@google/generative-ai';
 import { useState } from 'react';
-import { Alert } from 'react-native';
 
 interface BaseColor {
 	base_color_name_kr: string;

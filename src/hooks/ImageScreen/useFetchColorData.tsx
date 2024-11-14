@@ -6,7 +6,15 @@ interface Navigation {
 	goBack: () => void;
 }
 
-export const useFetchColorData = (hexValue: string, navigation: Navigation) => {
+interface FetchColorDataResponse {
+	data: any;
+	isLoading: boolean;
+}
+
+export const useFetchColorData = (
+	hexValue: string,
+	navigation: Navigation,
+): FetchColorDataResponse => {
 	const [data, setData] = useState<any>(null);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const { run } = useGemini();

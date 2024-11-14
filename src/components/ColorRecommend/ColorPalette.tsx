@@ -22,7 +22,7 @@ interface ColorPaletteProps {
 	titleEng: string;
 	colors: string[];
 	onColorSelect: (selectedColors: string[]) => void;
-	description?: { hexCode: string; harmony_description: string }[];
+	description?: string[];
 }
 
 const ColorPalette: React.FC<ColorPaletteProps> = ({

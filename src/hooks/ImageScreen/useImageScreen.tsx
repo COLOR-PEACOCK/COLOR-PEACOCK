@@ -1,17 +1,17 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Alert } from 'react-native';
-import RNFS from 'react-native-fs';
 import _ from 'lodash';
 
 // hooks & utils
 import { useColorName, useImagePicker } from '@hooks';
+import { convertToBase64, getHtmlContent } from '@utils/ImageScreen';
 
 interface ColorName {
 	korName: string;
 	engName: string;
 }
 
-export const useImageScreen = (visited: boolean) => {
+export const useImageScreen = () => {
 	const [color, setColor] = useState<string>('#000000');
 	const [colorName, setColorName] = useState<ColorName>({
 		korName: '',
@@ -22,31 +22,28 @@ export const useImageScreen = (visited: boolean) => {
 	const { imageUri, selectImage } = useImagePicker();
 	const { getColorName } = useColorName();
 
-	// 화면 처음 렌더링 -> 이미지 선택 유도 기능
+	// 이미지 선택 기능
 	useEffect(() => {
 		selectImage();
 	}, []);
 
-	// imageUri -> Base64로 변환 기능
-	const convertToBase64 = async () => {
-		try {
-			if (imageUri) {
-				const base64Image = await RNFS.readFile(imageUri, 'base64');
-				setImageDataUrl(`data:image/jpeg;base64,${base64Image}`);
-			}
-		} catch (error) {
-			Alert.alert('Error', '이미지를 Base64로 변환하는데 실패했습니다.');
-		}
-	};
-
-	// imageUri가 변경될 때 Base64 변환
+	// imageUri 변경 시 Base64 변환
 	useEffect(() => {
 		if (imageUri) {
-			convertToBase64();
+			convertToBase64(imageUri).then(dataUrl => {
+				if (dataUrl) {
+					setImageDataUrl(dataUrl);
+				} else {
+					Alert.alert(
+						'Error',
+						'이미지를 Base64로 변환하는데 실패했습니다.',
+					);
+				}
+			});
 		}
 	}, [imageUri]);
 
-	// 호출 제한하여 웹뷰에서 색상 데이터 전달 받기
+	// WebView에서 전달받은 색상 데이터로 업데이트
 	const onMessage = useCallback(
 		_.throttle((event: { nativeEvent: { data: string } }) => {
 			setColor(event.nativeEvent.data);
@@ -66,5 +63,6 @@ export const useImageScreen = (visited: boolean) => {
 		imageDataUrl,
 		onMessage,
 		selectImage,
+		getHtmlContent,
 	};
 };
