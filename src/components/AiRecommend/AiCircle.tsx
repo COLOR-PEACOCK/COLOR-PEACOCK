@@ -13,11 +13,11 @@ import { heightScale } from '@utils/scaling';
 interface AiCircleProps {
 	type: string; // 타입에 맞게 수정
 	number: number;
-	colorCode: string; // 색상 코드의 타입
-	korColorName: string; // 한국어 색상 이름
-	engColorName: string; // 영어 색상 이름
-	colorShort: string; // 색상 짧은 이름
-	colorDescription: string; // 색상 설명
+	colorCode: string[]; // 색상 코드의 타입
+	korColorName: string[]; // 한국어 색상 이름
+	engColorName: string[]; // 영어 색상 이름
+	colorShort: string[]; // 색상 짧은 이름
+	colorDescription: string[]; // 색상 설명
 	isSelected: string[]; // 선택 여부
 	setIsSelected: React.Dispatch<React.SetStateAction<string[]>>; // 선택 상태 설정 함수
 	containerHeight: number; // 컨테이너 높이
