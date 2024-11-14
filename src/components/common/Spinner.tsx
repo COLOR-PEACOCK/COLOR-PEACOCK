@@ -3,9 +3,9 @@ import { View, Image, Animated, Easing, Text } from 'react-native';
 import spinner from '../../assets/loadingSpinner.png';
 import logoIcon from '../../assets/icons/logo.png';
 
-const Spinner = () => {
+const Spinner: React.FC = () => {
 	// 스피너
-	const spinValue = useRef(new Animated.Value(0)).current;
+	const spinValue = useRef<Animated.Value>(new Animated.Value(0)).current;
 
 	useEffect(() => {
 		const animation = Animated.loop(
