@@ -7,13 +7,19 @@ import {
 	LayoutChangeEvent,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { COLOR } from '@styles/color';
 import { BasicHeader, LoadingScreen, CustomPopup } from '@components/common';
 import { AiCircle, Background } from '@components/AiRecommend';
 import useRunAi from '@hooks/AiScreen/useRunAi';
 
-const AiResponseScreen: React.FC<any> = ({ route }) => {
+type AiResponseScreenProps = NativeStackScreenProps<
+	RootStackParamList,
+	'AiResponseScreen'
+>;
+
+const AiResponseScreen: React.FC<AiResponseScreenProps> = ({ route }) => {
 	const { itemInImage, itemToRecommend, base64Image } = route.params;
 
 	const [isButtonPressed, setIsButtonPressed] = useState(false);
