@@ -63,7 +63,7 @@ const SearchInputForm = ({
 						handleAutoFocus(index, text);
 					}}
 					onSubmitEditing={() => {
-						if (inputOption.labels.length - 1 < index)
+						if (inputOption.labels.length - 1 > index)
 							handleFocusNext(index);
 						else onSubmit();
 					}}

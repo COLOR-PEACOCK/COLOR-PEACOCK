@@ -33,41 +33,7 @@ const Dropdown = ({
 	placeholder,
 }: DropdownProps) => {
 	const { isModalVisible, handleOpenModal, handleCloseModal } = useModal();
-	const [dropdownTop, setDropdownTop] = useState<number>(0);
-	const [dropdownLeft, setDropDownLeft] = useState<number>();
-	const [width, setWidth] = useState<number>(0);
 	const touchableOpacityRef = useRef<View>(null);
-
-	useEffect(() => {
-		if (!isModalVisible) {
-			return;
-		}
-
-		touchableOpacityRef.current?.measure(
-			(width: number, height: number, pageX: number, pageY: number) => {
-				setWidth(width);
-				setDropDownLeft(pageX);
-				if (
-					DEVICE_HEIGHT -
-						(pageY +
-							height +
-							12 +
-							Math.min(
-								SCROLL_VIEW_MAX_HEIGHT,
-								list.length * 48,
-							)) >
-					10
-				) {
-					setDropdownTop(pageY + height + 12);
-				} else {
-					setDropdownTop(
-						pageY -
-							Math.min(SCROLL_VIEW_MAX_HEIGHT, list.length * 48),
-					);
-				}
-			},
-		);
-	}, [isModalVisible]);
 
 	const handlePressLabel = (label: string) => {
 		handleCloseModal();
@@ -120,7 +86,8 @@ const Dropdown = ({
 							width: '100%',
 							alignItems: 'center',
 						}}>
-						<View style={[styles.modalContainer, { width }]}>
+						<View
+							style={[styles.modalContainer, { width: '100%' }]}>
 							<ScrollView
 								showsVerticalScrollIndicator={false}
 								keyboardShouldPersistTaps={'always'}>

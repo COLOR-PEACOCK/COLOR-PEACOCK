@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react';
+import React, { PropsWithChildren, useEffect } from 'react';
 import { Pressable, TextStyle } from 'react-native';
 import { COLOR } from '@styles/color';
 import { CustomText as Text } from '@components/common';
@@ -19,7 +19,8 @@ const ListValue = ({
 	onPressLabel,
 }: ListValueProps) => {
 	const handlePressLabel = () => {
-		if (onPressLabel) onPressLabel(label);
+		if (onPressLabel){
+			onPressLabel(label)};
 	};
 
 	const getTextColor = () => {
