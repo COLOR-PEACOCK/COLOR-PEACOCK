@@ -2,15 +2,6 @@ import React from 'react';
 import { SafeAreaView, View, StyleSheet } from 'react-native';
 import { WebView } from 'react-native-webview';
 
-// hooks & utils
-import { ImageScreenInfoText } from '@utils/infoText';
-import {
-	useImageScreen,
-	useControlScreen,
-	usePopup,
-	useImageWebview,
-} from '@hooks/ImageScreen';
-
 // components
 import { BasicHeader, CustomPopup } from '@components/common';
 import {
@@ -19,30 +10,30 @@ import {
 	ControlButtons,
 } from '@components/ImageScreen';
 
+// hooks & utils
+import { ImageScreenInfoText } from '@utils/infoText';
+import { usePopup, useImageScreen, useControlScreen } from '@hooks/ImageScreen';
+
 interface ImageScreenProps {
 	navigation: any;
-	route: {
-		params: {
-			color?: string;
-			colorName?: string;
-			imageDataUrl?: string;
-			visited?: boolean;
-		};
-	};
 }
 
-const ImageScreen: React.FC<ImageScreenProps> = ({ navigation, route }) => {
-	const { color, colorName, imageDataUrl, onMessage, selectImage } =
-		useImageScreen(route.params);
+const ImageScreen: React.FC<ImageScreenProps> = ({ navigation }) => {
+	const {
+		color,
+		colorName,
+		imageDataUrl,
+		onMessage,
+		selectImage,
+		getHtmlContent,
+	} = useImageScreen();
 	const { handleColorRecommend, handleAiRecommend } = useControlScreen(
 		navigation,
 		color,
 	);
-	const { getHtmlContent } = useImageWebview();
-	const { showPopup, handleClosePopup } = usePopup(
-		!route.params?.visited,
-		imageDataUrl,
-	);
+	const { showPopup } = usePopup({
+		initialVisibility: true,
+	});
 
 	return (
 		<SafeAreaView style={{ flex: 1 }}>
@@ -75,10 +66,7 @@ const ImageScreen: React.FC<ImageScreenProps> = ({ navigation, route }) => {
 			/>
 			{/* 초기 설명 팝업 */}
 			{showPopup && (
-				<CustomPopup
-					message="조준점을 잡아다 끌어서 이동시켜 보세요!"
-					onClose={handleClosePopup}
-				/>
+				<CustomPopup message="조준점을 잡아다 끌어서 이동시켜 보세요!" />
 			)}
 		</SafeAreaView>
 	);

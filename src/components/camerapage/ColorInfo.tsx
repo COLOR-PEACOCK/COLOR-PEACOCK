@@ -1,20 +1,21 @@
 import { COLOR } from '@styles/color';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { ColorInfoProps } from '@typesStore/cameraTypes';
 
 const cameraswitch = require('@icons/camera-switch.png');
 
-const ColorInfo = ({
+const ColorInfo: React.FC<ColorInfoProps> = ({
 	selectedColor,
 	parentlayout,
 	setIsOpen,
 	isOpen,
 	setCameraType,
 }) => {
-	const bottomSheetRef = useRef(null);
+	const bottomSheetRef = useRef<BottomSheet>(null);
 	const cameraSwitch = () =>
 		setCameraType(prevType => (prevType === 'back' ? 'front' : 'back'));
 
@@ -42,12 +43,14 @@ const ColorInfo = ({
 				)}
 			</View>
 
-			<View onPress={cameraSwitch} style={styles.switchbuttonwrapper}>
+			<TouchableOpacity
+				onPress={cameraSwitch}
+				style={styles.switchbuttonwrapper}>
 				<Image
 					source={cameraswitch}
 					style={{ width: 28, height: 28 }}
 				/>
-			</View>
+			</TouchableOpacity>
 		</View>
 	);
 

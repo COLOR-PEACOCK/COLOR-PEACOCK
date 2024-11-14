@@ -10,7 +10,7 @@ import {
 import { heightScale } from '@utils/scaling';
 import { COLOR } from '@styles/color';
 import { useCanvasItemHandler } from '@hooks/ObjectScreen';
-import { RenderItemProps } from 'types/itemData.interface';
+import { RenderItemProps } from '@typesStore/itemData.interface.ts';
 import { TrashIcon } from '@icons/objecticon/objectIcon.js';
 
 const CanvasDroppedItem: React.FC<RenderItemProps> = ({ item, isSelected }) => {

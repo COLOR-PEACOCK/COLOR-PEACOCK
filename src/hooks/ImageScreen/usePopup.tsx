@@ -1,20 +1,30 @@
 import { useState, useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface UsePopupProps {
 	initialVisibility: boolean;
-	dependency: any;
 }
 
-export const usePopup = ({ initialVisibility, dependency }: UsePopupProps) => {
+export const usePopup = ({ initialVisibility }: UsePopupProps) => {
 	const [showPopup, setShowPopup] = useState(initialVisibility);
 
 	useEffect(() => {
-		if (dependency) {
-			setShowPopup(!initialVisibility);
-		}
-	}, [dependency, initialVisibility]);
+		const checkFirstVisit = async () => {
+			try {
+				const hasVisited = await AsyncStorage.getItem('hasVisited');
+				if (!hasVisited && initialVisibility) {
+					setShowPopup(true);
+					await AsyncStorage.setItem('hasVisited', 'true');
+				} else {
+					setShowPopup(false);
+				}
+			} catch (error) {
+				console.error('AsyncStorage error:', error);
+			}
+		};
 
-	const handleClosePopup = () => setShowPopup(false);
+		checkFirstVisit();
+	}, [initialVisibility]);
 
-	return { showPopup, handleClosePopup };
+	return { showPopup };
 };

@@ -2,28 +2,36 @@ import React from 'react';
 import { SafeAreaView, View, StyleSheet, ScrollView } from 'react-native';
 import { COLOR } from '@styles/color';
 
+// components
+import { LoadingScreen, BasicHeader } from '@components/common';
+import { MainColorInfo, ColorPalette } from '@components/ColorRecommend';
+
 // hooks & utils
+import { ImageAiScreeninfoText } from '@utils/infoText';
 import { useColorInfo } from '@hooks/ColorRecommendScreen';
 import { useFetchColorData } from '@hooks/ImageScreen';
-import { ImageAiScreeninfoText } from '@utils/infoText';
-
-// components
-import { BasicHeader, LoadingScreen } from '@components/common';
-import { ColorPalette, MainColorInfo } from '@components/ColorRecommend';
 
 interface RouteParams {
 	mainColor: {
-		hexVal: string,
+		hexVal: string;
 	};
 }
 
 interface Navigation {
 	navigate: (screen: string, params: any) => void;
+	goBack: () => void;
+}
+
+interface RecommendedTheme {
+	theme_name_kr: string;
+	theme_name_eng: string;
+	theme_hexCode_list: string[];
+	colors: string[];
 }
 
 interface ImageAiScreenProps {
 	route: {
-		params: RouteParams,
+		params: RouteParams;
 	};
 	navigation: Navigation;
 }
@@ -66,24 +74,25 @@ const ImageAiScreen: React.FC<ImageAiScreenProps> = ({ route, navigation }) => {
 							colorInfo={colorInfo}
 							textColor={textColor}
 							labelColor={labelColor}
-							setIsPickerVisible={null}
 						/>
 					</View>
 					{/* 컬러 팔레트들 */}
 					<View style={styles.paletteContainer}>
 						{data &&
-							data.recommended_themes_and_colors?.map(item => (
-								<ColorPalette
-									key={item.theme_name_kr}
-									titleKor={item.theme_name_kr}
-									titleEng={item.theme_name_eng}
-									colors={[
-										data?.base_color[0].hexCode,
-									].concat(item.theme_hexCode_list)}
-									onColorSelect={handleColorSelect}
-									description={item.colors}
-								/>
-							))}
+							data.recommended_themes_and_colors?.map(
+								(item: RecommendedTheme) => (
+									<ColorPalette
+										key={item.theme_name_kr}
+										titleKor={item.theme_name_kr}
+										titleEng={item.theme_name_eng}
+										colors={[
+											data?.base_color[0].hexCode,
+										].concat(item.theme_hexCode_list)}
+										onColorSelect={handleColorSelect}
+										description={item.colors}
+									/>
+								),
+							)}
 					</View>
 				</ScrollView>
 			)}

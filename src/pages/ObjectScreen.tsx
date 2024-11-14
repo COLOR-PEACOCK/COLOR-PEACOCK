@@ -9,16 +9,12 @@ import {
 	ObjectBottomCotainer,
 } from '@components/ObjectPage';
 
-import { dummyColor, infoText } from '@utils/object/constants';
+import { dummyColor } from '@utils/object/constants';
+import { ObjectScreenInfoText } from '@utils/infoText';
 import { useDefaultItem } from '@hooks/ObjectScreen';
+import { ObjectScreenProps } from '@typesStore/itemData.interface';
 
 const backgroundimg = require('@images/objectitems/background/background.png');
-
-interface ObjectScreenProps {
-	route: {
-		params?: string[];
-	};
-}
 
 const ObjectScreen: React.FC<ObjectScreenProps> = ({ route }) => {
 	const colors = route.params || dummyColor;
@@ -32,7 +28,7 @@ const ObjectScreen: React.FC<ObjectScreenProps> = ({ route }) => {
 				subTitle={'color preview'}
 				titleIcon={'object'}
 				rightIcon={'info'}
-				infoText={infoText}
+				infoText={ObjectScreenInfoText}
 			/>
 
 			{/* 오브젝트 배치 화면 */}

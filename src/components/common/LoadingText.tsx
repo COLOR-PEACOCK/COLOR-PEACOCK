@@ -4,8 +4,8 @@ import { COLOR } from '@styles/color';
 
 // 로딩중 텍스트
 const LoadingText = () => {
-	const [loadingText, setLoadingText] = useState('AI 분석중');
-	const loadingStates = [
+	const [loadingText, setLoadingText] = useState<string>('AI 분석중');
+	const loadingStates: string[] = [
 		'AI 분석중',
 		'AI 분석중.',
 		'AI 분석중..',
@@ -13,7 +13,7 @@ const LoadingText = () => {
 	];
 
 	useEffect(() => {
-		let index = 0;
+		let index: number = 0;
 
 		const interval = setInterval(() => {
 			index = (index + 1) % loadingStates.length;
