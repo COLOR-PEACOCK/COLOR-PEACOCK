@@ -12,7 +12,7 @@ import { CustomText as Text } from '@components/common/CustomText';
 import { heightScale } from '@utils/scaling';
 
 import { useObjectState } from '@hooks/ObjectScreen';
-import { ItemDataTypes } from 'types/itemData.interface';
+import { ItemDataTypes } from '@typesStore/itemData.interface';
 
 const RenderItemList: React.FC = () => {
 	const {

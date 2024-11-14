@@ -6,3 +6,6 @@ export const ImageAiScreeninfoText =
 
 export const ColorRecommendScreenInfoText =
 	'• 선택한 색상을 기반하여 색상 추천 목록을 제공합니다.\n• 원하는 색상을 터치해 색상의 자세한 정보를 확인하세요!';
+
+export const ObjectScreenInfoText =
+	'추천 및 분석에서 얻은 색상들을 캐릭터에게 입혀 사전에 색상의 분위기를 직접적으로 체험할 수 있습니다.';
