@@ -3,6 +3,17 @@ import nearestColor from 'nearest-color';
 import colorNameList from '../assets/color_name.json';
 import { getLevenshteinDistance, stringFormat } from '@utils/home';
 
+interface ColorName {
+	korean_name: string;
+	name: string;
+	hex: string;
+}
+
+interface ColorResponse {
+	korean_name: string;
+	name: string;
+}
+
 /**
  * @returns isLoading, getEngColorName getKorColorName
  * @example
@@ -13,6 +24,7 @@ import { getLevenshteinDistance, stringFormat } from '@utils/home';
 const useColorName = () => {
 	useEffect(() => {}, []);
 	const [isLoading, setIsLoading] = useState(false);
+
 	const nearest = nearestColor.from(
 		colorNameList.reduce(
 			(o, { korean_name, hex }) =>
@@ -26,7 +38,6 @@ const useColorName = () => {
 			{},
 		),
 	);
-
 	const nearestName = nearestColor.from(
 		colorNameList.reduce(
 			(o, { name, korean_name, hex }) =>
@@ -43,12 +54,11 @@ const useColorName = () => {
 	 * const engColorName = await getEngColorName('0d0d0f')
 	 * ```
 	 */
-	const getColorName = value => {
+	const getColorName = (value: string): ColorResponse => {
 		setIsLoading(true);
 		const response = nearestName(value);
 		setIsLoading(false);
-		const korean_name = response.name.split('/')[0];
-		const name = response.name.split('/')[1];
+		const [korean_name, name] = response.name.split('/');
 		return { korean_name, name };
 	};
 
@@ -60,7 +70,7 @@ const useColorName = () => {
 	 * const engColorName = getEngColorNameLocal('#231f20')
 	 * ```
 	 */
-	const getEngColorNameLocal = value => {
+	const getEngColorNameLocal = (value: string): string => {
 		setIsLoading(true);
 		const response = nearestEng(value);
 		setIsLoading(false);
@@ -75,14 +85,17 @@ const useColorName = () => {
 	 * const korColorName = getKorColorName('#231f20')
 	 * ```
 	 */
-	const getKorColorName = value => {
+	const getKorColorName = (value: string): string => {
 		setIsLoading(true);
 		const response = nearest(value);
 		setIsLoading(false);
 		return response.name;
 	};
 
-	const getSortedSearchColorList = (key, keyword) => {
+	const getSortedSearchColorList = (
+		key: 'korean_name' | 'name',
+		keyword: string,
+	) => {
 		return colorNameList
 			.filter(color => {
 				return stringFormat(color[key]).includes(keyword);
@@ -98,7 +111,7 @@ const useColorName = () => {
 			.slice(0, 5);
 	};
 
-	const getSearchColorList = (isKorean, keyword) => {
+	const getSearchColorList = (isKorean: boolean, keyword: string) => {
 		const key = isKorean ? 'korean_name' : 'name';
 		const keyword_ = stringFormat(keyword);
 		return getSortedSearchColorList(key, keyword_);

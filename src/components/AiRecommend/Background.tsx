@@ -1,13 +1,13 @@
 import React from 'react';
 import Svg, { Circle, Path } from 'react-native-svg';
 
-const Background = ({ color }) => (
+const Background: React.FC<{ color: string }> = ({ color }) => (
 	<Svg
 		width="372"
 		height="727"
 		viewBox="0 0 372 727"
 		fill="none"
-		xmlns="http://www.w3.org/2000/svg"
+		// xmlns="http://www.w3.org/2000/svg"
 		style={{ zIndex: -11 }}>
 		<Circle
 			cx="24"
