@@ -1,23 +1,23 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { TouchableOpacity, StyleSheet, View, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { COLOR } from '@styles/color';
 import { CustomText as Text, SVGIcon } from '@components/common';
-
 // images
 import informationIcon from '@icons/infor.png';
 
+interface BasicHeaderProps {
+	leftIcon?: string;
+	onPressLeft?: () => void;
+	titleIcon?: IconName;
+	title?: string;
+	subTitle?: string;
+	rightIcon?: string;
+	onPressRight?: () => void;
+	infoText?: string;
+}
 /**
- * @param {string} leftIcon 왼쪽 버튼 아이콘, default: arrowleft
- * @param onPressLeft 왼쪽 버튼 이벤트, default: goback()
- * @param titleIcon 유효한 값: 'camera', 'image', 'AI', 'report', 'palette'
- * @param title default color: COLOR.PRIMARY
- * @param subTitle default color: COLOR.GRAY6
- * @param rightIcon 오른쪽 버튼, default: null
- * @param onPressRight 오른쪽 버튼 이벤트, default: null
- * @see 왼쪽, 오른쪽 아이콘 https://oblador.github.io/react-native-vector-icons/#AntDesign
- * @example 모든 파라미터는 생략 가능합니다.
  * ```
 <BasicHeader
     titleIcon={'iamge'}
@@ -29,14 +29,14 @@ const infoText = 'infomation text'
  */
 const BasicHeader = ({
 	leftIcon = 'arrowleft',
-	onPressLeft = null,
+	onPressLeft,
 	titleIcon,
 	title,
 	subTitle,
-	rightIcon = null,
+	rightIcon,
 	onPressRight,
 	infoText,
-}) => {
+}: BasicHeaderProps) => {
 	const navigate = useNavigation();
 	const isInfo = rightIcon === 'info';
 	const [infoButtonLayout, setInfoButtonLayout] = useState({
@@ -45,26 +45,9 @@ const BasicHeader = ({
 		left: 0,
 		top: 0,
 	});
-	const infoButtonRef = useRef(null);
-	const infoModalRef = useRef(null);
-	const [infoTextWidth, setInfoTextWidth] = useState(0);
-	const [isInfoVisible, setIsInfoVisible] = useState();
 
-	useEffect(() => {
-		infoButtonRef.current?.measure(
-			(_x, _y, width, height, pageX, pageY) => {
-				setInfoButtonLayout({
-					width: width,
-					height: height,
-					left: pageX,
-					top: pageY,
-				});
-			},
-		);
-		infoModalRef.current?.measure((_x, _y, width, height, pageX, pageY) => {
-			setInfoTextWidth(width);
-		});
-	}, []);
+	const [infoTextWidth, setInfoTextWidth] = useState<number>(0);
+	const [isInfoVisible, setIsInfoVisible] = useState<boolean>(false);
 
 	return (
 		<View
@@ -90,6 +73,7 @@ const BasicHeader = ({
 					height={45}
 					color={COLOR.PRIMARY}
 				/>
+
 				<Text style={styles.title}>{title}</Text>
 				<Text style={styles.engTitle}>{subTitle}</Text>
 			</View>
@@ -97,13 +81,20 @@ const BasicHeader = ({
 			{/* right button */}
 			{isInfo ? (
 				<TouchableOpacity
-					ref={infoButtonRef}
 					style={styles.infoButton}
 					onPress={
 						infoText
 							? () => setIsInfoVisible(!isInfoVisible)
 							: onPressRight
-					}>
+					}
+					onLayout={({ nativeEvent }) => {
+						setInfoButtonLayout({
+							width: nativeEvent.layout.width,
+							height: nativeEvent.layout.height,
+							left: nativeEvent.layout.x,
+							top: nativeEvent.layout.y,
+						});
+					}}>
 					<Image
 						source={informationIcon}
 						style={{ width: 24, height: 24 }}
@@ -130,11 +121,13 @@ const BasicHeader = ({
 							{rightIcon}
 						</Text>
 					) : (
-						<Icon
-							name={rightIcon}
-							color={COLOR.PRIMARY}
-							size={30}
-						/>
+						rightIcon && (
+							<Icon
+								name={rightIcon}
+								color={COLOR.PRIMARY}
+								size={30}
+							/>
+						)
 					)}
 				</TouchableOpacity>
 			)}
@@ -155,7 +148,11 @@ const BasicHeader = ({
 							opacity: isInfoVisible ? 100 : 0,
 						},
 					]}>
-					<View ref={infoModalRef} style={styles.infoModalSquare}>
+					<View
+						style={styles.infoModalSquare}
+						onLayout={({ nativeEvent }) => {
+							setInfoTextWidth(nativeEvent.layout.width);
+						}}>
 						<View style={styles.triangleBorder}>
 							<View style={styles.triangle} />
 						</View>

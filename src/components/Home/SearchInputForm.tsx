@@ -1,26 +1,20 @@
 import React, { forwardRef } from 'react';
-import { Pressable, StyleSheet, TextInput, View, TextInputProps } from 'react-native';
+import {
+	Pressable,
+	StyleSheet,
+	TextInput,
+	View,
+	TextInputProps,
+} from 'react-native';
 import { COLOR } from '@styles/color';
 import { CustomText as Text } from '@components/common';
-import { useInputState } from '@hooks/home';
-
+import { useInputState } from '@hooks/Home';
+import { InputValuesType } from '@typesStore/Home/inputTypes';
 
 interface SearchInputFormProps {
 	selectedLabel: string;
-	inputValues: {
-		part1: string;
-		part2: string;
-		part3: string;
-		part4: string;
-	};
-	setInputValues: React.Dispatch<
-		React.SetStateAction<{
-			part1: string;
-			part2: string;
-			part3: string;
-			part4: string;
-		}>
-	>;
+	inputValues: InputValuesType;
+	setInputValues: React.Dispatch<React.SetStateAction<InputValuesType>>;
 	onSubmit: () => void;
 }
 

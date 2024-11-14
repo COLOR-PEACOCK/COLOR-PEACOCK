@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useColorName } from '@hooks/index';
 import {
-	INPUT_TYPES,
 	colorConverter,
 	isValidKorean,
 	stringFormat,
-} from '@utils/home';
+} from '@utils/Home';
+import { INPUT_TYPES, InputValuesType } from '@typesStore/Home/inputTypes';
 
 const useSearchModalState = () => {
 	const initValue = {
@@ -18,7 +18,7 @@ const useSearchModalState = () => {
 	const [selectedLabel, setSelectedLabel] = useState<string>(
 		INPUT_TYPES.COLOR_NAME,
 	);
-	const [inputValues, setInputValues] = useState<typeof initValue>(initValue);
+	const [inputValues, setInputValues] = useState<InputValuesType>(initValue);
 	const [searchNameList, setSearchNameList] = useState<
 		{
 			distance: number | undefined;
@@ -59,7 +59,7 @@ const useSearchModalState = () => {
 	// 검색 버튼 터치 시
 	const handleHexValue = () => {
 		const convertValueToHex =
-			colorConverter[selectedLabel] || (values => values);
+			colorConverter[selectedLabel] || ((values: string[]) => values);
 		const hexValue = convertValueToHex(inputValues, searchNameList);
 		if (hexValue) return hexValue;
 		else console.log('fail');

@@ -1,6 +1,6 @@
 import { Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { useAsyncStorage } from '@hooks/home';
+import { useAsyncStorage } from '@hooks/Home';
 import { RootStackParamList } from '../../router';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 

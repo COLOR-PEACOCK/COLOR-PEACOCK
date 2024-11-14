@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import nearestColor from 'nearest-color';
 import colorNameList from '../assets/color_name.json';
-import { getLevenshteinDistance, stringFormat } from '@utils/home';
+import { getLevenshteinDistance, stringFormat } from '@utils/Home';
 
 // interface ColorName {
 // 	korean_name: string;

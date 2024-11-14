@@ -1,13 +1,4 @@
-import React, {
-	useRef,
-	useState,
-	useEffect,
-	PropsWithChildren,
-	Component,
-	RefObject,
-	ComponentProps,
-	ComponentRef,
-} from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import {
 	View,
 	StyleSheet,
@@ -16,7 +7,6 @@ import {
 	ScrollView,
 	Pressable,
 	ViewStyle,
-	TouchableOpacityProps,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { COLOR } from '@styles/color';
@@ -54,14 +44,7 @@ const Dropdown = ({
 		}
 
 		touchableOpacityRef.current?.measure(
-			(
-				_x: any,
-				_y: any,
-				width: React.SetStateAction<number>,
-				height: any,
-				pageX: number,
-				pageY: number,
-			) => {
+			(width: number, height: number, pageX: number, pageY: number) => {
 				setWidth(width);
 				setDropDownLeft(pageX);
 				if (

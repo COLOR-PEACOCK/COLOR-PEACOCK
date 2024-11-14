@@ -1,5 +1,5 @@
-import React, { PropsWithChildren } from 'react';
-import { StyleSheet, Text } from 'react-native';
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 
 interface OutlinedTextProps {
 	strokeColor: string;
@@ -33,7 +33,7 @@ const OutlinedText = ({
 	});
 
 	return (
-		<>
+		<View>
 			<Text style={styles.paragraph}>{text}</Text>
 			<Text
 				style={[
@@ -59,7 +59,7 @@ const OutlinedText = ({
 				]}>
 				{text}
 			</Text>
-		</>
+		</View>
 	);
 };
 

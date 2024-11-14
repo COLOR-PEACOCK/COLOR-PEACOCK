@@ -1,15 +1,13 @@
-import { PropsWithChildren } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { COLOR } from '@styles/color';
 import { SVGIcon } from '@components/common';
-import { usePressButtonState } from '@hooks/home';
-import { IconName } from '@components/common/SVGIcon';
+import { usePressButtonState } from '@hooks/Home';
 
 interface PressButtonProps {
-	iconName: IconName;
-	onPress: any;
-	engText: string;
-	text: string;
+	iconName?: IconName;
+	onPress?: any;
+	engText?: string;
+	text?: string;
 	enabled?: boolean;
 }
 const SIZE = 48;

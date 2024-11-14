@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
-import { inputTypeMap } from '@utils/home';
 import { TextInput } from 'react-native';
+import { INPUT_TYPES, inputTypeMap } from '@typesStore/Home/inputTypes';
 
-const useInputState = (selectedLabel:string) => {
+const useInputState = (selectedLabel: string) => {
 	const inputRef = useRef<TextInput[]>([]);
-	const [inputOption, setInputOption] = useState(inputTypeMap['색상 이름']);
+	const [inputOption, setInputOption] = useState(
+		inputTypeMap[INPUT_TYPES.COLOR_NAME],
+	);
 	useEffect(() => {
 		setInputOption(inputTypeMap[selectedLabel]);
 		inputRef.current[0]?.focus();
