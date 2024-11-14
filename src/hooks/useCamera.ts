@@ -1,12 +1,11 @@
-import { useNavigation } from "@react-navigation/native";
-import { Alert, Linking } from "react-native";
-import { useCameraPermission } from "react-native-vision-camera";
-
+import { useNavigation } from '@react-navigation/native';
+import { Alert, Linking } from 'react-native';
+import { useCameraPermission } from 'react-native-vision-camera';
 
 const useCamera = () => {
-    const navigation = useNavigation();
-    const { hasPermission, requestPermission } = useCameraPermission();
-    const requestCameraPermission = async () => {
+	const navigation = useNavigation();
+	const { hasPermission, requestPermission } = useCameraPermission();
+	const requestCameraPermission = async () => {
 		try {
 			if (hasPermission === false) {
 				const newPermission = await requestPermission();
@@ -26,12 +25,12 @@ const useCamera = () => {
 			}
 		} catch (error) {
 			Alert.alert('알림', '카메라 렌더링중 오류가 발생했습니다.', [
-				{ text: '확인', onPress: navigation.goBack() },
+				{ text: '확인', onPress: () => navigation.goBack() },
 			]);
 		}
 	};
 
- return { hasPermission, requestCameraPermission}
-}
+	return { hasPermission, requestCameraPermission };
+};
 
 export default useCamera;
