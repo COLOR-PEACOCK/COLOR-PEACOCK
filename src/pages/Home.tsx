@@ -29,8 +29,6 @@ import logoIcon from '@icons/logo.png';
 
 const DEFAULT_BUTTON_WIDTH = 376;
 
-type color = { hexcode: string; colorName: string };
-
 type HomeScreenRouteProp = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
 const Home: React.FC<HomeScreenRouteProp> = ({ navigation }) => {

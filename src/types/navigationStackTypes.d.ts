@@ -4,13 +4,13 @@ declare type RootStackParamList = {
 	ImageScreen: { visited: boolean };
     ImageAiScreen: { mainColor: { hexVal: string } };
 	AiOnboardingScreen: undefined;
-	AiScreen: {
+	AiScreen: undefined;
+	AiResponseScreen: {
 		itemInImage: string;
 		itemToRecommend: string;
 		base64Image: string;
 	};
-	AiResponseScreen: undefined;
 	ColorRecommendScreen: { mainColor: { hexVal: string } };
-	ObjectScreen: { selectedColors: string[] };
-	ObjectInterior: { selectedColors: string[] };
+	ObjectScreen: string[];
+	ObjectInterior: string[];
 };
