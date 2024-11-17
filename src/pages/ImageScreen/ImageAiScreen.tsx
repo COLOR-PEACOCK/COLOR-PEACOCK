@@ -10,17 +10,7 @@ import { MainColorInfo, ColorPalette } from '@components/ColorRecommend';
 import { ImageAiScreeninfoText } from '@utils/infoText';
 import { useColorInfo } from '@hooks/ColorRecommendScreen';
 import { useFetchColorData } from '@hooks/ImageScreen';
-
-interface RouteParams {
-	mainColor: {
-		hexVal: string;
-	};
-}
-
-interface Navigation {
-	navigate: (screen: string, params: any) => void;
-	goBack: () => void;
-}
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 interface RecommendedTheme {
 	theme_name_kr: string;
@@ -29,12 +19,7 @@ interface RecommendedTheme {
 	colors: string[];
 }
 
-interface ImageAiScreenProps {
-	route: {
-		params: RouteParams;
-	};
-	navigation: Navigation;
-}
+type ImageAiScreenProps = NativeStackScreenProps<RootStackParamList, 'ImageAiScreen'>;
 
 const ImageAiScreen: React.FC<ImageAiScreenProps> = ({ route, navigation }) => {
 	const { mainColor } = route.params;
