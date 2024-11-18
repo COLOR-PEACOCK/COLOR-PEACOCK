@@ -1,9 +1,8 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
 	View,
 	StyleSheet,
 	TouchableOpacity,
-	Dimensions,
 	ScrollView,
 	Pressable,
 	ViewStyle,
@@ -11,9 +10,7 @@ import {
 import Icon from 'react-native-vector-icons/AntDesign';
 import { COLOR } from '@styles/color';
 import { ListValue } from '@components/Home';
-import { useModal } from '@hooks/index';
 
-const DEVICE_HEIGHT = Dimensions.get('window').height;
 const SCROLL_VIEW_MAX_HEIGHT = 240;
 
 interface DropdownProps {
@@ -24,6 +21,7 @@ interface DropdownProps {
 	disabled?: boolean;
 	placeholder?: string;
 }
+
 const Dropdown = ({
 	list,
 	selectedLabel = '',
@@ -32,75 +30,65 @@ const Dropdown = ({
 	disabled,
 	placeholder,
 }: DropdownProps) => {
-	const { isModalVisible, handleOpenModal, handleCloseModal } = useModal();
-	const touchableOpacityRef = useRef<View>(null);
+	const [isOpen, setIsOpen] = useState(false);
 
-	const handlePressLabel = (label: string) => {
-		handleCloseModal();
-		if (onClickDropdown) {
-			onClickDropdown(label);
-		}
-	};
+	const handlePressLabel = useCallback(
+		(label: string) => {
+			setIsOpen(false);
+			onClickDropdown?.(label);
+		},
+		[onClickDropdown],
+	);
+
+	const toggleDropdown = useCallback(() => {
+		setIsOpen(prev => !prev);
+	}, []);
+
+	const renderListItems = useCallback(() => {
+		return list.map(l => (
+			<ListValue
+				key={l}
+				label={l}
+				isActive={l === selectedLabel}
+				onPressLabel={() => handlePressLabel(l)} // 바로 label 전달
+			/>
+		));
+	}, [list, selectedLabel, handlePressLabel]);
 
 	return (
 		<View style={layoutStyle}>
 			<TouchableOpacity
 				activeOpacity={1}
-				ref={touchableOpacityRef}
 				disabled={disabled}
-				onPress={isModalVisible ? handleCloseModal : handleOpenModal}
+				onPress={toggleDropdown}
 				style={[
 					styles.fieldContainer,
-					{
-						...(isModalVisible && {
-							borderColor: COLOR.PRIMARY,
-							borderWidth: 2,
-							borderRadius: 8,
-						}),
-						...(disabled && {
-							borderColor: COLOR.GRAY_5,
-						}),
-					},
+					isOpen && styles.fieldContainerOpen,
+					disabled && styles.fieldContainerDisabled,
 				]}>
 				<ListValue
-					label={selectedLabel}
-					{...(!selectedLabel &&
-						placeholder && {
-							disabled: true,
-							label: placeholder,
-						})}
-					onPressLabel={
-						isModalVisible ? handleCloseModal : handleOpenModal
-					}
+					label={selectedLabel || placeholder || ''}
+					disabled={!selectedLabel && !!placeholder}
+					onPressLabel={toggleDropdown}
 				/>
 				<Icon
-					name={isModalVisible ? 'caretup' : 'caretdown'}
+					name={isOpen ? 'caretup' : 'caretdown'}
 					size={10}
-					style={{ marginHorizontal: 18 }}
+					style={styles.icon}
 				/>
 			</TouchableOpacity>
-			{isModalVisible && (
-				<Pressable onPress={handleCloseModal}>
-					<View
-						style={{
-							width: '100%',
-							alignItems: 'center',
-						}}>
-						<View
-							style={[styles.modalContainer, { width: '100%' }]}>
-							<ScrollView
-								showsVerticalScrollIndicator={false}
-								keyboardShouldPersistTaps={'always'}>
-								{list.map(l => (
-									<ListValue
-										key={l}
-										label={l}
-										isActive={l === selectedLabel}
-										onPressLabel={handlePressLabel}
-									/>
-								))}
-							</ScrollView>
-						</View>
+			{isOpen && (
+				<Pressable
+					onPress={toggleDropdown}
+					style={styles.pressableOverlay}>
+					<View style={styles.modalContainer}>
+						<ScrollView
+							showsVerticalScrollIndicator={false}
+							keyboardShouldPersistTaps="always"
+							style={{ maxHeight: SCROLL_VIEW_MAX_HEIGHT }}
+						>
+							{renderListItems()}
+						</ScrollView>
 					</View>
 				</Pressable>
 			)}
@@ -118,6 +106,15 @@ const styles = StyleSheet.create({
 		borderWidth: 2,
 		borderRadius: 8,
 	},
+	fieldContainerOpen: {
+		borderColor: COLOR.PRIMARY,
+	},
+	fieldContainerDisabled: {
+		borderColor: COLOR.GRAY_5,
+	},
+	icon: {
+		marginHorizontal: 18,
+	},
 	modalContainer: {
 		zIndex: 10,
 		borderWidth: 2,
@@ -125,6 +122,11 @@ const styles = StyleSheet.create({
 		borderColor: COLOR.GRAY_3,
 		backgroundColor: COLOR.WHITE,
 		elevation: 4,
+		width: '100%',
+	},
+	pressableOverlay: {
+		width: '100%',
+		alignItems: 'center',
 	},
 });
 
