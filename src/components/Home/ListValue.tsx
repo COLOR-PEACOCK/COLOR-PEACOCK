@@ -1,8 +1,7 @@
-import React, { PropsWithChildren, useEffect } from 'react';
-import { Pressable, TextStyle } from 'react-native';
+import React, { memo, useCallback } from 'react';
+import { Pressable, TextStyle, StyleProp } from 'react-native';
 import { COLOR } from '@styles/color';
 import { CustomText as Text } from '@components/common';
-import { StyleProp } from 'react-native';
 
 interface ListValueProps {
 	label: string;
@@ -11,44 +10,44 @@ interface ListValueProps {
 	disabled?: boolean;
 	onPressLabel?: (label: string) => void;
 }
-const ListValue = ({
-	label,
-	textStyle,
-	isActive,
-	disabled,
-	onPressLabel,
-}: ListValueProps) => {
-	const handlePressLabel = () => {
-		if (onPressLabel){
-			onPressLabel(label)};
-	};
 
-	const getTextColor = () => {
-		if (isActive) {
-			return COLOR.WHITE;
-		} else if (disabled) {
-			return COLOR.GRAY_6;
-		} else {
-			return COLOR.GRAY_10;
-		}
-	};
+const ListValue = memo(
+	({
+		label,
+		textStyle,
+		isActive,
+		disabled,
+		onPressLabel,
+	}: ListValueProps) => {
+		const handlePressLabel = useCallback(() => {
+			onPressLabel?.(label);
+		}, [onPressLabel, label]);
 
-	const getBackgroundColor = () => {
-		return isActive ? COLOR.PRIMARY : undefined;
-	};
+		const textColor = isActive
+			? COLOR.WHITE
+			: disabled
+			? COLOR.GRAY_6
+			: COLOR.GRAY_10;
+		const backgroundColor = isActive ? COLOR.PRIMARY : undefined;
 
-	return (
-		<Pressable
-			style={{
-				paddingLeft: 8,
-				paddingVertical: 8,
-				backgroundColor: getBackgroundColor(),
-				borderRadius: 4,
-			}}
-			onPress={handlePressLabel}>
-			<Text style={[textStyle, { color: getTextColor() }]}>{label}</Text>
-		</Pressable>
-	);
-};
+		return (
+			<Pressable
+				style={({ pressed }) => [
+					{
+						paddingLeft: 8,
+						paddingVertical: 8,
+						backgroundColor: backgroundColor,
+						borderRadius: 4,
+						opacity: pressed ? 0.5 : 1,
+					},
+				]}
+				onPress={handlePressLabel}
+				disabled={!onPressLabel || disabled} // onPressLabel이 없거나 disabled일 경우 비활성화
+			>
+				<Text style={[textStyle, { color: textColor }]}>{label}</Text>
+			</Pressable>
+		);
+	},
+);
 
 export default ListValue;
