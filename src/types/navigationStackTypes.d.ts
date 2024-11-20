@@ -2,7 +2,7 @@ declare type RootStackParamList = {
 	Home: undefined;
 	CameraScreen: undefined;
 	ImageScreen: { visited: boolean };
-    ImageAiScreen: { mainColor: { hexVal: string } };
+	ImageAiScreen: { mainColor: { hexVal: string } };
 	AiOnboardingScreen: undefined;
 	AiScreen: {
 		itemInImage: string;
