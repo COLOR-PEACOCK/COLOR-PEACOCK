@@ -18,7 +18,7 @@ import { CarouselRenderItemInfo } from 'react-native-reanimated-carousel/lib/typ
 import convert from 'color-convert';
 
 import { COLOR } from '@styles/color';
-import { CustomText as Text } from '@components/common';
+import { SVGIcon, CustomText as Text } from '@components/common';
 import { PressButton, OutlinedText, SearchModal } from '@components/Home';
 import { useCheckAppVersion, useModal } from '@hooks/index';
 import { useBackHandler, useHomeState, usePressButtonState } from '@hooks/Home';
@@ -122,14 +122,14 @@ const Home: React.FC<HomeScreenRouteProp> = ({ navigation }) => {
 						/>
 					</View>
 					<Pressable
+						onPressIn={handleTouchStart}
+						onPress={handleOpenModal}
+						onPressOut={handleTouchEnd}
 						style={[
 							styles.searchIconWrapper,
 							{ backgroundColor: buttonColor },
-						]}
-						onPressIn={handleTouchStart}
-						onPress={handleOpenModal}
-						onPressOut={handleTouchEnd}>
-						<SearchSVG color={contentColor} />
+						]}>
+						<SVGIcon name={'search'} color={contentColor} />
 					</Pressable>
 				</View>
 				<ScrollView
