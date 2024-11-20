@@ -1,34 +1,10 @@
 import React from 'react';
-import { View, Image, TouchableOpacity, Alert, StyleSheet } from 'react-native';
-import { launchImageLibrary } from 'react-native-image-picker';
+import { View, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { CustomText as Text } from '@components/common/CustomText';
+import useImagePicker from '@hooks/useImagePicker';
 
-interface ImagePickerProps {
-	imageUri: string | null;
-	setImageUri: (uri: string) => void;
-}
-
-const ImagePicker: React.FC<ImagePickerProps> = ({ imageUri, setImageUri }) => {
-	const selectImage = async () => {
-		try {
-			const response = await launchImageLibrary({ mediaType: 'photo' });
-			if (response.didCancel) {
-				Alert.alert(
-					'Image selection canceled',
-					'No image was selected.',
-				);
-			} else if (response.errorMessage) {
-				Alert.alert('Error', response.errorMessage);
-			} else if (response.assets && response.assets[0]?.uri) {
-				setImageUri(response.assets[0].uri);
-			}
-		} catch (error) {
-			Alert.alert(
-				'Error',
-				`An error occurred: ${(error as Error).message}`,
-			);
-		}
-	};
+const ImagePicker: React.FC = () => {
+	const { imageUri, selectImage } = useImagePicker();
 
 	return (
 		<TouchableOpacity style={styles.imageContainer} onPress={selectImage}>
