@@ -6,3 +6,5 @@ declare type IconName =
 	| 'report'
 	| 'object'
 	| 'search';
+
+declare	type color = { hexcode: string; colorName: string };
