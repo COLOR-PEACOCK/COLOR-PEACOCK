@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { SafeAreaView, View, StyleSheet, ScrollView } from 'react-native';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 // components
 import { BasicHeader } from '@components/common';
@@ -16,18 +17,10 @@ import { ColorRecommendScreenInfoText } from '@utils/infoText';
 // styles
 import { COLOR } from '@styles/color';
 
-interface ColorRecommendScreenProps {
-	route: {
-		params: {
-			mainColor: {
-				hexVal: string;
-			};
-		};
-	};
-	navigation: {
-		navigate: (screen: string, params: any) => void;
-	};
-}
+type ColorRecommendScreenProps = NativeStackScreenProps<
+	RootStackParamList,
+	'ColorRecommendScreen'
+>;
 
 const ColorRecommendScreen: React.FC<ColorRecommendScreenProps> = ({
 	route,
@@ -42,7 +35,7 @@ const ColorRecommendScreen: React.FC<ColorRecommendScreenProps> = ({
 	const colorVariants = useColorVariants(tempColor.replace('#', ''));
 
 	const handleColorSelect = (selectedColors: string[]) => {
-		navigation.navigate('ObjectScreen', selectedColors);
+		navigation.navigate('ObjectScreen', { selectedColors });
 	};
 
 	return (

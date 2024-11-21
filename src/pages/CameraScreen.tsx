@@ -8,6 +8,8 @@ import {
 	LayoutChangeEvent,
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+
 import { CameraPosition } from 'react-native-vision-camera';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -25,7 +27,12 @@ import { ExtColor, ParentLayout, SeletedColor } from '@typesStore/cameraTypes';
 
 const extbutton = require('@icons/circle__lock__btn.png');
 
-const CameraScreen = ({ navigation }) => {
+type CameraScreenProps = NativeStackScreenProps<
+	RootStackParamList,
+	'CameraScreen'
+>;
+
+const CameraScreen: React.FC<CameraScreenProps> = ({ navigation }) => {
 	const [isActive, setIsActive] = useState<boolean>(false);
 	const [cameraType, setCameraType] = useState<CameraPosition>('back');
 	const [parentlayout, setParentlayout] = useState<ParentLayout>({
