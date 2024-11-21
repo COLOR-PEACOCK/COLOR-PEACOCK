@@ -4,7 +4,7 @@ import convert from 'color-convert';
 export function getComplementaryColor(hsl: [number, number, number]): string[] {
 	return [
 		`#${convert.hsl.hex([hsl[0], hsl[1], hsl[2]])}`,
-		`#${convert.hsl.hex((hsl[0] + 180) % 360, hsl[1], hsl[2])}`,
+		`#${convert.hsl.hex([(hsl[0] + 180) % 360, hsl[1], hsl[2]])}`,
 	];
 }
 

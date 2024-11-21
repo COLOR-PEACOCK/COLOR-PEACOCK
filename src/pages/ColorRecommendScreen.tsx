@@ -35,7 +35,7 @@ const ColorRecommendScreen: React.FC<ColorRecommendScreenProps> = ({
 	const colorVariants = useColorVariants(tempColor.replace('#', ''));
 
 	const handleColorSelect = (selectedColors: string[]) => {
-		navigation.navigate('ObjectScreen', { selectedColors });
+		navigation.navigate('ObjectScreen', selectedColors);
 	};
 
 	return (
