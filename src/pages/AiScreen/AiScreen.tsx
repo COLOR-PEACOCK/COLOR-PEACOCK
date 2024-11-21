@@ -8,13 +8,17 @@ import {
 	KeyboardAvoidingView,
 	SafeAreaView,
 } from 'react-native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+
 import RNFS from 'react-native-fs';
 import { COLOR } from '@styles/color';
 import { BasicHeader, CustomText as Text } from '@components/common';
 import useImagePicker from '@hooks/useImagePicker';
 import RunAi from '@icons/runAiIcon.svg';
 
-const AiScreen: React.FC<any> = ({ navigation }) => {
+type AiScreenProps = NativeStackScreenProps<RootStackParamList, 'AiScreen'>;
+
+const AiScreen: React.FC<AiScreenProps> = ({ navigation }) => {
 	const [itemInImage, setItemInImage] = useState<string>('');
 	const [itemToRecommend, setItemToRecommend] = useState<string>('');
 	const { imageUri, selectImage } = useImagePicker();
