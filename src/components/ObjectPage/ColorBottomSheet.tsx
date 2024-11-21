@@ -5,8 +5,7 @@ import {
 	TouchableOpacity,
 	View,
 } from 'react-native';
-import BottomSheet from '@gorhom/bottom-sheet';
-import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
+import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 
 import { heightScale } from '@utils/scaling';
 import { useBottomSheetHandler } from '@hooks/ObjectScreen';
@@ -24,29 +23,31 @@ const ColorBottomSheet: React.FC<ColorBottomSheetProps> = ({ colors }) => {
 	return (
 		<View style={styles.colorContainer}>
 			<BottomSheet
-				ref={bottomSheetRef as React.RefObject<BottomSheetMethods>}
-				snapPoints={[heightScale(40), heightScale(108)]}
+				ref={bottomSheetRef}
+				snapPoints={[heightScale(40), heightScale(104)]}
 				enableHandlePanningGesture={false}
 				handleComponent={CustomHandler}
 				backgroundComponent={null}>
-				<ImageBackground
-					source={colorContainer}
-					style={{
-						flex: 1,
-					}}>
-					<View style={styles.colorWrapper}>
-						{colors.map((color, index) => (
-							<TouchableOpacity
-								key={index}
-								style={[
-									styles.colorBox,
-									{ backgroundColor: color },
-								]}
-								onPress={() => handleColorSelect(color)}
-							/>
-						))}
-					</View>
-				</ImageBackground>
+				<BottomSheetView style={{ width: '100%', height: '100%' }}>
+					<ImageBackground
+						source={colorContainer}
+						style={{
+							height: heightScale(64),
+						}}>
+						<View style={styles.colorWrapper}>
+							{colors.map((color, index) => (
+								<TouchableOpacity
+									key={index}
+									style={[
+										styles.colorBox,
+										{ backgroundColor: color },
+									]}
+									onPress={() => handleColorSelect(color)}
+								/>
+							))}
+						</View>
+					</ImageBackground>
+				</BottomSheetView>
 			</BottomSheet>
 		</View>
 	);
