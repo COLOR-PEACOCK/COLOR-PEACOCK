@@ -33,7 +33,7 @@ export interface ObjectStateContextType {
 }
 
 export interface ObjectStateProviderProps {
-	children: string;
+	children: React.ReactNode;
 }
 
 export interface RenderItemProps {
