@@ -1,6 +1,7 @@
 import React from 'react';
 import { SafeAreaView, View, StyleSheet, ScrollView } from 'react-native';
 import { COLOR } from '@styles/color';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 // components
 import { LoadingScreen, BasicHeader } from '@components/common';
@@ -11,17 +12,6 @@ import { ImageAiScreeninfoText } from '@utils/infoText';
 import { useColorInfo } from '@hooks/ColorRecommendScreen';
 import { useFetchColorData } from '@hooks/ImageScreen';
 
-interface RouteParams {
-	mainColor: {
-		hexVal: string;
-	};
-}
-
-interface Navigation {
-	navigate: (screen: string, params: any) => void;
-	goBack: () => void;
-}
-
 interface RecommendedTheme {
 	theme_name_kr: string;
 	theme_name_eng: string;
@@ -29,12 +19,10 @@ interface RecommendedTheme {
 	colors: string[];
 }
 
-interface ImageAiScreenProps {
-	route: {
-		params: RouteParams;
-	};
-	navigation: Navigation;
-}
+type ImageAiScreenProps = NativeStackScreenProps<
+	RootStackParamList,
+	'ImageAiScreen'
+>;
 
 const ImageAiScreen: React.FC<ImageAiScreenProps> = ({ route, navigation }) => {
 	const { mainColor } = route.params;
@@ -42,7 +30,7 @@ const ImageAiScreen: React.FC<ImageAiScreenProps> = ({ route, navigation }) => {
 	const { data, isLoading } = useFetchColorData(mainColor.hexVal, navigation);
 
 	const handleColorSelect = (selectedColors: string[]) => {
-		navigation.navigate('ObjectScreen', selectedColors);
+		navigation.navigate('ObjectScreen', { selectedColors });
 	};
 
 	return (
