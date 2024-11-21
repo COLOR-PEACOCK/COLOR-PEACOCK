@@ -14,7 +14,7 @@ import { CustomHandler } from '@components/ObjectPage';
 const colorContainer = require('@images/objectitems/background/cricle__wrapper.png');
 
 interface ColorBottomSheetProps {
-	colors: string[];
+	colors: readonly string[];
 }
 
 const ColorBottomSheet: React.FC<ColorBottomSheetProps> = ({ colors }) => {
