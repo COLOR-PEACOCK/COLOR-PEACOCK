@@ -40,9 +40,3 @@ export interface RenderItemProps {
 	item: ItemDataTypes;
 	isSelected: boolean;
 }
-
-export interface ObjectScreenProps {
-	route: {
-		params?: string[];
-	};
-}

@@ -9,12 +9,9 @@ import Carousel, {
 	Pagination,
 } from 'react-native-reanimated-carousel';
 import { CarouselRenderItemInfo } from 'react-native-reanimated-carousel/lib/typescript/types';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-interface ObjectInteriorProps {
-	route: {
-		params?: string[];
-	};
-}
+type ObjectInteriorProps = NativeStackScreenProps<RootStackParamList, 'ObjectInterior'>
 
 const ObjectInterior: React.FC<ObjectInteriorProps> = ({ route }) => {
 	const colors = route.params;
