@@ -28,20 +28,22 @@ const useColorName = () => {
 	const nearest = nearestColor.from(
 		colorNameList.reduce(
 			(o, { korean_name, hex }) =>
-				Object.assign(o, { [korean_name]: hex }),
+				({...o, [korean_name]: hex }),
 			{},
 		),
 	);
 	const nearestEng = nearestColor.from(
 		colorNameList.reduce(
-			(o, { name, hex }) => Object.assign(o, { [name]: hex }),
+			(o, { name, hex }) => ({...o, [name]: hex }),
 			{},
 		),
 	);
 	const nearestName = nearestColor.from(
 		colorNameList.reduce(
-			(o, { name, korean_name, hex }) =>
-				Object.assign(o, { [korean_name + '/' + name]: hex }),
+			(o, { name, korean_name, hex }) => ({
+				...o,
+				[`${korean_name}/${name}`]: hex,
+			}),
 			{},
 		),
 	);
@@ -58,7 +60,7 @@ const useColorName = () => {
 		setIsLoading(true);
 		const response = nearestName(value);
 		setIsLoading(false);
-		const [korean_name, name] = response.name.split('/');
+		const [korean_name, name] = response?.name.split('/') || [];
 		return { korean_name, name };
 	};
 
@@ -74,7 +76,7 @@ const useColorName = () => {
 		setIsLoading(true);
 		const response = nearestEng(value);
 		setIsLoading(false);
-		return response.name;
+		return response?.name || '';
 	};
 
 	/**
@@ -89,7 +91,7 @@ const useColorName = () => {
 		setIsLoading(true);
 		const response = nearest(value);
 		setIsLoading(false);
-		return response.name;
+		return response?.name || '';
 	};
 
 	const getSortedSearchColorList = (
@@ -107,7 +109,7 @@ const useColorName = () => {
 					keyword,
 				),
 			}))
-			.sort((a, b) => a.distance - b.distance)
+			.sort((a, b) => (a?.distance || 0) - (b?.distance || 0))
 			.slice(0, 5);
 	};
 
