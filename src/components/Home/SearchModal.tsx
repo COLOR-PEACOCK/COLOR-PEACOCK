@@ -16,7 +16,7 @@ import { BASE_HEIGHT, heightScale } from '@utils/scaling';
 import { INPUT_TYPES } from '@typesStore/Home/inputTypes';
 
 const DEVICE_HEIGHT = Dimensions.get('window').height;
-const INPUT_TYPE_OPTIONS = Object.values(INPUT_TYPES)
+const INPUT_TYPE_OPTIONS = Object.values(INPUT_TYPES);
 
 interface SearchModalProps {
 	visible: boolean;
