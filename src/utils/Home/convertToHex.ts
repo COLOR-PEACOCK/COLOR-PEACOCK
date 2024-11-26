@@ -1,9 +1,5 @@
 import convert from 'color-convert';
-import {
-	stringFormat,
-	isValidKorean,
-	isValidHexCode,
-} from '@utils/Home';
+import { compactKeyword, isValidKorean, isValidHexCode } from '@utils/Home';
 import { INPUT_TYPES } from '@typesStore/Home/inputTypes';
 
 const rgbToHex = (r: number, g: number, b: number) => {
@@ -62,12 +58,12 @@ export const colorConverter = {
 			korean_name: string;
 		}[],
 	) => {
-		const keyword = stringFormat(values.part1);
+		const keyword = compactKeyword(values.part1);
 		const matchedColor = searchNameList.find(
 			(color: { korean_name: string; name: string }) =>
 				isValidKorean(keyword)
-					? stringFormat(color.korean_name) === keyword
-					: stringFormat(color.name) === keyword,
+					? compactKeyword(color.korean_name) === keyword
+					: compactKeyword(color.name) === keyword,
 		);
 		return matchedColor ? matchedColor.hex : null;
 	},

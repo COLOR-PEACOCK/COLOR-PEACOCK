@@ -22,8 +22,8 @@ import { SVGIcon, CustomText as Text } from '@components/common';
 import { PressButton, OutlinedText, SearchModal } from '@components/Home';
 import { useCheckAppVersion, useModal } from '@hooks/index';
 import { useBackHandler, useHomeState, usePressButtonState } from '@hooks/Home';
-import { SearchSVG } from '@icons/index';
 import { widthScale } from '@utils/scaling';
+import { extractHexDigits } from '@utils/Home';
 
 import logoIcon from '@icons/logo.png';
 
@@ -82,7 +82,7 @@ const Home: React.FC<HomeScreenRouteProp> = ({ navigation }) => {
 				]}>
 				<OutlinedText
 					strokeColor={
-						convert.hex.hsl(item.hexcode.replace('#', ''))[2] > 80
+						convert.hex.hsl(extractHexDigits(item.hexcode))[2] > 80
 							? COLOR.GRAY_10
 							: COLOR.GRAY_2
 					}
@@ -181,9 +181,7 @@ const Home: React.FC<HomeScreenRouteProp> = ({ navigation }) => {
 							}}
 							data={dummy_trendColor}
 							onProgressChange={progress}
-							renderItem={(info: CarouselRenderItemInfo<color>) =>
-								renderItem(info)
-							}
+							renderItem={renderItem}
 						/>
 					</View>
 					<View style={styles.indicator}>
