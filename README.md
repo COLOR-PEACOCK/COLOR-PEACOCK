@@ -46,6 +46,7 @@
 
 ## 🗓️ 개발 기간
 2024.08.01 ~ 2024.09.13
+
 ---
 #### [🦚 Color Peacock 앱 다운로드 바로가기](https://play.google.com/store/apps/details?id=com.ColorPeacock&pcampaignid=web_share)
 #### [🎨 Color Peacock 피그마 바로가기](https://www.figma.com/design/u6HEGpu8iK2bha0M8aFPv1/%EC%BC%A0%EA%B9%80%EC%97%90-%EB%B0%B0%ED%8F%AC%EA%B9%8C%EC%A7%80?node-id=490-6365&t=wppappiwY8TNsVZq-1)
