@@ -8,38 +8,24 @@ interface OutlinedTextProps {
 	text: string;
 }
 
+const WEIGHT = 1;
+
 const OutlinedText = ({
 	strokeColor,
 	textColor,
 	fontSize,
 	text,
 }: OutlinedTextProps) => {
-	const weight = 1;
-	const styles = StyleSheet.create({
-		paragraph: {
-			textShadowColor: strokeColor,
-			color: textColor,
-			fontSize: fontSize,
-			fontFamily: 'Pretendard-bold',
-			textShadowRadius: 1,
-			textShadowOffset: {
-				width: weight,
-				height: weight,
-			},
-		},
-		abs: {
-			position: 'absolute',
-		},
-	});
-
 	return (
 		<View>
-			<Text style={styles.paragraph}>{text}</Text>
 			<Text
 				style={[
 					styles.paragraph,
-					styles.abs,
-					{ textShadowOffset: { width: -weight, height: -weight } },
+					{
+						textShadowColor: strokeColor,
+						color: textColor,
+						fontSize: fontSize,
+					},
 				]}>
 				{text}
 			</Text>
@@ -47,7 +33,12 @@ const OutlinedText = ({
 				style={[
 					styles.paragraph,
 					styles.abs,
-					{ textShadowOffset: { width: -weight, height: weight } },
+					{
+						textShadowOffset: { width: -WEIGHT, height: -WEIGHT },
+						textShadowColor: strokeColor,
+						color: textColor,
+						fontSize: fontSize,
+					},
 				]}>
 				{text}
 			</Text>
@@ -55,12 +46,44 @@ const OutlinedText = ({
 				style={[
 					styles.paragraph,
 					styles.abs,
-					{ textShadowOffset: { width: weight, height: -weight } },
+					{
+						textShadowOffset: { width: -WEIGHT, height: WEIGHT },
+						textShadowColor: strokeColor,
+						color: textColor,
+						fontSize: fontSize,
+					},
+				]}>
+				{text}
+			</Text>
+			<Text
+				style={[
+					styles.paragraph,
+					styles.abs,
+					{
+						textShadowOffset: { width: WEIGHT, height: -WEIGHT },
+						textShadowColor: strokeColor,
+						color: textColor,
+						fontSize: fontSize,
+					},
 				]}>
 				{text}
 			</Text>
 		</View>
 	);
 };
+
+const styles = StyleSheet.create({
+	paragraph: {
+		fontFamily: 'Pretendard-bold',
+		textShadowRadius: 1,
+		textShadowOffset: {
+			width: WEIGHT,
+			height: WEIGHT,
+		},
+	},
+	abs: {
+		position: 'absolute',
+	},
+});
 
 export default OutlinedText;
