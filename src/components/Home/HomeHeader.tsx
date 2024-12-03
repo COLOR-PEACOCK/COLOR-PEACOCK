@@ -13,7 +13,7 @@ const HomeHeader = () => {
 	const { contentColor, buttonColor, handleTouchStart, handleTouchEnd } =
 		usePressButtonState();
 
-	const { handleSearch } = useHomeState();
+	const { handleSelectColorRecommend } = useHomeState();
 	return (
 		<View style={styles.header}>
 			<View
@@ -32,7 +32,7 @@ const HomeHeader = () => {
 				<SearchModal
 					visible={isModalVisible}
 					handleCloseModal={handleCloseModal}
-					onPressSearch={handleSearch}
+					onPressSearch={handleSelectColorRecommend}
 				/>
 			</View>
 			<Pressable
