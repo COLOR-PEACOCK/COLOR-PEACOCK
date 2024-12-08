@@ -29,7 +29,7 @@ const HomeContainer = () => {
 	const COLOR_CARD_WIDTH = width * 0.7;
 	const caroucelRef = useRef<ICarouselInstance>(null);
 	const progress = useSharedValue<number>(0);
-	const { buttonList, handleSelectColorRecommend, trendColor } =
+	const { buttonList, handleSelectColorRecommend, TREND_COLOR_LIST } =
 		useHomeState();
 
 	const onPressPagination = useCallback(
@@ -106,7 +106,7 @@ const HomeContainer = () => {
 								? DEFAULT_BUTTON_WIDTH
 								: COLOR_CARD_WIDTH + 4,
 					}}
-					data={trendColor}
+					data={TREND_COLOR_LIST}
 					onProgressChange={progress}
 					renderItem={renderItem}
 				/>
@@ -114,7 +114,7 @@ const HomeContainer = () => {
 			<View style={styles.indicator}>
 				<Pagination.Custom
 					progress={progress}
-					data={trendColor}
+					data={TREND_COLOR_LIST}
 					dotStyle={styles.dotStyle}
 					activeDotStyle={styles.activeDotStyle}
 					containerStyle={{ gap: 6 }}

@@ -65,41 +65,40 @@ const useHomeState = () => {
 		},
 	];
 
-	const trendColor: color[] = [
-		{
-			hexcode: '#EAACC6',
-			colorName: 'Pink Macaroon',
-		},
-		{
-			hexcode: '#FFDAB9',
-			colorName: 'Peach Puff',
-		},
-		{
-			hexcode: '#FFAA4A',
-			colorName: 'Five Star',
-		},
-		{
-			hexcode: '#A2CFFE',
-			colorName: 'Baby Blue',
-		},
-		{
-			hexcode: '#EDDCC8',
-			colorName: 'Almond',
-		},
-		{
-			hexcode: '#816575',
-			colorName: 'Opera',
-		},
-	];
+	
 
 	return {
 		buttonList,
-		handleSelectCamera,
-		handleSelectAlbum,
-		handleSelectAI,
 		handleSelectColorRecommend,
-		trendColor,
+		TREND_COLOR_LIST,
 	};
 };
+
+const TREND_COLOR_LIST: color[] = [
+	{
+		hexcode: '#EAACC6',
+		colorName: 'Pink Macaroon',
+	},
+	{
+		hexcode: '#FFDAB9',
+		colorName: 'Peach Puff',
+	},
+	{
+		hexcode: '#FFAA4A',
+		colorName: 'Five Star',
+	},
+	{
+		hexcode: '#A2CFFE',
+		colorName: 'Baby Blue',
+	},
+	{
+		hexcode: '#EDDCC8',
+		colorName: 'Almond',
+	},
+	{
+		hexcode: '#816575',
+		colorName: 'Opera',
+	},
+];
 
 export default useHomeState;
