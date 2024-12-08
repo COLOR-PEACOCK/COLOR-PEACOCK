@@ -10,13 +10,13 @@ import {
 } from '@icons/index';
 
 const iconMap: { [key in IconName]: React.FC<SVGProps<SVGSVGElement>> } = {
-	camera: CameraSVG as React.FC<SVGProps<SVGSVGElement>>,
-	image: ImageSVG as React.FC<SVGProps<SVGSVGElement>>,
-	AI: AISVG as React.FC<SVGProps<SVGSVGElement>>,
-	palette: PaletteSVG as React.FC<SVGProps<SVGSVGElement>>,
-	report: ReportSVG as React.FC<SVGProps<SVGSVGElement>>,
-	object: ObjectSVG as React.FC<SVGProps<SVGSVGElement>>,
-	search: SearchSVG as React.FC<SVGProps<SVGSVGElement>>,
+	camera: CameraSVG,
+	image: ImageSVG,
+	AI: AISVG,
+	palette: PaletteSVG,
+	report: ReportSVG,
+	object: ObjectSVG,
+	search: SearchSVG,
 };
 
 interface SVGIconProps extends SVGProps<SVGSVGElement> {
