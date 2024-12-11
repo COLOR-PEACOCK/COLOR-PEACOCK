@@ -1,10 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useColorName } from '@hooks/index';
-import {
-	colorConverter,
-	isValidKorean,
-	stringFormat,
-} from '@utils/Home';
+import { colorConverter, isValidKorean, compactKeyword } from '@utils/Home';
 import { INPUT_TYPES, InputValuesType } from '@typesStore/Home/inputTypes';
 
 const useSearchModalState = () => {
@@ -35,7 +31,7 @@ const useSearchModalState = () => {
 	// 검색어 입력 시 색상 리스트 업데이트
 	useEffect(() => {
 		const updateSearchList = () => {
-			const keyword = stringFormat(inputValues.part1);
+			const keyword = compactKeyword(inputValues.part1);
 			if (!keyword) {
 				setSearchNameList([]);
 				return;

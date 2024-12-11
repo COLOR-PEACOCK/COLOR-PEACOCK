@@ -3,7 +3,7 @@ import { COLOR } from '@styles/color';
 import { SVGIcon } from '@components/common';
 import { usePressButtonState } from '@hooks/Home';
 
-interface PressButtonProps {
+export interface PressButtonProps {
 	iconName?: IconName;
 	onPress?: any;
 	engText?: string;
