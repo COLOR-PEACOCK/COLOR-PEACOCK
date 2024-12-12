@@ -1,9 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Alert } from 'react-native';
-import _ from 'lodash';
+import throttle from 'lodash/throttle';
 
-// hooks & utils
-import { useColorName, useImagePicker } from '@hooks';
+import { useColorName, useImagePicker } from '@hooks/index';
 import { convertToBase64, getHtmlContent } from '@utils/ImageScreen';
 
 interface ColorName {
@@ -22,36 +21,33 @@ export const useImageScreen = () => {
 	const { imageUri, selectImage } = useImagePicker();
 	const { getColorName } = useColorName();
 
-	// 이미지 선택 기능
 	useEffect(() => {
 		selectImage();
 	}, []);
 
-	// imageUri 변경 시 Base64 변환
 	useEffect(() => {
 		if (imageUri) {
-			convertToBase64(imageUri).then(dataUrl => {
-				if (dataUrl) {
+			convertToBase64(imageUri)
+				.then(dataUrl => {
 					setImageDataUrl(dataUrl);
-				} else {
+				})
+				.catch(error => {
+					console.error('Base64 변환 에러:', error);
 					Alert.alert(
 						'Error',
 						'이미지를 Base64로 변환하는데 실패했습니다.',
 					);
-				}
-			});
+				});
 		}
 	}, [imageUri]);
 
-	// WebView에서 전달받은 색상 데이터로 업데이트
 	const onMessage = useCallback(
-		_.throttle((event: { nativeEvent: { data: string } }) => {
+		throttle((event: { nativeEvent: { data: string } }) => {
 			setColor(event.nativeEvent.data);
 		}, 200),
 		[],
 	);
 
-	// 색상 이름 업데이트
 	useEffect(() => {
 		const { korean_name, name } = getColorName(color);
 		setColorName({ korName: korean_name, engName: name });
