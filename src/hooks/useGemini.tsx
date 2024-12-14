@@ -1,10 +1,8 @@
 import {
 	GoogleGenerativeAI,
-	ChatSession,
 	GenerativeModel,
 	GenerationConfig,
 } from '@google/generative-ai';
-import { useState } from 'react';
 
 interface BaseColor {
 	base_color_name_kr: string;
@@ -12,7 +10,8 @@ interface BaseColor {
 	hexCode: string;
 }
 
-interface RecommendedColor {
+export interface RecommendedColor {
+	[x: string]: any;
 	color_name_kr: string;
 	color_name_eng: string;
 	hexCode: string;
@@ -22,12 +21,12 @@ interface RecommendedColor {
 interface RecommendedTheme {
 	theme_name_kr: string;
 	theme_name_eng: string;
-	colors: RecommendedColor[];
+	colors: RecommendedColor;
 	theme_hexCode_list: string[];
 }
 
-interface ResponseData {
-	base_color: BaseColor[];
+export interface ResponseData {
+	base_color: BaseColor;
 	recommended_themes_and_colors: RecommendedTheme[];
 }
 
@@ -44,11 +43,9 @@ const useGemini = () => {
 		maxOutputTokens: 8192,
 		responseMimeType: 'application/json',
 	};
-	const [isLoading, setIsLoading] = useState(false);
 
-	async function run(value: string): Promise<ResponseData | null> {
-		setIsLoading(true);
-		const chatSession: ChatSession = model.startChat({
+	const run = async (value: string) => {
+		const chatSession = model.startChat({
 			generationConfig,
 			history: [],
 		});
@@ -59,10 +56,10 @@ const useGemini = () => {
             응답 내용은 한국말로 JSON 형식으로 만들어줘.
             JSON 응답의 형식은 아래와 같아야 해:
             {
-                "base_color": [{
+                "base_color": {
                     "base_color_name_kr": "string",
                     "base_color_name_eng": "string",
-                    "hexCode": "string"}],
+                    "hexCode": "string"},
                 "recommended_themes_and_colors" : [{
                     "theme_name_kr" : "string",
                     "theme_name_eng" : "string",
@@ -78,17 +75,18 @@ const useGemini = () => {
 
 		try {
 			const result = await chatSession.sendMessage(prompt);
-			const data: ResponseData = JSON.parse(result.response.text());
-			setIsLoading(false);
+			const response = result.response.text();
+			if (!response) {
+				throw new Error('Empty response from AI');
+			}
+			const data = JSON.parse(response);
 			return data;
 		} catch (error) {
-			console.log(error);
-			setIsLoading(false);
-			return null;
+			throw error;
 		}
-	}
+	};
 
-	return { run, isLoading };
+	return { run };
 };
 
 export default useGemini;
