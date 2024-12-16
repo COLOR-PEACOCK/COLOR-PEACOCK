@@ -11,7 +11,6 @@ interface BaseColor {
 }
 
 export interface RecommendedColor {
-	[x: string]: any;
 	color_name_kr: string;
 	color_name_eng: string;
 	hexCode: string;
