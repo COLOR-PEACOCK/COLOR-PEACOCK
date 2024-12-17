@@ -26,6 +26,10 @@ export const useImageScreen = () => {
 	}, []);
 
 	useEffect(() => {
+		getImageDataUrl();
+	}, [imageUri]);
+
+	const getImageDataUrl = useCallback(async () => {
 		if (imageUri) {
 			convertToBase64(imageUri)
 				.then(dataUrl => {
