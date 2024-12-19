@@ -1,24 +1,22 @@
 import React from 'react';
 import { SafeAreaView, View, StyleSheet } from 'react-native';
 import { WebView } from 'react-native-webview';
-
-// components
 import { BasicHeader, CustomPopup } from '@components/common';
 import {
 	ColorInfo,
 	ImagePlaceholder,
 	ControlButtons,
 } from '@components/ImageScreen';
-
-// hooks & utils
 import { ImageScreenInfoText } from '@utils/infoText';
 import { usePopup, useImageScreen, useControlScreen } from '@hooks/ImageScreen';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-interface ImageScreenProps {
-	navigation: any;
-}
+type ImageScreenRouteProp = NativeStackScreenProps<
+	RootStackParamList,
+	'ImageScreen'
+>;
 
-const ImageScreen: React.FC<ImageScreenProps> = ({ navigation }) => {
+const ImageScreen = ({ navigation }: ImageScreenRouteProp) => {
 	const {
 		color,
 		colorName,
@@ -37,17 +35,14 @@ const ImageScreen: React.FC<ImageScreenProps> = ({ navigation }) => {
 
 	return (
 		<SafeAreaView style={{ flex: 1 }}>
-			{/* 베이직 헤더 */}
 			<BasicHeader
-				titleIcon="image"
-				title="이미지"
-				subTitle="images"
-				rightIcon="info"
+				titleIcon={'image'}
+				title={'이미지'}
+				subTitle={'images'}
+				rightIcon={'info'}
 				infoText={ImageScreenInfoText}
 			/>
-			{/* 크로스 헤어 초점 색상 정보 */}
 			<ColorInfo color={color} colorName={colorName} />
-			{/* 이미지 */}
 			<View style={styles.imageContainer}>
 				{imageDataUrl ? (
 					<WebView
@@ -59,12 +54,10 @@ const ImageScreen: React.FC<ImageScreenProps> = ({ navigation }) => {
 					<ImagePlaceholder onSelectImage={selectImage} />
 				)}
 			</View>
-			{/* 버튼 */}
 			<ControlButtons
 				onAiRecommend={handleAiRecommend}
 				onColorRecommend={handleColorRecommend}
 			/>
-			{/* 초기 설명 팝업 */}
 			{showPopup && (
 				<CustomPopup message="조준점을 잡아다 끌어서 이동시켜 보세요!" />
 			)}
