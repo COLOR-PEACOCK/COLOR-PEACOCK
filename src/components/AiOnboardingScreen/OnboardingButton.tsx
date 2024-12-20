@@ -9,10 +9,7 @@ interface OnboardingButtonProps {
 	onPress: () => void;
 }
 
-const OnboardingButton: React.FC<OnboardingButtonProps> = ({
-	text,
-	onPress,
-}) => (
+const OnboardingButton = ({ text, onPress }: OnboardingButtonProps) => (
 	<TouchableOpacity style={styles.button} onPress={onPress}>
 		<OnboardingIcon color={COLOR.GRAY_1} />
 		<Text style={styles.buttonText}>{text}</Text>
