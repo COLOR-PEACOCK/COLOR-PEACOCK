@@ -32,7 +32,7 @@ const AiScreen: React.FC<AiScreenProps> = ({ navigation }) => {
 	};
 
 	const navigateToAiResponseScreen = async () => {
-		if (canRunAIAnalysis()) {
+		if (canRunAIAnalysis() && imageUri) {
 			const base64Image = await RNFS.readFile(
 				imageUri.replace('file://', ''),
 				'base64',
