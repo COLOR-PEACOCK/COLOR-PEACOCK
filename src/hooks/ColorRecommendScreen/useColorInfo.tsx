@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 // hooks & utils
 import { getColorInfo } from '@utils/colorRecommendUtils';
-import { useColorName } from '@hooks/index';
+import { useColorName } from '@hooks';
 
 // styles
 import { COLOR } from '@styles/color';
@@ -11,22 +11,21 @@ import tinycolor from 'tinycolor2';
 interface ColorInfo {
 	engName: string;
 	korName: string;
-	hexVal: string;
-	rgbVal: string;
-	hslVal: string;
-	cmykVal: string;
+	hexVal?: string;
+	rgbVal?: string;
+	hslVal?: string;
+	cmykVal?: string;
 }
 
 const useColorInfo = (initialColor: string) => {
 	const [tempColor, setTempColor] = useState<string>(initialColor);
-	const { getColorName } = useColorName();
+	const { getEngColorNameLocal, getKorColorName } = useColorName();
 
 	const [colorInfo, setColorInfo] = useState<ColorInfo>(() => {
 		const colorData = getColorInfo(tempColor.replace('#', '')) || {};
-		const { korean_name, name } = getColorName(tempColor);
 		return {
-			engName: name,
-			korName: korean_name,
+			engName: getEngColorNameLocal(tempColor),
+			korName: getKorColorName(tempColor),
 			hexVal: colorData.hexVal,
 			rgbVal: colorData.rgbVal,
 			hslVal: colorData.hslVal,
@@ -39,11 +38,12 @@ const useColorInfo = (initialColor: string) => {
 		if (tempColor) {
 			const updateColorInfo = () => {
 				const colorData = getColorInfo(tempColor.replace('#', ''));
-				const { korean_name, name } = getColorName(tempColor);
+				const engName = getEngColorNameLocal(tempColor);
+				const korName = getKorColorName(tempColor);
 
 				setColorInfo({
-					engName: name,
-					korName: korean_name,
+					engName: engName,
+					korName: korName,
 					hexVal: colorData.hexVal,
 					rgbVal: colorData.rgbVal,
 					hslVal: colorData.hslVal,

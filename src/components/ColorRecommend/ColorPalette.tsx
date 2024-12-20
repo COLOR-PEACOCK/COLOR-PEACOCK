@@ -1,19 +1,28 @@
+// TODO : 시간이 된다면 기능 -> 훅, 뷰 -> 컴포넌트 리팩토링
+
 import React, { useState } from 'react';
 import { View, TouchableOpacity, StyleSheet, Pressable } from 'react-native';
+
+// components
 import { ColorInfoModal } from '@components/ColorRecommend';
 import { CustomText as Text } from '@components/common/CustomText';
+
+// hooks & utils
 import { useColorInfo } from '@hooks/ColorRecommendScreen';
+
+// styles
 import { COLOR } from '@styles/color';
 import tinycolor from 'tinycolor2';
+
+// icons
 import HangerIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { RecommendedColor } from '@hooks/useGemini';
 
 interface ColorPaletteProps {
 	titleKor: string;
 	titleEng: string;
 	colors: string[];
 	onColorSelect: (selectedColors: string[]) => void;
-	description?: RecommendedColor[];
+	description?: string[];
 }
 
 const ColorPalette: React.FC<ColorPaletteProps> = ({
@@ -94,6 +103,7 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
 								: COLOR.WHITE,
 						},
 					]}
+					activeOpacity={1}
 					onPressIn={() => setIsButtonPressed(true)}
 					onPress={() =>
 						onColorSelect(
@@ -115,10 +125,13 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
 				colorInfo={colorInfo}
 				selectedColor={selectedColor || ''}
 				description={
-					description?.find(
+					description &&
+					selectedColor &&
+					description.find(
 						item =>
-							item.hexCode?.toLowerCase() ===
-							selectedColor?.toLowerCase(),
+							item.hexCode &&
+							item.hexCode.toLowerCase() ===
+								selectedColor.toLowerCase(),
 					)?.harmony_description
 				}
 			/>
