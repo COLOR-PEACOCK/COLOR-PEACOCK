@@ -30,7 +30,7 @@ const ImageAiScreen: React.FC<ImageAiScreenProps> = ({ route, navigation }) => {
 	const { data, isLoading } = useFetchColorData(mainColor.hexVal, navigation);
 
 	const handleColorSelect = (selectedColors: string[]) => {
-		navigation.navigate('ObjectScreen', { selectedColors });
+		navigation.navigate('ObjectScreen', selectedColors);
 	};
 
 	return (
@@ -67,20 +67,18 @@ const ImageAiScreen: React.FC<ImageAiScreenProps> = ({ route, navigation }) => {
 					{/* 컬러 팔레트들 */}
 					<View style={styles.paletteContainer}>
 						{data &&
-							data.recommended_themes_and_colors?.map(
-								(item: RecommendedTheme) => (
-									<ColorPalette
-										key={item.theme_name_kr}
-										titleKor={item.theme_name_kr}
-										titleEng={item.theme_name_eng}
-										colors={[
-											data?.base_color[0].hexCode,
-										].concat(item.theme_hexCode_list)}
-										onColorSelect={handleColorSelect}
-										description={item.colors}
-									/>
-								),
-							)}
+							data.recommended_themes_and_colors?.map(item => (
+								<ColorPalette
+									key={item.theme_name_kr}
+									titleKor={item.theme_name_kr}
+									titleEng={item.theme_name_eng}
+									colors={[data?.base_color.hexCode].concat(
+										item.theme_hexCode_list,
+									)}
+									onColorSelect={handleColorSelect}
+									description={item.colors}
+								/>
+							))}
 					</View>
 				</ScrollView>
 			)}
