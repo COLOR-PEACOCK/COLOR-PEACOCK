@@ -1,12 +1,8 @@
 import React, { useState } from 'react';
 import { View, Modal, Text, StyleSheet, Image, Pressable } from 'react-native';
 import ColorPicker, { Panel1, HueSlider } from 'reanimated-color-picker';
-
-// icons
 import GoBackIcon from '@icons/go-back.png';
 import DownloadIcon from '@icons/download.png';
-
-// styles
 import { COLOR } from '@styles/color';
 import tinycolor from 'tinycolor2';
 
