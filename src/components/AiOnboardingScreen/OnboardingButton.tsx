@@ -4,6 +4,10 @@ import { OnboardingIcon } from '@components/AiRecommend';
 import { widthScale, heightScale } from '@utils/scaling';
 import { COLOR } from '@styles/color';
 
+const BUTTON_HEIGHT = 98;
+const BUTTON_PADDING_VERTICAL = 15;
+const BUTTON_ICON_GAP = 6;
+
 interface OnboardingButtonProps {
 	text: string;
 	onPress: () => void;
@@ -19,12 +23,12 @@ const OnboardingButton = ({ text, onPress }: OnboardingButtonProps) => (
 const styles = StyleSheet.create({
 	button: {
 		backgroundColor: COLOR.PRIMARY,
-		height: heightScale(98),
-		paddingVertical: heightScale(15),
+		height: heightScale(BUTTON_HEIGHT),
+		paddingVertical: heightScale(BUTTON_PADDING_VERTICAL),
 		flexDirection: 'row',
 		alignItems: 'center',
 		justifyContent: 'center',
-		gap: 6,
+		gap: BUTTON_ICON_GAP,
 	},
 	buttonText: {
 		color: COLOR.GRAY_1,
