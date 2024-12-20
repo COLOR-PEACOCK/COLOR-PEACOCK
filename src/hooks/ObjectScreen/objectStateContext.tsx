@@ -4,7 +4,7 @@ import {
 	ItemDataTypes,
 	ObjectStateContextType,
 	ObjectStateProviderProps,
-} from 'types/itemData.interface';
+} from '@typesStore/itemData.interface';
 
 const ObjectStateContext = createContext<ObjectStateContextType | undefined>(
 	undefined,

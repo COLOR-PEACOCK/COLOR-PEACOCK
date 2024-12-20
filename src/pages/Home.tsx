@@ -8,7 +8,7 @@ import {
 	Image,
 	ScrollView,
 } from 'react-native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useSharedValue } from 'react-native-reanimated';
 import Carousel, {
 	ICarouselInstance,
@@ -18,29 +18,20 @@ import { CarouselRenderItemInfo } from 'react-native-reanimated-carousel/lib/typ
 import convert from 'color-convert';
 
 import { COLOR } from '@styles/color';
-import { CustomText as Text } from '@components/common';
+import { SVGIcon, CustomText as Text } from '@components/common';
 import { PressButton, OutlinedText, SearchModal } from '@components/Home';
-import { useModal } from '@hooks/index';
-import { useBackHandler, useHomeState, usePressButtonState } from '@hooks/home';
+import { useCheckAppVersion, useModal } from '@hooks/index';
+import { useBackHandler, useHomeState, usePressButtonState } from '@hooks/Home';
 import { SearchSVG } from '@icons/index';
 import { widthScale } from '@utils/scaling';
 
-import { RootStackParamList } from '../router';
 import logoIcon from '@icons/logo.png';
 
 const DEFAULT_BUTTON_WIDTH = 376;
 
-interface color {
-	hexcode: string;
-	colorName: string;
-}
+type HomeScreenRouteProp = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
-type HomeScreenRouteProp = NativeStackNavigationProp<
-	RootStackParamList,
-	'Home'
->;
-
-const Home = ({ navigation }: any) => {
+const Home: React.FC<HomeScreenRouteProp> = ({ navigation }) => {
 	const { width } = useWindowDimensions();
 	const pageWidth = width * 0.7;
 	const caroucelRef = useRef<ICarouselInstance>(null);
@@ -55,6 +46,7 @@ const Home = ({ navigation }: any) => {
 		handleSelectAI,
 		handleSearch,
 	} = useHomeState();
+	const { checkAppVersion } = useCheckAppVersion();
 
 	const onPressPagination = useCallback(
 		(index: number) => {
@@ -102,6 +94,10 @@ const Home = ({ navigation }: any) => {
 		);
 	};
 
+	useEffect(() => {
+		checkAppVersion();
+	}, []);
+
 	return (
 		<SafeAreaView style={{ flex: 1 }}>
 			<View style={styles.container}>
@@ -126,14 +122,14 @@ const Home = ({ navigation }: any) => {
 						/>
 					</View>
 					<Pressable
+						onPressIn={handleTouchStart}
+						onPress={handleOpenModal}
+						onPressOut={handleTouchEnd}
 						style={[
 							styles.searchIconWrapper,
 							{ backgroundColor: buttonColor },
-						]}
-						onPressIn={handleTouchStart}
-						onPress={handleOpenModal}
-						onPressOut={handleTouchEnd}>
-						<SearchSVG color={contentColor} />
+						]}>
+						<SVGIcon name={'search'} color={contentColor} />
 					</Pressable>
 				</View>
 				<ScrollView

@@ -1,5 +1,6 @@
 import React from 'react';
 import { ImageBackground, SafeAreaView, StyleSheet, View } from 'react-native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import { BasicHeader } from '@components/common';
 import { heightScale } from '@utils/scaling';
@@ -9,17 +10,16 @@ import {
 	ObjectBottomCotainer,
 } from '@components/ObjectPage';
 
-import { dummyColor, infoText } from '@utils/object/constants';
+import { dummyColor } from '@utils/object/constants';
+import { ObjectScreenInfoText } from '@utils/infoText';
 import { useDefaultItem } from '@hooks/ObjectScreen';
 
 const backgroundimg = require('@images/objectitems/background/background.png');
 
-interface ObjectScreenProps {
-	route: {
-		params?: string[];
-	};
-}
-
+type ObjectScreenProps = NativeStackScreenProps<
+	RootStackParamList,
+	'ObjectScreen'
+>;
 const ObjectScreen: React.FC<ObjectScreenProps> = ({ route }) => {
 	const colors = route.params || dummyColor;
 	useDefaultItem();
@@ -32,7 +32,7 @@ const ObjectScreen: React.FC<ObjectScreenProps> = ({ route }) => {
 				subTitle={'color preview'}
 				titleIcon={'object'}
 				rightIcon={'info'}
-				infoText={infoText}
+				infoText={ObjectScreenInfoText}
 			/>
 
 			{/* 오브젝트 배치 화면 */}

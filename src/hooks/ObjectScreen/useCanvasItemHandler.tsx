@@ -1,7 +1,7 @@
 import { ImageSourcePropType } from 'react-native';
 import { useObjectState } from './objectStateContext';
 import { heightScale } from '@utils/scaling';
-import { ItemDataTypes } from 'types/itemData.interface';
+import { ItemDataTypes } from '@typesStore/itemData.interface';
 
 import {
 	ClothesTopGray,

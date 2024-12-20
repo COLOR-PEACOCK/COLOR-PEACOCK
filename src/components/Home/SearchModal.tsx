@@ -10,10 +10,13 @@ import {
 import { COLOR } from '@styles/color';
 import { CustomText as Text } from '@components/common';
 import { SearchInputForm, ListValue, Dropdown } from '@components/Home';
-import { useSearchModalState } from '@hooks/home';
+import { useSearchModalState } from '@hooks/Home';
 import { ArrowGoBackSVG, FormkitSubmitSVG } from '@icons/index';
 import { BASE_HEIGHT, heightScale } from '@utils/scaling';
+import { INPUT_TYPES } from '@typesStore/Home/inputTypes';
+
 const DEVICE_HEIGHT = Dimensions.get('window').height;
+const INPUT_TYPE_OPTIONS = Object.values(INPUT_TYPES)
 
 interface SearchModalProps {
 	visible: boolean;
@@ -65,7 +68,7 @@ const SearchModal = ({
 					</View>
 					<View style={styles.modalBody}>
 						<Dropdown
-							list={dummy_list}
+							list={INPUT_TYPE_OPTIONS}
 							onClickDropdown={handlePressLabel}
 							layoutStyle={{
 								width: '100%',
@@ -143,8 +146,6 @@ const SearchModal = ({
 		</View>
 	);
 };
-
-const dummy_list = ['색상 이름', 'HEX', 'RGB', 'HSL', 'CMYK'];
 
 const styles = StyleSheet.create({
 	modalView: {

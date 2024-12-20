@@ -23,7 +23,7 @@ const femaleItemData = {
 			canvasX: -42,
 			canvasY: -384,
 			zIndex: 300,
-			svg: <DefaultTop width={widthScale(80)} height={heightScale(80)} />,
+			svg: <DefaultTop width={80} height={heightScale(80)} />,
 			isDefault: true,
 		},
 		{
