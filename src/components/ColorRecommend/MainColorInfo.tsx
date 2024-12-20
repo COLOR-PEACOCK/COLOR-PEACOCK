@@ -1,13 +1,7 @@
-// TODO : 시간이 된다면 기능 -> 훅, 뷰 -> 컴포넌트 리팩토링
-
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
-
-// images
 import adjustment from '@icons/adjustment.png';
 import adjustment_dark from '@icons/adjustment_dark.png';
-
-// styles
 import tinycolor from 'tinycolor2';
 
 interface ColorInfo {

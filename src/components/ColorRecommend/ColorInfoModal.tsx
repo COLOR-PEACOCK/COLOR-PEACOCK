@@ -1,13 +1,7 @@
-// TODO : 시간이 된다면 기능 -> 훅, 뷰 -> 컴포넌트 리팩토링
-
 import React from 'react';
 import { View, Modal, Text, StyleSheet, Pressable, Image } from 'react-native';
-
-// styles
 import tinycolor from 'tinycolor2';
 import { COLOR } from '@styles/color';
-
-// icons
 import GoBackIcon from '@icons/go-back.png';
 
 interface ColorInfoModalProps {
@@ -49,7 +43,6 @@ const ColorInfoModal: React.FC<ColorInfoModalProps> = ({
 	const hslNumbers = extractNumbers(colorInfo.hslVal);
 	const cmykNumbers = extractNumbers(colorInfo.cmykVal);
 
-	// 흰색일 때만 보더를 추가
 	const borderBottomStyle =
 		selectedColor === '#FFFFFF' || selectedColor === '#ffffff'
 			? { borderBottomWidth: 1, borderBottomColor: COLOR.GRAY_2 }

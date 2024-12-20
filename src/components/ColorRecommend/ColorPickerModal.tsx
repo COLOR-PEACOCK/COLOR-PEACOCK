@@ -1,14 +1,8 @@
-// TODO : 시간이 된다면 기능 -> 훅, 뷰 -> 컴포넌트 리팩토링
-
 import React, { useState } from 'react';
 import { View, Modal, Text, StyleSheet, Image, Pressable } from 'react-native';
 import ColorPicker, { Panel1, HueSlider } from 'reanimated-color-picker';
-
-// icons
 import GoBackIcon from '@icons/go-back.png';
 import DownloadIcon from '@icons/download.png';
-
-// styles
 import { COLOR } from '@styles/color';
 import tinycolor from 'tinycolor2';
 

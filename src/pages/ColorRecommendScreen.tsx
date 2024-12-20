@@ -1,26 +1,27 @@
 import React, { useState } from 'react';
 import { SafeAreaView, View, StyleSheet, ScrollView } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-
-// components
 import { BasicHeader } from '@components/common';
 import {
 	ColorPickerModal,
-	ColorPalette,
 	MainColorInfo,
+	ColorPalette,
 } from '@components/ColorRecommend';
-
-// hooks & utils
-import { useColorInfo, useColorVariants } from '@hooks/ColorRecommendScreen';
 import { ColorRecommendScreenInfoText } from '@utils/infoText';
-
-// styles
+import { getColorVariants } from '@utils/ColorRecommendScreen';
+import { useColorInfo } from '@hooks/ColorRecommendScreen';
 import { COLOR } from '@styles/color';
 
 type ColorRecommendScreenProps = NativeStackScreenProps<
 	RootStackParamList,
 	'ColorRecommendScreen'
 >;
+
+type ColorPaletteData = {
+	titleKor: string;
+	titleEng: string;
+	colors: string[];
+};
 
 const ColorRecommendScreen: React.FC<ColorRecommendScreenProps> = ({
 	route,
@@ -32,15 +33,57 @@ const ColorRecommendScreen: React.FC<ColorRecommendScreenProps> = ({
 
 	const [isPickerVisible, setIsPickerVisible] = useState<boolean>(false);
 
-	const colorVariants = useColorVariants(tempColor.replace('#', ''));
+	const colorVariants = getColorVariants(tempColor.replace('#', ''));
 
 	const handleColorSelect = (selectedColors: string[]) => {
 		navigation.navigate('ObjectScreen', selectedColors);
 	};
 
+	const colorPaletteData: ColorPaletteData[] = [
+		{
+			titleKor: '단색',
+			titleEng: 'Monochromatic color',
+			colors: colorVariants.monochromaticColors,
+		},
+		{
+			titleKor: '보색',
+			titleEng: 'Complementary color',
+			colors: colorVariants.complementaryColors,
+		},
+		{
+			titleKor: '밝게',
+			titleEng: 'Tint',
+			colors: colorVariants.tintColors,
+		},
+		{
+			titleKor: '어둡게',
+			titleEng: 'Shade',
+			colors: colorVariants.shadowColors,
+		},
+		{
+			titleKor: '유사색',
+			titleEng: 'Analogous colors',
+			colors: colorVariants.analogousColors,
+		},
+		{
+			titleKor: '분할 보색',
+			titleEng: 'Split complementary colors',
+			colors: colorVariants.splitComplementaryColors,
+		},
+		{
+			titleKor: '3가지 색상 조화',
+			titleEng: 'Three colors harmony',
+			colors: colorVariants.triadicColors,
+		},
+		{
+			titleKor: '4가지 색상 조화',
+			titleEng: 'Four colors harmony',
+			colors: colorVariants.tetradicColors,
+		},
+	];
+
 	return (
 		<SafeAreaView style={{ flex: 1 }}>
-			{/* 베이직 헤더 */}
 			<BasicHeader
 				titleIcon={'palette'}
 				title={'색상 추천'}
@@ -57,7 +100,6 @@ const ColorRecommendScreen: React.FC<ColorRecommendScreenProps> = ({
 							styles.colorBox,
 							{ backgroundColor: tempColor },
 						]}>
-						{/* 메인 컬러 정보 */}
 						<MainColorInfo
 							colorInfo={colorInfo}
 							textColor={textColor}
@@ -66,59 +108,18 @@ const ColorRecommendScreen: React.FC<ColorRecommendScreenProps> = ({
 						/>
 					</View>
 					<View style={styles.split} />
-					{/* 컬러 팔레트들 */}
 					<View style={{ marginBottom: 18 }}>
-						<ColorPalette
-							titleKor="단색"
-							titleEng="Monochromatic color"
-							colors={colorVariants.monochromaticColors}
-							onColorSelect={handleColorSelect}
-						/>
-						<ColorPalette
-							titleKor="보색"
-							titleEng="Complementary color"
-							colors={colorVariants.complementaryColors}
-							onColorSelect={handleColorSelect}
-						/>
-						<ColorPalette
-							titleKor="밝게"
-							titleEng="Tint"
-							colors={colorVariants.tintColors}
-							onColorSelect={handleColorSelect}
-						/>
-						<ColorPalette
-							titleKor="어둡게"
-							titleEng="Shade"
-							colors={colorVariants.shadowColors}
-							onColorSelect={handleColorSelect}
-						/>
-						<ColorPalette
-							titleKor="유사색"
-							titleEng="Analogous colors"
-							colors={colorVariants.analogousColors}
-							onColorSelect={handleColorSelect}
-						/>
-						<ColorPalette
-							titleKor="분할 보색"
-							titleEng="Split complementary colors"
-							colors={colorVariants.splitComplementaryColors}
-							onColorSelect={handleColorSelect}
-						/>
-						<ColorPalette
-							titleKor="3가지 색상 조화"
-							titleEng="Three colors harmony"
-							colors={colorVariants.triadicColors}
-							onColorSelect={handleColorSelect}
-						/>
-						<ColorPalette
-							titleKor="4가지 색상 조화"
-							titleEng="Four colors harmony"
-							colors={colorVariants.tetradicColors}
-							onColorSelect={handleColorSelect}
-						/>
+						{colorPaletteData.map((palette, index) => (
+							<ColorPalette
+								key={index}
+								titleKor={palette.titleKor}
+								titleEng={palette.titleEng}
+								colors={palette.colors}
+								onColorSelect={handleColorSelect}
+							/>
+						))}
 					</View>
 				</ScrollView>
-				{/* 컬러 피커 모달 */}
 				<ColorPickerModal
 					isVisible={isPickerVisible}
 					tempColor={tempColor}

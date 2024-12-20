@@ -1,28 +1,23 @@
-// TODO : 시간이 된다면 기능 -> 훅, 뷰 -> 컴포넌트 리팩토링
-
 import React, { useState } from 'react';
 import { View, TouchableOpacity, StyleSheet, Pressable } from 'react-native';
-
-// components
 import { ColorInfoModal } from '@components/ColorRecommend';
 import { CustomText as Text } from '@components/common/CustomText';
-
-// hooks & utils
 import { useColorInfo } from '@hooks/ColorRecommendScreen';
-
-// styles
 import { COLOR } from '@styles/color';
 import tinycolor from 'tinycolor2';
-
-// icons
 import HangerIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+
+interface DescriptionItem {
+	hexCode: string;
+	harmony_description: string;
+}
 
 interface ColorPaletteProps {
 	titleKor: string;
 	titleEng: string;
 	colors: string[];
 	onColorSelect: (selectedColors: string[]) => void;
-	description?: string[];
+	descriptions?: DescriptionItem[];
 }
 
 const ColorPalette: React.FC<ColorPaletteProps> = ({
@@ -30,7 +25,7 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
 	titleEng,
 	colors,
 	onColorSelect,
-	description,
+	descriptions,
 }) => {
 	const [isButtonPressed, setIsButtonPressed] = useState(false);
 	const [selectedColor, setSelectedColor] = useState<string | null>(
@@ -54,27 +49,21 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
 
 	return (
 		<View style={styles.container}>
-			{/* 이름 */}
 			<View style={styles.header}>
 				<Text style={styles.titleKor}>{titleKor}</Text>
 				<Text style={styles.titleEng}>{titleEng}</Text>
 			</View>
-			{/* 팔레트의 컬러들 */}
 			<View style={styles.paletteContainer}>
 				<View style={styles.colorRow}>
 					{colors.map((color, index) => {
-						const borderRadiusStyle =
-							index === 0
-								? {
-										borderTopLeftRadius: 8,
-										borderBottomLeftRadius: 8,
-								  }
-								: index === colors.length - 1
-								? {
-										borderTopRightRadius: 8,
-										borderBottomRightRadius: 8,
-								  }
-								: {};
+						const borderRadiusStyle = {
+							borderTopLeftRadius: index === 0 ? 8 : 0,
+							borderBottomLeftRadius: index === 0 ? 8 : 0,
+							borderTopRightRadius:
+								index === colors.length - 1 ? 8 : 0,
+							borderBottomRightRadius:
+								index === colors.length - 1 ? 8 : 0,
+						};
 
 						return (
 							<TouchableOpacity
@@ -93,7 +82,6 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
 						);
 					})}
 				</View>
-				{/* 클릭 -> 오브젝트 화면으로 색상 팔레트 넘김 */}
 				<Pressable
 					style={[
 						styles.iconContainer,
@@ -103,7 +91,6 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
 								: COLOR.WHITE,
 						},
 					]}
-					activeOpacity={1}
 					onPressIn={() => setIsButtonPressed(true)}
 					onPress={() =>
 						onColorSelect(
@@ -118,21 +105,20 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
 					/>
 				</Pressable>
 			</View>
-			{/* 각 컬러의 정보 확인 모달 */}
 			<ColorInfoModal
 				isVisible={isModalVisible}
 				onClose={closeModal}
 				colorInfo={colorInfo}
 				selectedColor={selectedColor || ''}
 				description={
-					description &&
-					selectedColor &&
-					description.find(
-						item =>
-							item.hexCode &&
-							item.hexCode.toLowerCase() ===
+					(descriptions &&
+						selectedColor &&
+						descriptions.find(
+							item =>
+								item.hexCode.toLowerCase() ===
 								selectedColor.toLowerCase(),
-					)?.harmony_description
+						)?.harmony_description) ||
+					undefined
 				}
 			/>
 		</View>
@@ -178,7 +164,7 @@ const styles = StyleSheet.create({
 	colorBox: {
 		flex: 1,
 		height: 50,
-		marginHorizontal: -1, // 팔레트 칩 사이 간격 최소화
+		marginHorizontal: -1,
 	},
 	iconContainer: {
 		width: 50,
