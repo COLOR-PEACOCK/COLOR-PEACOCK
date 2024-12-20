@@ -15,9 +15,9 @@ const useOnboardingNavigation = (navigation: NavigationProp<any>) => {
 	const handleNext = () => {
 		if (currentIndex < FINAL_PAGE) {
 			swiperRef.current?.scrollBy(1);
-		} else {
-			navigation.navigate('AiScreen');
+			return;
 		}
+		navigation.navigate('AiScreen');
 	};
 
 	return { swiperRef, currentIndex, setCurrentIndex, handleSkip, handleNext };
