@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Image, Animated, Easing, Text } from 'react-native';
+import { View, Image, Animated, Easing, Text, StyleSheet } from 'react-native';
 import spinner from '../../assets/loadingSpinner.png';
 import logoIcon from '../../assets/icons/logo.png';
 
@@ -28,26 +28,33 @@ const Spinner: React.FC = () => {
 	});
 
 	return (
-		<View
-			style={{
-				position: 'relative',
-				justifyContent: 'center',
-				alignItems: 'center',
-				width: 68,
-				height: 68,
-			}}>
+		<View style={styles.spinnerContainer}>
 			<Animated.Image
 				source={spinner} // 스피너 이미지 경로
-				style={{
-					position: 'absolute',
-					width: 68, // 이미지 크기
-					height: 68,
-					transform: [{ rotate: spin }],
-				}}
+				style={[styles.spinnerImage, { transform: [{ rotate: spin }] }]}
 			/>
-			<Image source={logoIcon} style={{ width: 48, height: 48 }} />
+			<Image source={logoIcon} style={styles.logoImage} />
 		</View>
 	);
 };
+
+const styles = StyleSheet.create({
+	spinnerContainer: {
+		position: 'relative',
+		justifyContent: 'center',
+		alignItems: 'center',
+		width: 68,
+		height: 68,
+	},
+	spinnerImage: {
+		position: 'absolute',
+		width: 68, // 이미지 크기
+		height: 68,
+	},
+	logoImage: {
+		width: 48,
+		height: 48,
+	},
+});
 
 export default Spinner;
