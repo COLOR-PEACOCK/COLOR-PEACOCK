@@ -17,6 +17,9 @@ const LARGE_SCALE = 1.6; // 큰 크기 비율
 const SMALL_OFFSET_SCALE = 0.5; // 작은 크기 원 화면에 떨어져있는 비율(-는 화면 바깥쪽으로 멀어지고, +는 화면 안쪽으로 멀어짐)
 const BASE_OFFSET_SCALE = -0.1; // 중간 크기 원 화면에 떨어져있는 비율(-는 화면 바깥쪽으로 멀어지고, +는 화면 안쪽으로 멀어짐)
 const LARGE_OFFSET_SCALE = -0.125; // 큰 크기 원 화면에 떨어져있는 비율(-는 화면 바깥쪽으로 멀어지고, +는 화면 안쪽으로 멀어짐)
+const FONTSIZE_LARGE_SCALE = 1; // 가장 큰 원에 들어가는 세부설명 폰트 사이즈 비율
+const FONTSIZE_MEDIUM_SCALE = 0.5; // 중간크기 원에 들어가는 세부설명 폰트 사이즈 비율
+const FONTSIZE_SMALL_SCALE = 0; // 작은크기 원에 들어가는 세부설명 폰트 사이즈 비율
 
 // 원 지름(중간 크기 원은 안드로이드 에뮬레이터 미디엄폰 기준 205)
 const diameter: number = BASE_DIAMETER;
@@ -83,9 +86,9 @@ const AiCircle: React.FC<AiCircleProps> = ({
 			Animated.spring(animatedSize, {
 				toValue:
 					isSelected[number] === 'large'
-						? 1.6
+						? LARGE_SCALE
 						: isSelected[number] === 'small'
-						? 0.5
+						? SMALL_SCALE
 						: 1,
 				useNativeDriver: false,
 			}),
@@ -93,10 +96,10 @@ const AiCircle: React.FC<AiCircleProps> = ({
 			Animated.timing(animatedFontSize, {
 				toValue:
 					isSelected[number] === 'large'
-						? 1
+						? FONTSIZE_LARGE_SCALE
 						: isSelected[number] === 'small'
-						? 0
-						: 0.5,
+						? FONTSIZE_SMALL_SCALE
+						: FONTSIZE_MEDIUM_SCALE,
 				duration: 300,
 				useNativeDriver: false,
 			}),
@@ -137,7 +140,7 @@ const AiCircle: React.FC<AiCircleProps> = ({
 		...(type == 'left'
 			? {
 					left: animatedSize.interpolate({
-						inputRange: [0.5, 1, 1.6],
+						inputRange: [SMALL_SCALE, 1, LARGE_SCALE],
 						outputRange: [
 							DISTANCE - SCREEN_WIDTH * 0.5,
 							-DISTANCE - SCREEN_WIDTH * 0.5,
@@ -147,7 +150,7 @@ const AiCircle: React.FC<AiCircleProps> = ({
 			  }
 			: {
 					right: animatedSize.interpolate({
-						inputRange: [0.5, 1, 1.6],
+						inputRange: [SMALL_SCALE, 1, LARGE_SCALE],
 						outputRange: [
 							DISTANCE - SCREEN_WIDTH * 0.5,
 							-DISTANCE - SCREEN_WIDTH * 0.5,
@@ -156,7 +159,7 @@ const AiCircle: React.FC<AiCircleProps> = ({
 					}),
 			  }),
 		top: animatedSize.interpolate({
-			inputRange: [0.5, 1, 1.6],
+			inputRange: [SMALL_SCALE, 1, LARGE_SCALE],
 			outputRange: [
 				smallVerticalOffset + number * distanceBetweenCircles('small'),
 				mediumVerticalOffset +
@@ -165,11 +168,11 @@ const AiCircle: React.FC<AiCircleProps> = ({
 			],
 		}),
 		width: animatedSize.interpolate({
-			inputRange: [0.5, 1, 1.6],
+			inputRange: [SMALL_SCALE, 1, LARGE_SCALE],
 			outputRange: [smallDiameter, diameter, largeDiameter],
 		}),
 		height: animatedSize.interpolate({
-			inputRange: [0.5, 1, 1.6],
+			inputRange: [SMALL_SCALE, 1, LARGE_SCALE],
 			outputRange: [smallDiameter, diameter, largeDiameter],
 		}),
 		borderRadius: 400,
