@@ -8,13 +8,13 @@ import { ColorInfoProps } from '@typesStore/cameraTypes';
 
 const cameraswitch = require('@icons/camera-switch.png');
 
-const ColorInfo: React.FC<ColorInfoProps> = ({
+const ColorInfo = ({
 	selectedColor,
 	parentLayout,
 	setIsOpen,
 	isOpen,
 	setCameraType,
-}) => {
+}: ColorInfoProps) => {
 	const bottomSheetRef = useRef<BottomSheet>(null);
 	const cameraSwitch = () =>
 		setCameraType(prevType => (prevType === 'back' ? 'front' : 'back'));

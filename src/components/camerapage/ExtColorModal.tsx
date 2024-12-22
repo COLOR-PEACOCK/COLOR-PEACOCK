@@ -3,10 +3,7 @@ import { ExtColorModalProps } from '@typesStore/cameraTypes';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-const ExtColorModal: React.FC<ExtColorModalProps> = ({
-	parentLayout,
-	extColor,
-}) => {
+const ExtColorModal = ({ parentLayout, extColor }: ExtColorModalProps) => {
 	return (
 		<View
 			style={[

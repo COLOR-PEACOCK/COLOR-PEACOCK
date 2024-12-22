@@ -3,7 +3,7 @@ import { CrossHairProps } from '@typesStore/cameraTypes';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-const CrossHair: React.FC<CrossHairProps> = ({ extColor, parentLayout }) => {
+const CrossHair = ({ extColor, parentLayout }: CrossHairProps) => {
 	return (
 		<View
 			style={[

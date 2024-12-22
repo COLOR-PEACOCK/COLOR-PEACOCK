@@ -13,7 +13,7 @@ import { useCanvasItemHandler } from '@hooks/ObjectScreen';
 import { RenderItemProps } from '@typesStore/itemData.interface.ts';
 import { TrashIcon } from '@icons/objecticon/objectIcon.js';
 
-const CanvasDroppedItem: React.FC<RenderItemProps> = ({ item, isSelected }) => {
+const CanvasDroppedItem = ({ item, isSelected }: RenderItemProps) => {
 	const {
 		handleItemSelect,
 		handleItemDelete,

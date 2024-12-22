@@ -10,9 +10,7 @@ const ObjectStateContext = createContext<ObjectStateContextType | undefined>(
 	undefined,
 );
 
-export const ObjectStateProvider: React.FC<ObjectStateProviderProps> = ({
-	children,
-}) => {
+export const ObjectStateProvider = ({ children }: ObjectStateProviderProps) => {
 	const [itemData, setItemData] = useState<ItemDataTypes | null>(null);
 	const [droppedItems, setDroppedItems] = useState<any[]>([]);
 	const [isMale, setIsMale] = useState<boolean>(false);

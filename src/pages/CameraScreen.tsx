@@ -32,7 +32,7 @@ type CameraScreenProps = NativeStackScreenProps<
 	'CameraScreen'
 >;
 
-const CameraScreen: React.FC<CameraScreenProps> = ({ navigation }) => {
+const CameraScreen = ({ navigation }: CameraScreenProps) => {
 	const [isCameraActive, setIsCameraActive] = useState<boolean>(false);
 	const [cameraType, setCameraType] = useState<CameraPosition>('back');
 	const [parentLayout, setParentLayout] = useState<ParentLayout>({
