@@ -1,9 +1,10 @@
 import { Dispatch, SetStateAction } from 'react';
+import { ItemCategory } from '@typesStore/Object/itemCategories.ts';
 
 export interface ItemDataTypes {
 	[key: string]: ItemDataTypes[] | any;
 	id: string;
-	category: string;
+	category: ItemCategory;
 	svg: JSX.Element;
 	color?: string;
 	canvasHeight: number;

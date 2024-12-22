@@ -2,6 +2,7 @@ import { ImageSourcePropType } from 'react-native';
 import { useObjectState } from './objectStateContext';
 import { heightScale } from '@utils/scaling';
 import { ItemDataTypes } from '@typesStore/itemData.interface';
+import { ItemCategory } from '@typesStore/Object/itemCategories';
 
 import {
 	ClothesTopGray,
@@ -22,13 +23,6 @@ const useCanvasItemHandler = () => {
 		setActiveTab,
 		setIsColorPickerOpen,
 	} = useObjectState();
-
-	enum ItemCategory {
-		CLOTHES_TOP = 'clothesTop',
-		CLOTHES_BOTTOM = 'clothesBottom',
-		SHOES = 'shoes',
-		SOCKS = 'socks',
-	}
 
 	const toggleSocksVisibility = (id: string) => {
 		setDroppedItems(prevItems =>
