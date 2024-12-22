@@ -33,9 +33,9 @@ type CameraScreenProps = NativeStackScreenProps<
 >;
 
 const CameraScreen: React.FC<CameraScreenProps> = ({ navigation }) => {
-	const [isActive, setIsActive] = useState<boolean>(false);
+	const [isCameraActive, setIsCameraActive] = useState<boolean>(false);
 	const [cameraType, setCameraType] = useState<CameraPosition>('back');
-	const [parentlayout, setParentlayout] = useState<ParentLayout>({
+	const [parentLayout, setParentLayout] = useState<ParentLayout>({
 		height: 0,
 		width: 0,
 	});
@@ -45,9 +45,7 @@ const CameraScreen: React.FC<CameraScreenProps> = ({ navigation }) => {
 		engName: '',
 		korName: '',
 	});
-	const [selectedColor, setSelectedColor] = useState<
-		SeletedColor | undefined
-	>(undefined);
+	const [selectedColor, setSelectedColor] = useState<SeletedColor>();
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 	const [zoomLevel, setZoomLevel] = useState<1 | 2>(1);
 	const parentRef = useRef<View>(null);
@@ -61,9 +59,9 @@ const CameraScreen: React.FC<CameraScreenProps> = ({ navigation }) => {
 	// 카메라 활성화 관리
 	useFocusEffect(
 		useCallback(() => {
-			setIsActive(true);
+			setIsCameraActive(true);
 			return () => {
-				setIsActive(false);
+				setIsCameraActive(false);
 			};
 		}, []),
 	);
@@ -71,7 +69,7 @@ const CameraScreen: React.FC<CameraScreenProps> = ({ navigation }) => {
 	// 크기 정보
 	const onLayout = (event: LayoutChangeEvent) => {
 		const { width, height } = event.nativeEvent.layout;
-		setParentlayout({ height: height, width: width });
+		setParentLayout({ height: height, width: width });
 	};
 
 	// 줌 버튼 이벤트
@@ -111,18 +109,18 @@ const CameraScreen: React.FC<CameraScreenProps> = ({ navigation }) => {
 						extColor={setExtColor}
 						cameraType={cameraType}
 						zoomLevel={zoomLevel}
-						isActive={isActive}
+						isCameraActive={isCameraActive}
 					/>
 				)}
 
 				{/* 추출 색상 정보 모달 */}
 				<ExtColorModal
-					parentlayout={parentlayout}
+					parentLayout={parentLayout}
 					extColor={extColor}
 				/>
 
 				{/* 조준점 */}
-				<CrossHair extColor={extColor} parentlayout={parentlayout} />
+				<CrossHair extColor={extColor} parentLayout={parentLayout} />
 			</View>
 
 			{/* 하단 영역 */}
@@ -137,7 +135,7 @@ const CameraScreen: React.FC<CameraScreenProps> = ({ navigation }) => {
 					}}>
 					<ColorInfo
 						selectedColor={selectedColor}
-						parentlayout={parentlayout}
+						parentLayout={parentLayout}
 						isOpen={isOpen}
 						setIsOpen={setIsOpen}
 						setCameraType={setCameraType}

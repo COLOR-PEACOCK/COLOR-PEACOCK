@@ -23,6 +23,13 @@ const useCanvasItemHandler = () => {
 		setIsColorPickerOpen,
 	} = useObjectState();
 
+	enum ItemCategory {
+		CLOTHES_TOP = 'clothesTop',
+		CLOTHES_BOTTOM = 'clothesBottom',
+		SHOES = 'shoes',
+		SOCKS = 'socks',
+	}
+
 	const toggleSocksVisibility = (id: string) => {
 		setDroppedItems(prevItems =>
 			prevItems.map(item =>
@@ -31,8 +38,8 @@ const useCanvasItemHandler = () => {
 		);
 	};
 
-	const handleItemSelect = (id: string, category: string) => {
-		if (category === 'socks') {
+	const handleItemSelect = (id: string, category: ItemCategory) => {
+		if (category === ItemCategory.SOCKS) {
 			toggleSocksVisibility(id);
 			setSelectedItemId(prevId => (prevId === id ? null : id));
 			return;
@@ -62,8 +69,8 @@ const useCanvasItemHandler = () => {
 		const itemToDelete = droppedItems.find(item => item.id === id);
 
 		if (
-			itemToDelete.category === 'clothesTop' ||
-			itemToDelete.category === 'clothesBottom'
+			itemToDelete.category === ItemCategory.CLOTHES_TOP ||
+			itemToDelete.category === ItemCategory.CLOTHES_BOTTOM
 		) {
 			// 상의나 하의인 경우, 해당 카테고리의 기본 아이템으로 교체
 			const defaultItem = defaultItems.find(
@@ -109,10 +116,10 @@ const useCanvasItemHandler = () => {
 		isVisible: boolean | undefined,
 	): ImageSourcePropType => {
 		const icons: { [key: string]: ImageSourcePropType } = {
-			clothesTop: ClothesTopGray,
-			clothesBottom: ClothesBottomGray,
-			shoes: ShoesGray,
-			socks: isVisible ? DisableSocks : Socks,
+			[ItemCategory.CLOTHES_TOP]: ClothesTopGray,
+			[ItemCategory.CLOTHES_BOTTOM]: ClothesBottomGray,
+			[ItemCategory.SHOES]: ShoesGray,
+			[ItemCategory.SOCKS]: isVisible ? DisableSocks : Socks,
 		};
 		return icons[category];
 	};

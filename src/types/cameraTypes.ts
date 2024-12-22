@@ -24,12 +24,12 @@ export interface CameraRenderProps {
 	extColor: (color: ExtColor) => void;
 	cameraType: CameraPosition;
 	zoomLevel?: number;
-	isActive: boolean;
+	isCameraActive: boolean;
 }
 
 export interface ColorInfoProps {
 	selectedColor: SeletedColor | undefined;
-	parentlayout: ParentLayout;
+	parentLayout: ParentLayout;
 	isOpen: boolean;
 	setIsOpen: Dispatch<SetStateAction<boolean>>;
 	setCameraType: Dispatch<SetStateAction<CameraPosition>>;
@@ -37,10 +37,10 @@ export interface ColorInfoProps {
 
 export interface CrossHairProps {
 	extColor: ExtColor;
-	parentlayout: ParentLayout;
+	parentLayout: ParentLayout;
 }
 
 export interface ExtColorModalProps {
-	parentlayout: ParentLayout;
+	parentLayout: ParentLayout;
 	extColor: ExtColor;
 }

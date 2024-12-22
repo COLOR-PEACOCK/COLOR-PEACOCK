@@ -10,13 +10,13 @@ import { useObjectState, useGenderChange } from '@hooks/ObjectScreen';
 import { GenderMale, GenderFemale } from '@icons/objecticon/objectIcon.js';
 
 const ChangeGenderButton = () => {
-	const { gender } = useObjectState();
+	const { isMale } = useObjectState();
 	const handleGenderChange = useGenderChange();
 	return (
 		<TouchableOpacity
 			onPress={handleGenderChange}
 			style={styles.genderChangeButton}>
-			{gender ? (
+			{isMale ? (
 				<Image
 					source={GenderMale}
 					style={{ width: heightScale(34), height: heightScale(34) }}

@@ -20,8 +20,8 @@ export interface ObjectStateContextType {
 	setItemData: Dispatch<SetStateAction<ItemDataTypes | null>>;
 	droppedItems: any[];
 	setDroppedItems: Dispatch<SetStateAction<any[]>>;
-	gender: boolean;
-	setGender: Dispatch<SetStateAction<boolean>>;
+	isMale: boolean;
+	setIsMale: Dispatch<SetStateAction<boolean>>;
 	selectedItemId: string | null;
 	setSelectedItemId: Dispatch<SetStateAction<string | null>>;
 	isColorPickerOpen: boolean;

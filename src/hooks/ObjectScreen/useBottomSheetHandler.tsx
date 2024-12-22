@@ -25,9 +25,7 @@ const useBottomSheetHandler = () => {
 		}
 	};
 	useEffect(() => {
-		isColorPickerOpen
-			? bottomSheetRef?.current?.snapToIndex(1)
-			: bottomSheetRef?.current?.snapToIndex(0);
+		bottomSheetRef?.current?.snapToIndex(isColorPickerOpen ? 1 : 0);
 	}, [isColorPickerOpen]);
 
 	useEffect(() => {

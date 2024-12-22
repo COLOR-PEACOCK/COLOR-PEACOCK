@@ -15,7 +15,7 @@ const CameraRender: React.FC<CameraRenderProps> = ({
 	extColor,
 	cameraType,
 	zoomLevel,
-	isActive,
+	isCameraActive,
 }) => {
 	const [rgbColor, setRgbColor] = useState({ r: 0, g: 0, b: 0 });
 	const { getColorName } = useColorName();
@@ -87,7 +87,7 @@ const CameraRender: React.FC<CameraRenderProps> = ({
 			resizeMode="cover"
 			pixelFormat="yuv"
 			device={device}
-			isActive={isActive}
+			isActive={isCameraActive}
 			frameProcessor={frameProcessor}
 			zoom={zoomLevel}
 		/>
