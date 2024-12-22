@@ -20,7 +20,7 @@ type ObjectScreenProps = NativeStackScreenProps<
 	RootStackParamList,
 	'ObjectScreen'
 >;
-const ObjectScreen: React.FC<ObjectScreenProps> = ({ route }) => {
+const ObjectScreen = ({ route }: ObjectScreenProps) => {
 	const colors = route.params || dummyColor;
 	useDefaultItem();
 

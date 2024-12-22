@@ -1,5 +1,10 @@
-// 기본 아이템 선택 함수
-const getDefaultItems = (data: any) => {
+interface ClothingData {
+	clothesTop: string[];
+	clothesBottom: string[];
+	socks: string[];
+}
+
+const getDefaultItems = (data: ClothingData): string[] => {
 	return [data.clothesTop[0], data.clothesBottom[0], data.socks[0]];
 };
 

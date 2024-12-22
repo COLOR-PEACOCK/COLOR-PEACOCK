@@ -10,12 +10,10 @@ const ObjectStateContext = createContext<ObjectStateContextType | undefined>(
 	undefined,
 );
 
-export const ObjectStateProvider: React.FC<ObjectStateProviderProps> = ({
-	children,
-}) => {
+export const ObjectStateProvider = ({ children }: ObjectStateProviderProps) => {
 	const [itemData, setItemData] = useState<ItemDataTypes | null>(null);
 	const [droppedItems, setDroppedItems] = useState<any[]>([]);
-	const [gender, setGender] = useState<boolean>(false);
+	const [isMale, setIsMale] = useState<boolean>(false);
 	const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
 	const [isColorPickerOpen, setIsColorPickerOpen] = useState<boolean>(false);
 	const [defaultItems, setDefaultItems] = useState<any[]>([]);
@@ -26,8 +24,8 @@ export const ObjectStateProvider: React.FC<ObjectStateProviderProps> = ({
 		setItemData,
 		droppedItems,
 		setDroppedItems,
-		gender,
-		setGender,
+		isMale,
+		setIsMale,
 		selectedItemId,
 		setSelectedItemId,
 		isColorPickerOpen,

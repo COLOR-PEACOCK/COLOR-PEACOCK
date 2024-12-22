@@ -3,14 +3,14 @@ import { CrossHairProps } from '@typesStore/cameraTypes';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-const CrossHair: React.FC<CrossHairProps> = ({ extColor, parentlayout }) => {
+const CrossHair = ({ extColor, parentLayout }: CrossHairProps) => {
 	return (
 		<View
 			style={[
 				styles.outerblackborder,
 				{
-					top: parentlayout.height / 2 - 23.5,
-					left: parentlayout.width / 2 - 23.5,
+					top: parentLayout.height / 2 - 23.5,
+					left: parentLayout.width / 2 - 23.5,
 				},
 			]}>
 			<View style={[styles.betweenbg, { borderColor: extColor.bgColor }]}>

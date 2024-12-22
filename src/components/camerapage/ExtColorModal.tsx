@@ -3,16 +3,13 @@ import { ExtColorModalProps } from '@typesStore/cameraTypes';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-const ExtColorModal: React.FC<ExtColorModalProps> = ({
-	parentlayout,
-	extColor,
-}) => {
+const ExtColorModal = ({ parentLayout, extColor }: ExtColorModalProps) => {
 	return (
 		<View
 			style={[
 				styles.colormodal,
 				{
-					height: parentlayout.height / 7.15,
+					height: parentLayout.height / 7.15,
 				},
 			]}>
 			<View
@@ -26,7 +23,7 @@ const ExtColorModal: React.FC<ExtColorModalProps> = ({
 			<View
 				style={{
 					gap: 6,
-					width: parentlayout.width / 2.314,
+					width: parentLayout.width / 2.314,
 				}}>
 				<View>
 					<Text style={styles.korcolors}>≈{extColor.korName}</Text>

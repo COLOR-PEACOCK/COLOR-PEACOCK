@@ -5,16 +5,16 @@ import maleItemData from '../../assets/data/objectdata/maleItemData.js';
 import femaleItemData from '../../assets/data/objectdata/femaleItemData.js';
 
 const useGenderChange = () => {
-	const { gender, setGender, setItemData, setDroppedItems, setDefaultItems } =
+	const { isMale, setIsMale, setItemData, setDroppedItems, setDefaultItems } =
 		useObjectState();
 
 	// 성별과 아이템 아이템 변경 함수
 	const handleGenderChange = () => {
-		const newGender = !gender;
+		const newGender = !isMale;
 		const newItemData: any = newGender ? maleItemData : femaleItemData;
 		const defaultItems = getDefaultItems(newItemData);
 
-		setGender(newGender);
+		setIsMale(newGender);
 		setDroppedItems(defaultItems);
 		setDefaultItems(defaultItems);
 		setItemData(newItemData);

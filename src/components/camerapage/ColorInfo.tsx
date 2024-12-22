@@ -8,22 +8,21 @@ import { ColorInfoProps } from '@typesStore/cameraTypes';
 
 const cameraswitch = require('@icons/camera-switch.png');
 
-const ColorInfo: React.FC<ColorInfoProps> = ({
+const ColorInfo = ({
 	selectedColor,
-	parentlayout,
+	parentLayout,
 	setIsOpen,
 	isOpen,
 	setCameraType,
-}) => {
+}: ColorInfoProps) => {
 	const bottomSheetRef = useRef<BottomSheet>(null);
 	const cameraSwitch = () =>
 		setCameraType(prevType => (prevType === 'back' ? 'front' : 'back'));
 
-	useEffect(() => {
-		isOpen
-			? bottomSheetRef.current?.snapToIndex(1)
-			: bottomSheetRef.current?.snapToIndex(0);
-	}, [isOpen]);
+	useEffect(
+		() => bottomSheetRef.current?.snapToIndex(isOpen ? 1 : 0),
+		[isOpen],
+	);
 
 	const handleTouchEvent = () => {
 		setIsOpen(!isOpen);
@@ -34,13 +33,13 @@ const ColorInfo: React.FC<ColorInfoProps> = ({
 			<View
 				style={[
 					styles.customHandle,
-					{ left: parentlayout.width / 2 - 14 },
+					{ left: parentLayout.width / 2 - 14 },
 				]}>
-				{isOpen ? (
-					<Icon name={'angle-down'} color={COLOR.PRIMARY} size={24} />
-				) : (
-					<Icon name={'angle-up'} color={COLOR.PRIMARY} size={24} />
-				)}
+				<Icon
+					name={isOpen ? 'angle-down' : 'angle-up'}
+					color={COLOR.PRIMARY}
+					size={24}
+				/>
 			</View>
 
 			<TouchableOpacity
@@ -67,7 +66,7 @@ const ColorInfo: React.FC<ColorInfoProps> = ({
 				onPress={handleTouchEvent}
 				style={[
 					styles.handlerbuttonevent,
-					{ left: parentlayout.width / 2 - 17.5 },
+					{ left: parentLayout.width / 2 - 17.5 },
 					isOpen ? { top: 25 } : { top: 125 },
 				]}
 			/>
@@ -93,7 +92,7 @@ const ColorInfo: React.FC<ColorInfoProps> = ({
 							<View
 								style={{
 									gap: 6,
-									width: parentlayout.width / 2.314,
+									width: parentLayout.width / 2.314,
 								}}>
 								<View>
 									<Text style={styles.korcolors}>
