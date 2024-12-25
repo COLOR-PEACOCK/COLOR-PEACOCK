@@ -9,12 +9,12 @@ import MaleBodySvg from '@images/objectitems/bodyimages/male_body.svg';
 import FeMaleBodySvg from '@images/objectitems/bodyimages/female__body.svg';
 
 const ObjectCanvas = () => {
-	const { gender, droppedItems, selectedItemId } = useObjectState();
+	const { isMale, droppedItems, selectedItemId } = useObjectState();
 
 	return (
 		<View style={styles.canvas}>
 			<View style={styles.avatarContainer}>
-				{gender ? (
+				{isMale ? (
 					<MaleBodySvg width="100%" height="100%" />
 				) : (
 					<FeMaleBodySvg width="100%" height="100%" />

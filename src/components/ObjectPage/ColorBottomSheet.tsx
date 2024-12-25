@@ -17,7 +17,7 @@ interface ColorBottomSheetProps {
 	colors: readonly string[];
 }
 
-const ColorBottomSheet: React.FC<ColorBottomSheetProps> = ({ colors }) => {
+const ColorBottomSheet = ({ colors }: ColorBottomSheetProps) => {
 	const { bottomSheetRef, handleColorSelect } = useBottomSheetHandler();
 
 	return (

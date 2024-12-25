@@ -11,12 +11,12 @@ import { useResizePlugin } from 'vision-camera-resize-plugin';
 import { useColorName } from '@hooks/index';
 import { CameraRenderProps } from '@typesStore/cameraTypes';
 
-const CameraRender: React.FC<CameraRenderProps> = ({
+const CameraRender = ({
 	extColor,
 	cameraType,
 	zoomLevel,
-	isActive,
-}) => {
+	isCameraActive,
+}: CameraRenderProps) => {
 	const [rgbColor, setRgbColor] = useState({ r: 0, g: 0, b: 0 });
 	const { getColorName } = useColorName();
 	const device = useCameraDevice(cameraType);
@@ -87,7 +87,7 @@ const CameraRender: React.FC<CameraRenderProps> = ({
 			resizeMode="cover"
 			pixelFormat="yuv"
 			device={device}
-			isActive={isActive}
+			isActive={isCameraActive}
 			frameProcessor={frameProcessor}
 			zoom={zoomLevel}
 		/>

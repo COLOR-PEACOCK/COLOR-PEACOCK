@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { COLOR } from '@styles/color';
 
 // 로딩중 텍스트
@@ -25,16 +25,17 @@ const LoadingText = () => {
 
 	return (
 		<View>
-			<Text
-				style={{
-					fontFamily: 'Pretendard-Bold',
-					color: COLOR.GRAY_10,
-					fontSize: 16,
-				}}>
-				{loadingText}
-			</Text>
+			<Text style={styles.animatedTextStyle}>{loadingText}</Text>
 		</View>
 	);
 };
+
+const styles = StyleSheet.create({
+	animatedTextStyle: {
+		fontFamily: 'Pretendard-Bold',
+		color: COLOR.GRAY_10,
+		fontSize: 16,
+	},
+});
 
 export default LoadingText;
