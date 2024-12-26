@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
 	Camera,
-	CameraPosition,
 	runAtTargetFps,
 	useCameraDevice,
 	useFrameProcessor,
@@ -61,31 +60,28 @@ const CameraRender = ({
 		'worklet';
 		runAtTargetFps(4, () => {
 			'worklet';
-			if (frame.pixelFormat === 'yuv') {
-				const resized = resize(frame, {
-					scale: {
-						width: resizeWidth,
-						height: resizeHeight,
-					},
-					pixelFormat: 'rgb',
-					dataType: 'uint8',
-				});
-				// RGB 값 추출
-				const index =
-					((resizeHeight / 2) * resizeWidth + resizeWidth / 2) * 3;
-				const red = resized[index];
-				const green = resized[index + 1];
-				const blue = resized[index + 2];
-				updateColorJS(red, green, blue);
-			}
+			const resized = resize(frame, {
+				scale: {
+					width: resizeWidth,
+					height: resizeHeight,
+				},
+				pixelFormat: 'rgb',
+				dataType: 'uint8',
+			});
+			// RGB 값 추출
+			const index =
+				((resizeHeight / 2) * resizeWidth + resizeWidth / 2) * 3;
+			const red = resized[index];
+			const green = resized[index + 1];
+			const blue = resized[index + 2];
+			updateColorJS(red, green, blue);
 		});
 	}, []);
 
 	return (
 		<Camera
 			style={{ width: '100%', height: '100%' }}
-			resizeMode="cover"
-			pixelFormat="yuv"
+			resizeMode={'cover'}
 			device={device}
 			isActive={isCameraActive}
 			frameProcessor={frameProcessor}
