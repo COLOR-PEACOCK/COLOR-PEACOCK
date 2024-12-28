@@ -48,7 +48,7 @@ export const useImageScreen = () => {
 	const onMessage = useCallback(
 		throttle((event: { nativeEvent: { data: string } }) => {
 			setColor(event.nativeEvent.data);
-		}, 200),
+		}, 80),
 		[],
 	);
 

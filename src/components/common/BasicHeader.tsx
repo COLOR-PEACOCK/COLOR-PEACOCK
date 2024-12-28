@@ -84,7 +84,7 @@ const BasicHeader = ({
 							top:
 								infoButtonLayout.y +
 								infoButtonLayout.height +
-								10,
+								(infoModalVisible ? 10 : -120),
 							opacity: infoModalVisible ? 1 : 0,
 						},
 					]}>
