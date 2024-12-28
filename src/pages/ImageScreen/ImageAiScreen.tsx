@@ -76,7 +76,7 @@ const ImageAiScreen: React.FC<ImageAiScreenProps> = ({ route, navigation }) => {
 										item.theme_hexCode_list,
 									)}
 									onColorSelect={handleColorSelect}
-									description={item.colors}
+									descriptions={item.colors}
 								/>
 							))}
 					</View>

@@ -6,18 +6,14 @@ import { useColorInfo } from '@hooks/ColorRecommendScreen';
 import { COLOR } from '@styles/color';
 import tinycolor from 'tinycolor2';
 import HangerIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-
-interface DescriptionItem {
-	hexCode: string;
-	harmony_description: string;
-}
+import { RecommendedColor } from '@hooks/useGemini';
 
 interface ColorPaletteProps {
 	titleKor: string;
 	titleEng: string;
 	colors: string[];
 	onColorSelect: (selectedColors: string[]) => void;
-	descriptions?: DescriptionItem[];
+	descriptions?: RecommendedColor[];
 }
 
 const ColorPalette: React.FC<ColorPaletteProps> = ({
@@ -111,14 +107,11 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
 				colorInfo={colorInfo}
 				selectedColor={selectedColor || ''}
 				description={
-					(descriptions &&
-						selectedColor &&
-						descriptions.find(
+					(descriptions?.find(
 							item =>
 								item.hexCode.toLowerCase() ===
-								selectedColor.toLowerCase(),
-						)?.harmony_description) ||
-					undefined
+								selectedColor?.toLowerCase(),
+						)?.harmony_description)
 				}
 			/>
 		</View>
