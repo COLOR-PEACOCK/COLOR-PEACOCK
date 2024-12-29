@@ -1,12 +1,10 @@
 import { Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useAsyncStorage } from '@hooks/Home';
 import { PressButtonProps } from '@components/Home/PressButton';
 
 const useHomeState = () => {
-	type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
-	const navigation = useNavigation<HomeScreenNavigationProp>();
+	const navigation = useNavigation<HomeScreenNavigationProps>();
 	const { storeData, getData } = useAsyncStorage();
 
 	const handleSelectCamera = () => {
@@ -64,8 +62,6 @@ const useHomeState = () => {
 			text: 'AI로 색상 추천 받기',
 		},
 	];
-
-	
 
 	return {
 		buttonList,

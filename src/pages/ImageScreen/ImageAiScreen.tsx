@@ -1,30 +1,13 @@
 import React from 'react';
 import { SafeAreaView, View, StyleSheet, ScrollView } from 'react-native';
 import { COLOR } from '@styles/color';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-
-// components
 import { LoadingScreen, BasicHeader } from '@components/common';
 import { MainColorInfo, ColorPalette } from '@components/ColorRecommend';
-
-// hooks & utils
 import { ImageAiScreeninfoText } from '@utils/infoText';
 import { useColorInfo } from '@hooks/ColorRecommendScreen';
 import { useFetchColorData } from '@hooks/ImageScreen';
 
-interface RecommendedTheme {
-	theme_name_kr: string;
-	theme_name_eng: string;
-	theme_hexCode_list: string[];
-	colors: string[];
-}
-
-type ImageAiScreenProps = NativeStackScreenProps<
-	RootStackParamList,
-	'ImageAiScreen'
->;
-
-const ImageAiScreen: React.FC<ImageAiScreenProps> = ({ route, navigation }) => {
+const ImageAiScreen = ({ route, navigation }: ImageAiScreenProps) => {
 	const { mainColor } = route.params;
 	const { colorInfo, textColor, labelColor } = useColorInfo(mainColor.hexVal);
 	const { data, isLoading } = useFetchColorData(mainColor.hexVal, navigation);

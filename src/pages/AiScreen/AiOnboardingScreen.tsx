@@ -1,21 +1,13 @@
 import React from 'react';
 import { SafeAreaView, View, StyleSheet, Image, Text } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import Swiper from 'react-native-swiper';
-
-// components
 import { BasicHeader } from '@components/common';
 import OnboardingButton from '@components/AiOnboardingScreen/OnboardingButton';
-
-// hooks & utils
 import { widthScale, heightScale } from '@utils/scaling';
 import useOnboardingNavigation from '@hooks/AiOnboardingScreen/useOnboardingNavigation';
-
-// styles
 import { COLOR } from '@styles/color';
 
-const AiOnboardingScreen = () => {
-	const navigation = useNavigation();
+const AiOnboardingScreen = ({ navigation }: AiOnboardingScreenProps) => {
 	const { swiperRef, currentIndex, setCurrentIndex, handleSkip, handleNext } =
 		useOnboardingNavigation(navigation);
 
