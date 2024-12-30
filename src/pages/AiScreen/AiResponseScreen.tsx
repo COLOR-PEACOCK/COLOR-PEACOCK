@@ -6,20 +6,13 @@ import {
 	TouchableOpacity,
 	LayoutChangeEvent,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { COLOR } from '@styles/color';
 import { BasicHeader, LoadingScreen, CustomPopup } from '@components/common';
 import { AiCircle, Background } from '@components/AiRecommend';
 import useRunAi from '@hooks/AiScreen/useRunAi';
 
-type AiResponseScreenProps = NativeStackScreenProps<
-	RootStackParamList,
-	'AiResponseScreen'
->;
-
-const AiResponseScreen: React.FC<AiResponseScreenProps> = ({ route }) => {
+const AiResponseScreen = ({ route, navigation }: AiResponseScreenProps) => {
 	const { itemInImage, itemToRecommend, base64Image } = route.params;
 
 	const [isButtonPressed, setIsButtonPressed] = useState(false);
@@ -36,7 +29,6 @@ const AiResponseScreen: React.FC<AiResponseScreenProps> = ({ route }) => {
 	const [containerHeight, setContainerHeight] = useState<number>(0);
 
 	// 오브젝트 화면으로 네비게이트
-	const navigation = useNavigation();
 	const navigateObjectScreen = () => {
 		navigation.navigate('ObjectScreen', colors);
 	};

@@ -1,7 +1,5 @@
 import React from 'react';
 import { ImageBackground, SafeAreaView, StyleSheet, View } from 'react-native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-
 import { BasicHeader } from '@components/common';
 import { heightScale } from '@utils/scaling';
 import {
@@ -9,17 +7,12 @@ import {
 	ColorBottomSheet,
 	ObjectBottomCotainer,
 } from '@components/ObjectPage';
-
 import { dummyColor } from '@utils/object/constants';
 import { ObjectScreenInfoText } from '@utils/infoText';
 import { useDefaultItem } from '@hooks/ObjectScreen';
 
 const backgroundimg = require('@images/objectitems/background/background.png');
 
-type ObjectScreenProps = NativeStackScreenProps<
-	RootStackParamList,
-	'ObjectScreen'
->;
 const ObjectScreen = ({ route }: ObjectScreenProps) => {
 	const colors = route.params || dummyColor;
 	useDefaultItem();

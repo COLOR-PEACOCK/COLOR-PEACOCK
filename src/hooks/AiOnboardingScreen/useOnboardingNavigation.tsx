@@ -1,10 +1,9 @@
 import { useRef, useState } from 'react';
-import { NavigationProp } from '@react-navigation/native';
 import Swiper from 'react-native-swiper';
 
 const FINAL_PAGE = 2;
 
-const useOnboardingNavigation = (navigation: NavigationProp<any>) => {
+const useOnboardingNavigation = (navigation: AiOnboardingScreenNavigationProps) => {
 	const swiperRef = useRef<Swiper>(null);
 	const [currentIndex, setCurrentIndex] = useState(0);
 

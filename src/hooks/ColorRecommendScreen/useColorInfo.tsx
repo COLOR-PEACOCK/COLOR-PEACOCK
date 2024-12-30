@@ -1,12 +1,12 @@
 import { useMemo, useState } from 'react';
 import { getColorInfo } from '@utils/ColorRecommendScreen/colorRecommendUtils';
-import { useColorName } from '@hooks';
+import { useColorName } from '@hooks/index';
 import { COLOR } from '@styles/color';
 import tinycolor from 'tinycolor2';
 
 const useColorInfo = (initialColor: string) => {
 	const [tempColor, setTempColor] = useState<string>(initialColor);
-	const { getEngColorNameLocal, getKorColorName } = useColorName();
+	const { getColorName } = useColorName();
 
 	const colorInfo = useMemo(() => {
 		if (!tempColor) {
@@ -20,9 +20,10 @@ const useColorInfo = (initialColor: string) => {
 			};
 		}
 		const colorData = getColorInfo(tempColor.replace('#', ''));
+		const { korean_name, name } = getColorName(tempColor);
 		return {
-			engName: getEngColorNameLocal(tempColor),
-			korName: getKorColorName(tempColor),
+			engName: name,
+			korName: korean_name,
 			hexVal: colorData.hexVal,
 			rgbVal: colorData.rgbVal,
 			hslVal: colorData.hslVal,

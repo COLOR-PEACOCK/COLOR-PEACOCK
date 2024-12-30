@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { SafeAreaView, View, StyleSheet, ScrollView } from 'react-native';
-import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { BasicHeader } from '@components/common';
 import {
 	ColorPickerModal,
@@ -12,21 +11,16 @@ import { getColorVariants } from '@utils/ColorRecommendScreen';
 import { useColorInfo } from '@hooks/ColorRecommendScreen';
 import { COLOR } from '@styles/color';
 
-type ColorRecommendScreenProps = NativeStackScreenProps<
-	RootStackParamList,
-	'ColorRecommendScreen'
->;
-
 type ColorPaletteData = {
 	titleKor: string;
 	titleEng: string;
 	colors: string[];
 };
 
-const ColorRecommendScreen: React.FC<ColorRecommendScreenProps> = ({
+const ColorRecommendScreen = ({
 	route,
 	navigation,
-}) => {
+}: ColorRecommendScreenProps) => {
 	const { mainColor } = route.params;
 	const { tempColor, setTempColor, colorInfo, textColor, labelColor } =
 		useColorInfo(mainColor.hexVal);

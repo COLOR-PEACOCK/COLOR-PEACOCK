@@ -8,11 +8,8 @@ import {
 	LayoutChangeEvent,
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-
 import { CameraPosition } from 'react-native-vision-camera';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
 import { COLOR } from '@styles/color';
 import { BasicHeader, CustomText as Text } from '@components/common';
 import {
@@ -21,16 +18,11 @@ import {
 	CrossHair,
 	ExtColorModal,
 } from '@components/camerapage';
-
 import { useCamera } from '@hooks/index';
 import { ExtColor, ParentLayout, SeletedColor } from '@typesStore/cameraTypes';
+import { CameraScreenInfoText } from '@utils/infoText';
 
 const extbutton = require('@icons/circle__lock__btn.png');
-
-type CameraScreenProps = NativeStackScreenProps<
-	RootStackParamList,
-	'CameraScreen'
->;
 
 const CameraScreen = ({ navigation }: CameraScreenProps) => {
 	const [isCameraActive, setIsCameraActive] = useState<boolean>(false);
@@ -96,7 +88,13 @@ const CameraScreen = ({ navigation }: CameraScreenProps) => {
 	};
 	return (
 		<SafeAreaView style={{ flex: 1 }}>
-			<BasicHeader title="카메라" titleIcon="camera" subTitle="camera" />
+			<BasicHeader
+				title={'카메라'}
+				titleIcon={'camera'}
+				subTitle={'camera'}
+				rightIcon={'info'}
+				infoText={CameraScreenInfoText}
+			/>
 
 			{/* 카메라 영역 */}
 			<View
@@ -149,7 +147,7 @@ const CameraScreen = ({ navigation }: CameraScreenProps) => {
 						style={styles.zoombutton}
 						onPress={handlePressZoom}>
 						<Text style={{ fontSize: 16, color: COLOR.WHITE }}>
-							{zoomLevel === 1 ? '2X' : '1X'}
+							{zoomLevel === 1 ? '1X' : '2X'}
 						</Text>
 					</TouchableOpacity>
 

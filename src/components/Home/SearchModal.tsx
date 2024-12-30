@@ -9,14 +9,14 @@ import {
 
 import { COLOR } from '@styles/color';
 import { CustomText as Text } from '@components/common';
-import { SearchInputForm, ListValue, Dropdown } from '@components/Home';
+import { SearchInputForm, DropdownItem, Dropdown } from '@components/Home';
 import { useSearchModalState } from '@hooks/Home';
 import { ArrowGoBackSVG, FormkitSubmitSVG } from '@icons/index';
 import { BASE_HEIGHT, heightScale } from '@utils/scaling';
 import { INPUT_TYPES } from '@typesStore/Home/inputTypes';
 
 const DEVICE_HEIGHT = Dimensions.get('window').height;
-const INPUT_TYPE_OPTIONS = Object.values(INPUT_TYPES)
+const INPUT_TYPE_OPTIONS = Object.values(INPUT_TYPES);
 
 interface SearchModalProps {
 	visible: boolean;
@@ -47,6 +47,8 @@ const SearchModal = ({
 			onPressSearch(hexValue);
 		}
 	};
+
+	// console.log(DEVICE_HEIGHT+'\n'+BASE_HEIGHT)
 
 	return (
 		<View>
@@ -93,7 +95,7 @@ const SearchModal = ({
 											? item.korean_name
 											: item.name;
 										return (
-											<ListValue
+											<DropdownItem
 												key={item.hex ?? 'list'}
 												label={currentKeyword}
 												onPressLabel={() =>
@@ -186,7 +188,7 @@ const styles = StyleSheet.create({
 		gap: 10,
 	},
 	searchResults: {
-		maxHeight: DEVICE_HEIGHT >= BASE_HEIGHT - 1 ? 'auto' : heightScale(150),
+		maxHeight: DEVICE_HEIGHT >= BASE_HEIGHT - 15 ? 'auto' : heightScale(150),
 		borderColor: COLOR.GRAY_6,
 		borderRadius: 8,
 		borderWidth: 1,

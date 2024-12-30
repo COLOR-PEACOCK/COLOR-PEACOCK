@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import {
 	View,
 	StyleSheet,
@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { COLOR } from '@styles/color';
-import { ListValue } from '@components/Home';
+import { DropdownItem } from '@components/Home';
 
 const SCROLL_VIEW_MAX_HEIGHT = 240;
 
@@ -32,28 +32,26 @@ const Dropdown = ({
 }: DropdownProps) => {
 	const [isOpen, setIsOpen] = useState(false);
 
-	const handlePressLabel = useCallback(
+	const handlePressLabel =
 		(label: string) => {
 			setIsOpen(false);
 			onClickDropdown?.(label);
-		},
-		[onClickDropdown],
-	);
+		};
 
-	const toggleDropdown = useCallback(() => {
+	const toggleDropdown = () => {
 		setIsOpen(prev => !prev);
-	}, []);
+	};
 
-	const renderListItems = useCallback(() => {
+	const renderListItems = () => {
 		return list.map(l => (
-			<ListValue
+			<DropdownItem
 				key={l}
 				label={l}
 				isActive={l === selectedLabel}
 				onPressLabel={() => handlePressLabel(l)} // 바로 label 전달
 			/>
 		));
-	}, [list, selectedLabel, handlePressLabel]);
+	};
 
 	return (
 		<View style={layoutStyle}>
@@ -66,7 +64,7 @@ const Dropdown = ({
 					isOpen && styles.fieldContainerOpen,
 					disabled && styles.fieldContainerDisabled,
 				]}>
-				<ListValue
+				<DropdownItem
 					label={selectedLabel || placeholder || ''}
 					disabled={!selectedLabel && !!placeholder}
 					onPressLabel={toggleDropdown}

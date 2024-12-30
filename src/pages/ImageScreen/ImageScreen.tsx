@@ -9,14 +9,8 @@ import {
 } from '@components/ImageScreen';
 import { ImageScreenInfoText } from '@utils/infoText';
 import { usePopup, useImageScreen, useControlScreen } from '@hooks/ImageScreen';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-type ImageScreenRouteProp = NativeStackScreenProps<
-	RootStackParamList,
-	'ImageScreen'
->;
-
-const ImageScreen = ({ navigation }: ImageScreenRouteProp) => {
+const ImageScreen = ({ navigation }: ImageScreenProps) => {
 	const {
 		color,
 		colorName,
