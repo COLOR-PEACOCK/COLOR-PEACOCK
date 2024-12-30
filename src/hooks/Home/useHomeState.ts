@@ -1,4 +1,3 @@
-import { Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useAsyncStorage } from '@hooks/Home';
 import { PressButtonProps } from '@components/Home/PressButton';
@@ -8,7 +7,8 @@ const useHomeState = () => {
 	const { storeData, getData } = useAsyncStorage();
 
 	const handleSelectCamera = () => {
-		Alert.alert('알림', '카메라 기능은 추후 업데이트 예정입니다.');
+		const pageName = 'CameraScreen';
+		navigation.navigate(pageName);
 	};
 
 	const handleSelectAlbum = async () => {

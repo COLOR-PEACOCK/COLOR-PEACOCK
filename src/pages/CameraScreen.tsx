@@ -20,6 +20,7 @@ import {
 } from '@components/camerapage';
 import { useCamera } from '@hooks/index';
 import { ExtColor, ParentLayout, SeletedColor } from '@typesStore/cameraTypes';
+import { CameraScreenInfoText } from '@utils/infoText';
 
 const extbutton = require('@icons/circle__lock__btn.png');
 
@@ -91,6 +92,8 @@ const CameraScreen = ({ navigation }: CameraScreenProps) => {
 				title={'카메라'}
 				titleIcon={'camera'}
 				subTitle={'camera'}
+				rightIcon={'info'}
+				infoText={CameraScreenInfoText}
 			/>
 
 			{/* 카메라 영역 */}
@@ -144,7 +147,7 @@ const CameraScreen = ({ navigation }: CameraScreenProps) => {
 						style={styles.zoombutton}
 						onPress={handlePressZoom}>
 						<Text style={{ fontSize: 16, color: COLOR.WHITE }}>
-							{zoomLevel === 1 ? '2X' : '1X'}
+							{zoomLevel === 1 ? '1X' : '2X'}
 						</Text>
 					</TouchableOpacity>
 
