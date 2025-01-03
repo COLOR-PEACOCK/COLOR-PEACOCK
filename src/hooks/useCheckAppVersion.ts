@@ -7,7 +7,7 @@ const useCheckAppVersion = () => {
 			bundleId: 'com.ColorPeacock',
 		};
 		const version = await checkVersion(options);
-		console.log(NativeModules.RNDeviceInfo.appVersion);
+
 		if (version.needsUpdate) {
 			Alert.alert(
 				'알림',

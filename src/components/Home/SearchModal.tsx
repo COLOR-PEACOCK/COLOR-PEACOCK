@@ -16,6 +16,7 @@ import { BASE_HEIGHT, heightScale } from '@utils/scaling';
 import { INPUT_TYPES } from '@typesStore/Home/inputTypes';
 
 const DEVICE_HEIGHT = Dimensions.get('window').height;
+const WHITE_SPACE = 80;
 const INPUT_TYPE_OPTIONS = Object.values(INPUT_TYPES);
 
 interface SearchModalProps {
@@ -48,7 +49,7 @@ const SearchModal = ({
 		}
 	};
 
-	// console.log(DEVICE_HEIGHT+'\n'+BASE_HEIGHT)
+	console.log(DEVICE_HEIGHT + '\n' + BASE_HEIGHT);
 
 	return (
 		<View>
@@ -152,7 +153,8 @@ const SearchModal = ({
 const styles = StyleSheet.create({
 	modalView: {
 		width: '85%',
-		marginTop: DEVICE_HEIGHT >= BASE_HEIGHT - 1 ? heightScale(50) : 5,
+		marginTop:
+			DEVICE_HEIGHT >= BASE_HEIGHT - WHITE_SPACE ? heightScale(50) : 5,
 		marginHorizontal: 'auto',
 		paddingTop: 18,
 		zIndex: 5,
@@ -188,7 +190,10 @@ const styles = StyleSheet.create({
 		gap: 10,
 	},
 	searchResults: {
-		maxHeight: DEVICE_HEIGHT >= BASE_HEIGHT - 15 ? 'auto' : heightScale(150),
+		maxHeight:
+			DEVICE_HEIGHT >= BASE_HEIGHT - WHITE_SPACE
+				? 'auto'
+				: heightScale(150),
 		borderColor: COLOR.GRAY_6,
 		borderRadius: 8,
 		borderWidth: 1,
