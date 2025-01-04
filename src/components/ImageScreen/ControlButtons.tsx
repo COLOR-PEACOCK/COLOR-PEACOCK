@@ -1,17 +1,9 @@
 import React from 'react';
 import { View, Pressable, Image, StyleSheet } from 'react-native';
-
-// hooks & utils
 import { widthScale, heightScale } from '@utils/scaling';
-
-// components
 import { CustomText as Text } from '@components/common';
-
-// icons
 import aiIcon from '@icons/ai.png';
 import paletteIcon from '@icons/palette.png';
-
-// styles
 import { COLOR } from '@styles/color';
 
 interface ControlButtonsProps {
@@ -19,12 +11,11 @@ interface ControlButtonsProps {
 	onColorRecommend: () => void;
 }
 
-const ControlButtons: React.FC<ControlButtonsProps> = ({
+const ControlButtons = ({
 	onAiRecommend,
 	onColorRecommend,
-}) => (
+}: ControlButtonsProps) => (
 	<View style={styles.buttonContainer}>
-		{/* AI 테마 추천 버튼 */}
 		<Pressable
 			style={({ pressed }) => [
 				styles.button,
@@ -34,8 +25,6 @@ const ControlButtons: React.FC<ControlButtonsProps> = ({
 			<Image source={aiIcon} style={styles.buttonIcon} />
 			<Text style={styles.ButtonText}>AI 테마 추천</Text>
 		</Pressable>
-
-		{/* 색상 추천 버튼 */}
 		<Pressable
 			style={({ pressed }) => [
 				styles.button,
