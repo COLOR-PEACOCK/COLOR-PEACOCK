@@ -45,6 +45,9 @@ const HomeContainer = () => {
 		[progress],
 	);
 
+	const isLight = (hexcode: string) =>
+		convert.hex.hsl(extractHexDigits(hexcode))[2] > 80;
+
 	const renderItem = ({ item }: CarouselRenderItemInfo<color>) => {
 		return (
 			<Pressable
@@ -59,9 +62,7 @@ const HomeContainer = () => {
 				]}>
 				<OutlinedText
 					strokeColor={
-						convert.hex.hsl(extractHexDigits(item.hexcode))[2] > 80
-							? COLOR.GRAY_10
-							: COLOR.GRAY_2
+						isLight(item.hexcode) ? COLOR.GRAY_10 : COLOR.GRAY_2
 					}
 					textColor={item.hexcode}
 					fontSize={38}

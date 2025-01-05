@@ -37,19 +37,17 @@ const SearchModal = ({
 		searchNameList,
 		isKeywordKor,
 		handlePressLabel,
-		handleHexValue,
+		getHexValue,
 		handlePressSearchList,
 	} = useSearchModalState();
 
 	const handlePressSearch = () => {
-		const hexValue = handleHexValue();
+		const hexValue = getHexValue();
 		if (hexValue) {
 			handleCloseModal();
 			onPressSearch(hexValue);
 		}
 	};
-
-	console.log(DEVICE_HEIGHT + '\n' + BASE_HEIGHT);
 
 	return (
 		<View>

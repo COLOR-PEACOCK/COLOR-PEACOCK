@@ -53,7 +53,7 @@ const useSearchModalState = () => {
 	}, [selectedLabel]);
 
 	// 검색 버튼 터치 시
-	const handleHexValue = () => {
+	const getHexValue = () => {
 		const convertValueToHex =
 			colorConverter[selectedLabel] || ((values: string[]) => values);
 		const hexValue = convertValueToHex(inputValues, searchNameList);
@@ -74,7 +74,7 @@ const useSearchModalState = () => {
 		searchNameList,
 		isKeywordKor,
 		handlePressLabel,
-		handleHexValue,
+		getHexValue,
 		handlePressSearchList,
 	};
 };
