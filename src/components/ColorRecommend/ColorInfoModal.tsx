@@ -25,13 +25,13 @@ const extractNumbers = (str: string | undefined): string => {
 	return matchedNumbers.join(', ');
 };
 
-const ColorInfoModal: React.FC<ColorInfoModalProps> = ({
+const ColorInfoModal = ({
 	isVisible,
 	onClose,
 	colorInfo,
 	selectedColor,
 	description,
-}) => {
+}: ColorInfoModalProps) => {
 	const korTextColor = tinycolor(selectedColor).isLight()
 		? COLOR.GRAY_10
 		: COLOR.WHITE;

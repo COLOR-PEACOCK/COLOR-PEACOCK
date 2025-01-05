@@ -24,12 +24,12 @@ const extractNumbers = (str: string): string | undefined => {
 	return str.match(/\d+%?/g)?.join(', ');
 };
 
-const MainColorInfo: React.FC<MainColorInfoProps> = ({
+const MainColorInfo = ({
 	colorInfo,
 	labelColor,
 	textColor,
 	setIsPickerVisible,
-}) => {
+}: MainColorInfoProps) => {
 	const rgbNumbers = extractNumbers(colorInfo.rgbVal);
 	const hexNumbers = colorInfo.hexVal.slice(1, 8);
 	const hslNumbers = extractNumbers(colorInfo.hslVal);

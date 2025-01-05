@@ -16,13 +16,13 @@ interface ColorPaletteProps {
 	descriptions?: RecommendedColor[];
 }
 
-const ColorPalette: React.FC<ColorPaletteProps> = ({
+const ColorPalette = ({
 	titleKor,
 	titleEng,
 	colors,
 	onColorSelect,
 	descriptions,
-}) => {
+}: ColorPaletteProps) => {
 	const [isButtonPressed, setIsButtonPressed] = useState(false);
 	const [selectedColor, setSelectedColor] = useState<string | null>(
 		colors[0],
@@ -107,11 +107,11 @@ const ColorPalette: React.FC<ColorPaletteProps> = ({
 				colorInfo={colorInfo}
 				selectedColor={selectedColor || ''}
 				description={
-					(descriptions?.find(
-							item =>
-								item.hexCode.toLowerCase() ===
-								selectedColor?.toLowerCase(),
-						)?.harmony_description)
+					descriptions?.find(
+						item =>
+							item.hexCode.toLowerCase() ===
+							selectedColor?.toLowerCase(),
+					)?.harmony_description
 				}
 			/>
 		</View>
