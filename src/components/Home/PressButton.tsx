@@ -44,11 +44,7 @@ const PressButton = ({
 				style={styles.icon}
 			/>
 			<View>
-				<Text
-					style={[
-						styles.buttonEngText,
-						{ color: contentColor + 70 },
-					]}>
+				<Text style={[styles.buttonEngText, { color: contentColor }]}>
 					{engText}
 				</Text>
 				<Text style={[styles.buttonText, { color: contentColor }]}>
@@ -88,6 +84,7 @@ const styles = StyleSheet.create({
 		fontWeight: 500,
 		letterSpacing: 0.3,
 		textTransform: 'uppercase',
+		opacity: 0.7,
 	},
 	buttonText: {
 		fontFamily: 'Pretendard-Bold',

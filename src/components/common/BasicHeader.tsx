@@ -20,6 +20,10 @@ interface BasicHeaderProps {
 	infoText?: string;
 }
 
+const INFO_TEXT_RIGHT_OFFSET = 6;
+const INFO_TEXT_VERTICAL_OFFSET = 10;
+const INFO_TEXT_HIDDEN_VERTICAL_OFFSET = -120;
+
 const BasicHeader = ({
 	leftIcon = 'arrowleft',
 	onPressLeft,
@@ -71,7 +75,6 @@ const BasicHeader = ({
 				rightIcon={rightIcon}
 				onLayout={handleInfoButtonLayout}
 			/>
-			{/* info Modal */}
 			{infoText && (
 				<View
 					style={[
@@ -80,11 +83,14 @@ const BasicHeader = ({
 							left:
 								infoButtonLayout.x -
 								infoTextWidth +
-								infoButtonLayout.width * 1.3,
+								infoButtonLayout.width +
+									INFO_TEXT_RIGHT_OFFSET,
 							top:
 								infoButtonLayout.y +
 								infoButtonLayout.height +
-								(infoModalVisible ? 10 : -120),
+								(infoModalVisible
+									? INFO_TEXT_VERTICAL_OFFSET
+									: INFO_TEXT_HIDDEN_VERTICAL_OFFSET),
 							opacity: infoModalVisible ? 1 : 0,
 						},
 					]}>
