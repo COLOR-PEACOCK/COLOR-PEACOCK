@@ -6,7 +6,7 @@ import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { ColorInfoProps } from '@typesStore/cameraTypes';
 
-const cameraswitch = require('@icons/camera-switch.png');
+import cameraswitch from '@icons/camera-switch.png';
 
 const ColorInfo = ({
 	selectedColor,

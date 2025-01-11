@@ -22,7 +22,7 @@ import { useCamera } from '@hooks/index';
 import { ExtColor, ParentLayout, SeletedColor } from '@typesStore/cameraTypes';
 import { CameraScreenInfoText } from '@utils/infoText';
 
-const extbutton = require('@icons/circle__lock__btn.png');
+import extbutton from '@icons/circle__lock__btn.png';
 
 const CameraScreen = ({ navigation }: CameraScreenProps) => {
 	const [isCameraActive, setIsCameraActive] = useState<boolean>(false);

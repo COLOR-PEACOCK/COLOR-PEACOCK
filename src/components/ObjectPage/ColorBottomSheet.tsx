@@ -11,7 +11,7 @@ import { heightScale } from '@utils/scaling';
 import { useBottomSheetHandler } from '@hooks/ObjectScreen';
 import { CustomHandler } from '@components/ObjectPage';
 
-const colorContainer = require('@images/objectitems/background/cricle__wrapper.png');
+import colorContainer from '@images/objectitems/background/cricle__wrapper.png';
 
 interface ColorBottomSheetProps {
 	colors: readonly string[];
