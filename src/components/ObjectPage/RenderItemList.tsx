@@ -10,11 +10,10 @@ import {
 
 import { CustomText as Text } from '@components/common/CustomText';
 import { heightScale } from '@utils/scaling';
-
 import { useObjectState } from '@hooks/ObjectScreen';
 import { ItemDataTypes } from '@typesStore/itemData.interface';
 
-const RenderItemList: React.FC = () => {
+const RenderItemList = () => {
 	const {
 		setDroppedItems,
 		itemData,
@@ -23,7 +22,6 @@ const RenderItemList: React.FC = () => {
 		setSelectedItemId,
 	} = useObjectState();
 
-	//아이템 플랫 리스트 렌더
 	const renderItem: ListRenderItem<ItemDataTypes> = ({ item }) => {
 		return (
 			<View>
@@ -37,7 +35,6 @@ const RenderItemList: React.FC = () => {
 		);
 	};
 
-	//아이템 선택 이벤트
 	const handleItemSelect = (item: ItemDataTypes) => {
 		setSelectedItemId(prevId => (prevId === item.id ? null : item.id));
 		setIsColorPickerOpen(true);

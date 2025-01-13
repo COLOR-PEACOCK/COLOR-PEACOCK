@@ -44,7 +44,7 @@ interface AiCircleProps {
 	containerHeight: number; // 컨테이너 높이
 }
 
-const AiCircle: React.FC<AiCircleProps> = ({
+const AiCircle = ({
 	type,
 	number,
 	colorCode,
@@ -55,7 +55,7 @@ const AiCircle: React.FC<AiCircleProps> = ({
 	isSelected,
 	setIsSelected,
 	containerHeight,
-}) => {
+}: AiCircleProps) => {
 	const { width: SCREEN_WIDTH } = useWindowDimensions();
 
 	// AiCircle 크기 나타내는 Animated.Value 객체 생성

@@ -10,16 +10,17 @@ import Carousel, {
 } from 'react-native-reanimated-carousel';
 import { CarouselRenderItemInfo } from 'react-native-reanimated-carousel/lib/typescript/types';
 
+const BASE_URL = 'https://www.color-name.com/interior?h=';
+const INTERIOR_ITEM = [
+	['drawing-room', 'bedroom'],
+	['kitchen', 'living-room'],
+];
+
 const ObjectInterior = ({ route }: ObjectInteriorProps) => {
 	const colors = route.params;
 	const [selectedColor, setSelectedColor] = useState(colors?.[0]);
 	const { width } = useWindowDimensions();
 	const pageWidth = width * 0.67;
-	const baseUrl = 'https://www.color-name.com/interior?h=';
-	const interiorData = [
-		['drawing-room', 'bedroom'],
-		['kitchen', 'living-room'],
-	];
 	const caroucelRef = useRef<ICarouselInstance>(null);
 	const progress = useSharedValue<number>(0);
 
@@ -44,7 +45,7 @@ const ObjectInterior = ({ route }: ObjectInteriorProps) => {
 						width={width}
 						height={pageWidth}
 						source={{
-							uri: `${baseUrl}
+							uri: `${BASE_URL}
                         ${selectedColor?.replace('#', '')}&w=${item[0]}`,
 						}}
 						resizeMode={'contain'}
@@ -54,7 +55,7 @@ const ObjectInterior = ({ route }: ObjectInteriorProps) => {
 					width={width}
 					height={pageWidth}
 					source={{
-						uri: `${baseUrl}
+						uri: `${BASE_URL}
                         ${selectedColor?.replace('#', '')}&w=${item[1]}`,
 					}}
 					resizeMode={'contain'}
@@ -69,7 +70,7 @@ const ObjectInterior = ({ route }: ObjectInteriorProps) => {
 			<View style={styles.carouselContainer}>
 				<Pagination.Basic
 					progress={progress}
-					data={interiorData}
+					data={INTERIOR_ITEM}
 					dotStyle={{
 						width: 10,
 						backgroundColor: COLOR.PRIMARY + 50,
@@ -89,7 +90,7 @@ const ObjectInterior = ({ route }: ObjectInteriorProps) => {
 					ref={caroucelRef}
 					width={width}
 					height={pageWidth * 2}
-					data={interiorData}
+					data={INTERIOR_ITEM}
 					onProgressChange={progress}
 					renderItem={renderItem}
 				/>

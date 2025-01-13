@@ -18,7 +18,6 @@ const ImageAiScreen = ({ route, navigation }: ImageAiScreenProps) => {
 
 	return (
 		<SafeAreaView style={{ flex: 1 }}>
-			{/* 베이직 헤더 */}
 			<BasicHeader
 				titleIcon="AI"
 				title="AI 테마 추천"
@@ -26,7 +25,6 @@ const ImageAiScreen = ({ route, navigation }: ImageAiScreenProps) => {
 				rightIcon="info"
 				infoText={ImageAiScreeninfoText}
 			/>
-			{/* 로딩 화면 */}
 			{isLoading ? (
 				<View style={styles.loadingContainer}>
 					<LoadingScreen />
@@ -35,7 +33,6 @@ const ImageAiScreen = ({ route, navigation }: ImageAiScreenProps) => {
 				<ScrollView
 					style={{ paddingHorizontal: 18 }}
 					showsVerticalScrollIndicator={false}>
-					{/* 메인 컬러 정보 */}
 					<View
 						style={[
 							styles.colorBox,
@@ -47,7 +44,6 @@ const ImageAiScreen = ({ route, navigation }: ImageAiScreenProps) => {
 							labelColor={labelColor}
 						/>
 					</View>
-					{/* 컬러 팔레트들 */}
 					<View style={styles.paletteContainer}>
 						{data &&
 							data.recommended_themes_and_colors?.map(item => (

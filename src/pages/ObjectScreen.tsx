@@ -11,7 +11,7 @@ import { dummyColor } from '@utils/object/constants';
 import { ObjectScreenInfoText } from '@utils/infoText';
 import { useDefaultItem } from '@hooks/ObjectScreen';
 
-const backgroundimg = require('@images/objectitems/background/background.png');
+import backgroundimg from '@images/objectitems/background/background.png';
 
 const ObjectScreen = ({ route }: ObjectScreenProps) => {
 	const colors = route.params || dummyColor;

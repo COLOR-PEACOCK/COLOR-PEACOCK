@@ -3,7 +3,7 @@ import { View, Image, Animated, Easing, Text, StyleSheet } from 'react-native';
 import spinner from '../../assets/loadingSpinner.png';
 import logoIcon from '../../assets/icons/logo.png';
 
-const Spinner: React.FC = () => {
+const Spinner = () => {
 	// 스피너
 	const spinValue = useRef<Animated.Value>(new Animated.Value(0)).current;
 

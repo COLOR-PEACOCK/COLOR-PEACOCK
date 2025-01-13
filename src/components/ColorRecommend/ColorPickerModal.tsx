@@ -14,13 +14,13 @@ interface ColorPickerModalProps {
 	setIsPickerVisible: (visible: boolean) => void;
 }
 
-const ColorPickerModal: React.FC<ColorPickerModalProps> = ({
+const ColorPickerModal = ({
 	isVisible,
 	tempColor,
 	setTempColor,
 	onCancel,
 	setIsPickerVisible,
-}) => {
+}: ColorPickerModalProps) => {
 	const [currentColor, setCurrentColor] = useState<string>(tempColor);
 	const textColor = tinycolor(currentColor).isLight()
 		? COLOR.GRAY_9

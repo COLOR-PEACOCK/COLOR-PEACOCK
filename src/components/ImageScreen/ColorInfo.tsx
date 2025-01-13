@@ -1,10 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-
-// components
 import { CustomText as Text } from '@components/common';
-
-// styles
 import { COLOR } from '@styles/color';
 
 interface ColorInfoProps {
@@ -15,7 +11,7 @@ interface ColorInfoProps {
 	};
 }
 
-const ColorInfo: React.FC<ColorInfoProps> = ({ color, colorName }) => (
+const ColorInfo = ({ color, colorName }: ColorInfoProps) => (
 	<View style={styles.colorInfoBox}>
 		<View style={[styles.colorIndicator, { backgroundColor: color }]} />
 		<View style={styles.colorDetails}>

@@ -1,7 +1,7 @@
 import React from 'react';
 import Svg, { Path } from 'react-native-svg';
 
-const OnboardingIcon: React.FC<{ color: string }> = ({ color }) => (
+const OnboardingIcon = ({ color }: { color: string }) => (
 	<Svg
 		width="18"
 		height="18"

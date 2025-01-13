@@ -1,7 +1,7 @@
 import React from 'react';
 import Svg, { Circle, Path } from 'react-native-svg';
 
-const Background: React.FC<{ color: string }> = ({ color }) => (
+const Background = ({ color }: { color: string }) => (
 	<Svg
 		width="372"
 		height="727"

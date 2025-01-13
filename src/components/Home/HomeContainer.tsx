@@ -4,7 +4,7 @@ import {
 	ScrollView,
 	StyleSheet,
 	View,
-	useWindowDimensions,
+	Dimensions,
 } from 'react-native';
 import { useSharedValue } from 'react-native-reanimated';
 import Carousel, {
@@ -22,11 +22,13 @@ import { COLOR } from '@styles/color';
 import { extractHexDigits } from '@utils/Home';
 import { widthScale } from '@utils/scaling';
 
+const { width } = Dimensions.get('window');
 const DEFAULT_BUTTON_WIDTH = 376;
+const DEFAULT_LIGHTNESS = 80;
+const COLOR_CARD_WIDTH = width * 0.7;
+const COLOR_CARD_OFFSET = 4;
 
 const HomeContainer = () => {
-	const { width } = useWindowDimensions();
-	const COLOR_CARD_WIDTH = width * 0.7;
 	const caroucelRef = useRef<ICarouselInstance>(null);
 	const progress = useSharedValue<number>(0);
 	const { buttonList, handleSelectColorRecommend, TREND_COLOR_LIST } =
@@ -45,6 +47,9 @@ const HomeContainer = () => {
 		[progress],
 	);
 
+	const isLight = (hexcode: string) =>
+		convert.hex.hsl(extractHexDigits(hexcode))[2] > DEFAULT_LIGHTNESS;
+
 	const renderItem = ({ item }: CarouselRenderItemInfo<color>) => {
 		return (
 			<Pressable
@@ -59,9 +64,7 @@ const HomeContainer = () => {
 				]}>
 				<OutlinedText
 					strokeColor={
-						convert.hex.hsl(extractHexDigits(item.hexcode))[2] > 80
-							? COLOR.GRAY_10
-							: COLOR.GRAY_2
+						isLight(item.hexcode) ? COLOR.GRAY_10 : COLOR.GRAY_2
 					}
 					textColor={item.hexcode}
 					fontSize={38}
@@ -104,7 +107,7 @@ const HomeContainer = () => {
 						stackInterval:
 							COLOR_CARD_WIDTH > DEFAULT_BUTTON_WIDTH
 								? DEFAULT_BUTTON_WIDTH
-								: COLOR_CARD_WIDTH + 4,
+								: COLOR_CARD_WIDTH + COLOR_CARD_OFFSET,
 					}}
 					data={TREND_COLOR_LIST}
 					onProgressChange={progress}
