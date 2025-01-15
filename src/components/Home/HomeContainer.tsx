@@ -27,6 +27,10 @@ const DEFAULT_BUTTON_WIDTH = 376;
 const DEFAULT_LIGHTNESS = 80;
 const COLOR_CARD_WIDTH = width * 0.7;
 const COLOR_CARD_OFFSET = 4;
+const STACK_INTERVAL =
+	COLOR_CARD_WIDTH > DEFAULT_BUTTON_WIDTH
+		? DEFAULT_BUTTON_WIDTH
+		: COLOR_CARD_WIDTH + COLOR_CARD_OFFSET;
 
 const HomeContainer = () => {
 	const caroucelRef = useRef<ICarouselInstance>(null);
@@ -104,10 +108,7 @@ const HomeContainer = () => {
 					mode={'horizontal-stack'}
 					modeConfig={{
 						snapDirection: 'left',
-						stackInterval:
-							COLOR_CARD_WIDTH > DEFAULT_BUTTON_WIDTH
-								? DEFAULT_BUTTON_WIDTH
-								: COLOR_CARD_WIDTH + COLOR_CARD_OFFSET,
+						stackInterval: STACK_INTERVAL,
 					}}
 					data={TREND_COLOR_LIST}
 					onProgressChange={progress}
