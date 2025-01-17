@@ -7,8 +7,8 @@ import Dropdown from '@components/Home/Dropdown';
 import InputForm from '@components/Home/InputForm';
 import SearchInputForm from '@components/Home/SearchInputForm';
 import SearchModal from '@components/Home/SearchModal';
-
+import TrendColorPalette from '@components/Home/TrendColorPalette';
 export {
 	HomeHeader, HomeContainer, PressButton, OutlinedText, DropdownItem,
-	Dropdown, InputForm, SearchInputForm, SearchModal,
+	Dropdown, InputForm, SearchInputForm, SearchModal, TrendColorPalette,
 };
