@@ -4,7 +4,7 @@ import { Dimensions } from 'react-native';
  */
 export const BASE_WIDTH = 412;
 export const BASE_HEIGHT = 915;
-
+export const DEFAULT_BUTTON_WIDTH = 376;
 const { width, height } = Dimensions.get('window');
 
 /**
