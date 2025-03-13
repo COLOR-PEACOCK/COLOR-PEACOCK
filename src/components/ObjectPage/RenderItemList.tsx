@@ -59,16 +59,19 @@ const RenderItemList = () => {
 			return [...updatedItems, newItem];
 		});
 	};
-
-	return (
+	return activeTab && itemData?.[activeTab || '']?.length ? (
 		<FlatList
-			data={activeTab ? itemData?.[activeTab] : []}
+			data={itemData[activeTab]}
 			renderItem={renderItem}
 			horizontal={true}
 			keyExtractor={item => item.id}
 			contentContainerStyle={styles.flatListContent}
 			showsHorizontalScrollIndicator={false}
 		/>
+	) : (
+		<View style={styles.emptyList}>
+			<Text style={styles.emptyItemText}>아이템을 준비중입니다.</Text>
+		</View>
 	);
 };
 
@@ -89,6 +92,16 @@ const styles = StyleSheet.create({
 	applyText: {
 		fontFamily: 'Pretendard-Medium',
 		fontSize: heightScale(14),
+		color: COLOR.GRAY_7,
+	},
+	emptyList: {
+		paddingLeft: 20,
+		justifyContent: 'center',
+		alignItems: 'center',
+	},
+	emptyItemText: {
+		fontFamily: 'Pretendard-Medium',
+		fontSize: heightScale(18),
 		color: COLOR.GRAY_7,
 	},
 });
